@@ -1,7 +1,9 @@
 # SOEN341-UB2
-School's project trying to replicate Stack Overflow
+School project trying to replicate a Question and Anwser App. 
 
-## Author
+## Authors
 
 * **Kerry Gougeon** - [Kerry Gougeon](https://github.com/Kerry-G)
 * **Ramez Zaid** - [Ramez Zaid](https://github.com/ramzouza) 
+* **Jonathan Mongeau** - [Jonathan Mongeau](https://github.com/jonthemango)
+
