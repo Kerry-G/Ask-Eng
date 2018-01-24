@@ -10,3 +10,4 @@ School project trying to replicate a Question and Answer Application.
 * **Michael Magnabosco** - [Michael Magnabosco](https://github.com/linkmarche)
 * **Nicolas Hudon** - [Nicolas Hudon](https://github.com/niko378)
 * **Megan VanHumbeck** - [Megan VanHumbeck](https://github.com/megan-vanhumbeck)
+* **Jamal Ghamraoui** - [Jamal Ghamraoui](https://github.com/JamalG16)
