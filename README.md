@@ -8,3 +8,4 @@ School project trying to replicate a Question and Answer Application.
 * **Jonathan Mongeau** - [Jonathan Mongeau](https://github.com/jonthemango)
 * **Sharon Chee Yin Ho** - [Sharon Ho](https://github.com/sharon-ho)
 * **Michael Magnabosco** - [Michael Magnabosco](https://github.com/linkmarche)
+* **Nicolas Hudon** - [Nicolas Hudon](https://github.com/niko378)
