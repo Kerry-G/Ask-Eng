@@ -9,3 +9,4 @@ School project trying to replicate a Question and Answer Application.
 * **Sharon Chee Yin Ho** - [Sharon Ho](https://github.com/sharon-ho)
 * **Michael Magnabosco** - [Michael Magnabosco](https://github.com/linkmarche)
 * **Nicolas Hudon** - [Nicolas Hudon](https://github.com/niko378)
+* **Megan VanHumbeck** - [Megan VanHumbeck](https://github.com/megan-vanhumbeck)
