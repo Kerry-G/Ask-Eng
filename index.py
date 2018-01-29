@@ -10,11 +10,11 @@ cors = CORS(app, resources={r"/api/*": {"origins": "*"}})
 app = Flask(__name__, template_folder='static/build',static_folder='static/build')
 app.config.from_pyfile('config.py')
 
-@app.route('/', methods=['GET'])
+@app.route('/', methods=['GET','POST'])
 def index():
     return render_template('index.html')
 
-@app.route('/<path:path>', methods=['GET'])
+@app.route('/<path:path>', methods=['GET','POST'])
 def all(path):
     return render_template('index.html')
 
