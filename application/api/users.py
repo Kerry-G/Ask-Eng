@@ -7,7 +7,7 @@ from flask import Flask, Blueprint, redirect, render_template, url_for, session,
 from application.models import Users
 from application.util import *
 from passlib.hash import sha256_crypt
-
+import json
 
 # This is a Blueprint object. We use this as the object to route certain urls 
 # In /index.py we import this object and attach it to the Flask object app
@@ -18,6 +18,4 @@ users = Blueprint('users', __name__)
 
 @users.route('/api/', methods=['POST','OPTIONS'])
 def index():
-	response = flask.jsonify({'some': 'data'})
-	response.headers.add('Access-Control-Allow-Origin', '*')
-	return response
+	return json.dumps(['foo', {'bar': ('baz', None, 1.0, 2)}])
