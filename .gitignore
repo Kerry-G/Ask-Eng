@@ -1,5 +1,7 @@
+# python files
 config.py
-run.py
+
+# virtual env
 venv/
 
 # dependencies
