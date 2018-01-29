@@ -1,0 +1,30 @@
+{
+  "name": "341",
+  "version": "0.1.0",
+  "private": true,
+  "dependencies": {
+    "history": "^4.7.2",
+    "moment": "^2.20.1",
+    "react": "^16.2.0",
+    "react-bootstrap": "^0.32.1",
+    "react-dom": "^16.2.0",
+    "react-redux": "^5.0.6",
+    "react-router": "^4.2.0",
+    "react-router-dom": "^4.2.2",
+    "react-scripts": "1.1.0",
+    "react-thunk": "^1.0.0",
+    "redux": "^3.7.2",
+    "redux-form": "^7.2.1",
+    "redux-promise": "^0.5.3",
+    "redux-thunk": "^2.2.0"
+  },
+  "devDependencies": {
+    "react-scripts": "1.0.14"
+  },
+  "scripts": {
+    "start": "react-scripts start",
+    "build": "react-scripts build",
+    "test": "react-scripts test --env=jsdom",
+    "eject": "react-scripts eject"
+  }
+}

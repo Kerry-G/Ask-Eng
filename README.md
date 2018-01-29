@@ -1,6 +1,16 @@
 # SOEN341-UB2
 School project trying to replicate a Question and Answer Application. 
 
+## Front-End development
+
+The development of the frontend is in /static.
+
+The first time you go in the folder
+$ npm install
+
+To run it in localhost 
+$ npm run
+
 ## Authors
 
 * **Kerry Gougeon** - [Kerry Gougeon](https://github.com/Kerry-G)
