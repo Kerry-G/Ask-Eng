@@ -16,6 +16,6 @@ users = Blueprint('users', __name__)
 
 # Index 
 
-@users.route('/api/', methods=['POST'])
+@users.route('/api/', methods=['POST','OPTIONS'])
 def index():
 	return 'imagine json here.'
