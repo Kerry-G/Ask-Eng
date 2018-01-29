@@ -18,4 +18,6 @@ users = Blueprint('users', __name__)
 
 @users.route('/api/', methods=['POST','OPTIONS'])
 def index():
-	return 'imagine json here.'
+	response = flask.jsonify({'some': 'data'})
+    response.headers.add('Access-Control-Allow-Origin', '*')
+    return response

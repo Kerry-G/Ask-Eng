@@ -1,15 +1,12 @@
 from flask import Flask, request, render_template
 from flask_sqlalchemy import SQLAlchemy
-from flask_cors import CORS
 import os
 
 app = Flask(__name__)
-CORS(app)
 
 # Create instance of flask application
 app = Flask(__name__, template_folder='static/build',static_folder='static/build')
 app.config.from_pyfile('config.py')
-
 
 
 @app.route('/', methods=['GET','POST'])

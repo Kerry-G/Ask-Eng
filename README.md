@@ -1,7 +1,15 @@
 # SOEN341-UB2
 School project trying to replicate a Question and Answer Application. 
 
-## Front-End development
+
+
+## Installation
+
+# Back-End Installation
+
+
+
+# Front-End Installation
 
 The development of the frontend is in /static.
 
