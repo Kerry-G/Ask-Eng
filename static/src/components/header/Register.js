@@ -209,7 +209,7 @@ class Register extends Component {
                                 this.setState({ lname: e.target.value })
                             }}
                         />
-                        <ControlLabel>Role</ControlLabel>
+                        <ControlLabel>Engineering field</ControlLabel>
                         <Select
                             name="form-field-name"
                             value={this.state.role}
