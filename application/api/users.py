@@ -20,20 +20,26 @@ users = Blueprint('users', __name__)
 def index():
 	return json.dumps(['foo', {'bar': ('baz', None, 1.0, 2)}])
 
-@users.route('/api/users/<string:path>', methods=['PUT','GET'])
-def newUser(path):
+@users.route('/api/users/', methods=['PUT','GET'])
+def newUser():
 	data = request.data
-	print(str(data))
+	data  = data.decode('utf8').replace("'",'"')
+	data = json.loads(data)
+	print(data)
+	success = False
 	if request.method == 'PUT':
 
 		# Create a user and find our whether it is successful or not
-		sucess = Users.createUser(fname=data.fname, lname=data.lname, email=data.email, password=data.password, engineer=data.engineer, display_image=data.display_image)
-		message = str(sucess)
-		# if sucess then return succesful response, else return error response
+		success = Users.createUser(fname=data['fname'], lname=data['lname'], email=data['email'], password=data['password'], engineer=data['engineer'], display_image=data['display_image'])
+		if success:
+			message = "Users has been created"
+		else:
+			message = "Users already exists"
+
 	else:
-		sucess = False
+		success = False
 		message = "No HTTP request"
 
-	response = json.dumps({"success":sucess, "message":message})
+	response = json.dumps({"success":success, "message":message})
 	return response
 

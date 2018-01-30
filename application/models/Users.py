@@ -35,10 +35,10 @@ def userExists(email):
 	return User.query.filter_by(email=email).first() is not None
 
 # Returns True if user is created
-def createUser(fname, lname, email, password, engineer='software', display_image='', verfied=0):
-
+def createUser(fname, lname, email, password, engineer='software', display_image='', verified=0):
+	reponse = False
 	if userExists(email):
-		return False # if user exists then return false
+		reponse =  False # if user exists then return false
 	else:
 		# Hash the Password so that we are smart
 		password_hash = sha256_crypt.hash(password)
@@ -52,7 +52,8 @@ def createUser(fname, lname, email, password, engineer='software', display_image
 		# Commit it
 		db.session.commit()
 
-		return True
+		reponse = True
+	return reponse
 
 
 
