@@ -70,7 +70,7 @@ class Register extends Component {
     handleClick() {
         this.saveUser();
         this.handleAlert();
-        this.cleanState();
+        this.cleanState(true);
     }
 
     async saveUser() {
@@ -96,13 +96,13 @@ class Register extends Component {
             fetch(req).then(res => res.json())
                 .catch(e => console.error('Error:', e))
                 .then(response => {
-                    if (response){
+                    if (response) {
                         this.setState({ answer: response.message })
                     }
                 })
         } catch (e) { console.error("Error:", e) }
     }
-    handleAlert(){
+    handleAlert() {
         if (this.state.alert) {
             if (this.state.answer.success) {
                 this.setState({
@@ -115,26 +115,46 @@ class Register extends Component {
             }
         } else {
             this.setState({
-                alert:"warning",
-                answer:{message:'The query failed'}
+                alert: "warning",
+                answer: { message: 'The query failed' }
             })
         }
     }
 
-    handleClose(){
+    handleClose() {
         this.props.handleClose();
-        this.cleanState();
+        this.cleanState(false);
     }
-    cleanState(){
-        this.setState({
-            lname: '',
-            fname: '',
-            email: '',
-            validEmail: null,
-            pw: '',
-            role: '',
-            button: false,
-        })
+    /*
+    * cleanState reset the state of the component
+    * Input: a Boolean bool
+    * Output: if T, reset but keep the alert. If F, reset everything
+    * @author Kerry Gougeon
+    */
+    cleanState(bool) {
+        if (bool) {
+            this.setState({
+                lname: '',
+                fname: '',
+                email: '',
+                validEmail: null,
+                pw: '',
+                role: '',
+                button: false,
+            })
+        } else {
+            this.setState({
+                lname: '',
+                fname: '',
+                email: '',
+                validEmail: null,
+                pw: '',
+                role: '',
+                button: false,
+                answer: null,
+                alert: ''
+            })
+        }
     }
 
     render() {
