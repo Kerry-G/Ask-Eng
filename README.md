@@ -1,5 +1,5 @@
 # SOEN341-UB2
-An engineering question and anwser board.
+An engineering question and answer board.
 
 ## Requirements
 * Node 8.9.4
