@@ -1,5 +1,44 @@
 # SOEN341-UB2
-School project trying to replicate a Question and Answer Application. 
+An engineering question and anwser board.
+
+## Requirements
+* Node 8.9.4
+* Python 3.6
+
+## Getting Started
+
+#### Back-End Installation
+Begin by installing the latest version of [Python 3](https://www.python.org/downloads/). Go through the wizard. If you are on Windows make sure to check off **add to environment variables**. This will install *python* (if python 3.6 is the only version of python) or *python3* (if python 2.7 is already installed on your system) globally on your system. The installation of python also calls with *pip* or *pip3* (if python 2.7 is already installed on your system). pip is a package manager for Python.
+
+Take the config.py file that was sent to you and place it in the root of the project. Open your shell and *cd* to the root of the project. Now we can install the requirements for our projects.
+```
+$ pip install -r requirements.txt
+```
+Next we use python to run our project. You will use this command a lot for testing the web app. 
+```
+$ python run.py
+```
+The backend server should now be running on localhost:5000! Hit Ctrl+C in the shell to end the server process.
+
+
+#### Front-End Installation
+Begin by installing the latest version of [Node.js 8](https://nodejs.org/en/). Go through the wizard. If you are on Windows make sure to check off **add to environment variables**. The installation of Node.js also comes with *npm*. npm is a package manager for Node.js.
+
+The development of the frontend is in /static. The project is build with [create-react-app](https://github.com/facebook/create-react-app).
+
+From your project root *cd* to static. The first time you go in the folder, or anytime you change any module dependancies run the following command:
+```
+$ npm install
+```
+
+If you want to start react.
+```
+$ npm start
+```
+
+The frontend server should be running on localhost:3000! Hit Ctrl+C in the shell to end the server process.
+You want the frontend and the backend server running at the same time in different shells. 
+
 
 ## Authors
 

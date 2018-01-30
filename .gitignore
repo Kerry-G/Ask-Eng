@@ -1,0 +1,25 @@
+# python files
+config.py
+
+# virtual env
+venv/
+
+# dependencies
+static/node_modules
+
+# testing
+static/coverage
+
+# production
+static/build
+
+# misc
+.DS_Store
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+__pycache__/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
