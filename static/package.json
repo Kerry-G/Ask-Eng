@@ -2,7 +2,9 @@
   "name": "341",
   "version": "0.1.0",
   "private": true,
+  "proxy": "http://localhost:5000",
   "dependencies": {
+    "bootstrap": "^3.3.7",
     "history": "^4.7.2",
     "moment": "^2.20.1",
     "react": "^16.2.0",

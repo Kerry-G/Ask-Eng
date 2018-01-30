@@ -1,4 +1,4 @@
-from flask import Flask, request, render_template
+from flask import Flask, request, send_from_directory
 from flask_sqlalchemy import SQLAlchemy
 import os
 
@@ -8,14 +8,18 @@ app = Flask(__name__)
 app = Flask(__name__, template_folder='static/build',static_folder='static/build')
 app.config.from_pyfile('config.py')
 
-
-@app.route('/', methods=['GET','POST'])
-def index():
-    return render_template('index.html')
-
+@app.route('/', defaults={'path': ''}, methods=['GET','POST'])
 @app.route('/<path:path>', methods=['GET','POST'])
-def all(path):
-    return render_template('index.html')
+def index(path):
+    return send_from_directory('static/build', 'index.html')
+
+    # if(path == ""):
+    #     return send_from_directory('static/build', 'index.html')
+    # else:
+    #     if(os.path.exists("static/build/" + path)):
+    #         return send_from_directory('static/build', path)
+    #     else:
+    #         return send_from_directory('static/build', 'index.html')
 
 # Create db
 db = SQLAlchemy(app)
