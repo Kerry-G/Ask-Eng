@@ -2,8 +2,8 @@
 An engineering question and anwser board.
 
 ## Requirements
-    - Node 8.9.4
-    - Python 3.6
+* Node 8.9.4
+* Python 3.6
 
 ## Getting Started
 
