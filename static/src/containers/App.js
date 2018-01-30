@@ -46,7 +46,7 @@ class App extends Component {
         headers: myHeaders
       };
       let req = new Request("/api/users/", myInit)
-      fetch(req).then(res => console.log(res))
+      fetch(req).then(res => console.log(res.json()))
     } catch (e) { console.log(e) }
   }
 
