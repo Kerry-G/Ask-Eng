@@ -62,7 +62,7 @@ class App extends Component {
       let myHeaders = new Headers();
       myHeaders.append('Content-Type', 'application/json');
       let myInit = {
-        method: 'PUT',
+        method: 'POST',
         body: JSON.stringify(data),
         headers: myHeaders
       };
@@ -72,7 +72,7 @@ class App extends Component {
       .catch(e => console.error('Error:', e))
       .then(response => {
         console.log(response)
-        this.setState({sendDataAns:response.message})
+        this.setState({sendDataAns:response})
       })
     } catch (e) { console.error("Error:", e) }
   }
