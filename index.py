@@ -2,7 +2,7 @@ from flask import Flask, request, send_from_directory
 from flask_sqlalchemy import SQLAlchemy
 import os
 
-app = Flask(__name__)
+
 
 # Create instance of flask application
 app = Flask(__name__, template_folder='static/build',static_folder='static/build')
