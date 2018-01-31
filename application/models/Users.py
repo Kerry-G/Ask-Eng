@@ -4,7 +4,7 @@ from passlib.hash import sha256_crypt
 
 
 def engineerTypes():
-	return ['electrical','software','computer', 'chemical','mechanical','civil','industrial']
+	return ['software','electrical','computer', 'chemical','mechanical','civil','industrial']
 
 
 class User(db.Model):

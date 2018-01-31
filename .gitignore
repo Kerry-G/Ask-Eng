@@ -1,5 +1,6 @@
 # python files
 config.py
+*.pyc
 
 # virtual env
 venv/
