@@ -3,8 +3,8 @@ from datetime import datetime
 from passlib.hash import sha256_crypt
 
 
-def engineerTypes():
-	return ['electrical','software','computer', 'chemical','mechanical','civil','industrial']
+def engineerTypes(): return ['electrical','software','computer',
+	'chemical','mechanical','civil','industrial']
 
 
 class User(db.Model):
@@ -55,6 +55,28 @@ def createUser(fname, lname, email, password, engineer='software', display_image
 		reponse = True
 	return reponse
 
+# Returns True if user is found
+def getUser(email):
+        reponse = False
+        if userExists(email):
+                newUser = User.query.filter_by(email=email).first() # Create the new User
+
+                db.session.add(newUser) # Add it
+
+                db.session.commit() # Commit it
+
+                reponse = True	
+        else:
+                reponse =  False # if user doesn't exists then return false
+        return reponse
+
+# Returns True if user is deleted
+def deleteUser(email):
+        return True
+
+# Returns True if user is modified
+def modififyUser(old_email, fname, lname, new_email, password, engineer='software', display_image='', verified=0):
+        return True
 
 
 
