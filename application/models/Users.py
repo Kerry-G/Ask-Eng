@@ -3,14 +3,8 @@ from datetime import datetime
 from passlib.hash import sha256_crypt
 
 
-<<<<<<< HEAD
-def engineerTypes(): return ['electrical','software','computer',
-	'chemical','mechanical','civil','industrial']
-
-=======
 def engineerTypes():
 	return ['software','electrical','computer', 'chemical','mechanical','civil','industrial']
->>>>>>> f61aee954ba610d04afd31596189cf7838f270f3
 
 '''
 This is a SQLAlchemy model for reference.
@@ -84,7 +78,6 @@ def createUser(fname, lname, email, password, engineer='software', display_image
 		reponse = True
 	return reponse
 
-<<<<<<< HEAD
 # Returns True if user is found
 def getUser(email):
         reponse = False
@@ -104,10 +97,6 @@ def getUser(email):
 def deleteUser(email):
         return True
 
-# Returns True if user is modified
-def modififyUser(old_email, fname, lname, new_email, password, engineer='software', display_image='', verified=0):
-        return True
-=======
 def modifyUser(fname, lname, engineer, display_image):
 	pass
 
@@ -142,12 +131,6 @@ def getUserBy(id):
 def deleteUser(id):
 	pass
 
-
-
-
-
-
->>>>>>> f61aee954ba610d04afd31596189cf7838f270f3
 
 
 
