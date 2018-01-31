@@ -3,10 +3,18 @@ from datetime import datetime
 from passlib.hash import sha256_crypt
 
 
+<<<<<<< HEAD
 def engineerTypes(): return ['electrical','software','computer',
 	'chemical','mechanical','civil','industrial']
 
+=======
+def engineerTypes():
+	return ['software','electrical','computer', 'chemical','mechanical','civil','industrial']
+>>>>>>> f61aee954ba610d04afd31596189cf7838f270f3
 
+'''
+This is a SQLAlchemy model for reference.
+'''
 class User(db.Model):
 
 	id = db.Column(db.Integer, primary_key=True)
@@ -22,17 +30,38 @@ class User(db.Model):
 	downs = db.Column(db.Integer)
 
 	def __repr__(self):
-		return '<User %r %r>' % self.username % self.email
+		return '<User %r>' % self.email
 
-	
+	# the User object can now be iterated over. (also allows us to convert to a dict() )
+	def __iter__(self):
+	    yield 'id', self.id
+	    yield 'fname', self.fname
+	    yield 'lname', self.lname
+	    yield 'email', self.email
+	    yield 'password_hash', self.password_hash
+	    yield 'register_date', self.register_date
+	    yield 'engineer', self.engineer
+	    yield 'display_image', self.display_image
+	    yield 'verified', self.verified
+	    yield 'ups', self.ups
+	    yield 'downs', self.downs
 
 
 # Initializes the database
 db.create_all()
 
+
 # Returns True if user exists
 def userExists(email):
 	return User.query.filter_by(email=email).first() is not None
+
+
+# TODO
+# Returns true is user is verified
+def userVerified(email, password):
+	verified = False
+	return True
+
 
 # Returns True if user is created
 def createUser(fname, lname, email, password, engineer='software', display_image='', verified=0):
@@ -55,6 +84,7 @@ def createUser(fname, lname, email, password, engineer='software', display_image
 		reponse = True
 	return reponse
 
+<<<<<<< HEAD
 # Returns True if user is found
 def getUser(email):
         reponse = False
@@ -77,6 +107,47 @@ def deleteUser(email):
 # Returns True if user is modified
 def modififyUser(old_email, fname, lname, new_email, password, engineer='software', display_image='', verified=0):
         return True
+=======
+def modifyUser(fname, lname, engineer, display_image):
+	pass
+
+# Update a user's password
+def updatePassword(email, oldPassword, newPassword):
+	response = False
+	if userVerified(email, oldPassword):
+		user = User.query.filter_by(email=email).first()
+		user.password_hash = sha256_crypt.hash(newPassword)
+		db.session.add(user)
+		db.session.commit()
+
+	return response
+
+# Get all Users returns list of users or an empty list
+def getUsers(limit=20):
+	response = []
+
+	if limit is None:
+		users = User.query.all()
+	else:
+		users = User.query.limit(limit).all()
+
+	if users is not None:
+		for user in users:
+			reponse.append(dict(user))
+	return response
+
+def getUserBy(id):
+	pass
+
+def deleteUser(id):
+	pass
+
+
+
+
+
+
+>>>>>>> f61aee954ba610d04afd31596189cf7838f270f3
 
 
 
