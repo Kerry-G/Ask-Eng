@@ -17,7 +17,7 @@ class User(db.Model):
 	email = db.Column(db.String(120), unique=True, nullable=False)
 	password_hash = db.Column(db.String(100), nullable=False)
 	register_date = db.Column(db.DateTime, nullable=False, default=datetime.utcnow)
-	engineer = db.Column(db.String(30), unique=True, nullable=False) 
+	engineer = db.Column(db.String(30)) 
 	display_image = db.Column(db.String(30)) # location of image
 	verified = db.Column(db.Integer)
 	ups = db.Column(db.Integer)

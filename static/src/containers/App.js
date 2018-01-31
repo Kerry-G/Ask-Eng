@@ -72,7 +72,7 @@ class App extends Component {
       .catch(e => console.error('Error:', e))
       .then(response => {
         console.log(response)
-        this.setState({sendDataAns:response})
+        this.setState({sendDataAns:response.message})
       })
     } catch (e) { console.error("Error:", e) }
   }
