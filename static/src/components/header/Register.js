@@ -87,7 +87,7 @@ class Register extends Component {
             let myHeaders = new Headers();
             myHeaders.append('Content-Type', 'application/json');
             let myInit = {
-                method: 'PUT',
+                method: 'POST',
                 body: JSON.stringify(data),
                 headers: myHeaders
             };
