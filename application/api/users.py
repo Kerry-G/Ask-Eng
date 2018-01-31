@@ -16,91 +16,99 @@ import json
 users = Blueprint('users', __name__)
 
 # A list of the accepted http methods
-httpMethods = ['PUT','GET','POST','DELETE']
+httpMethods = ['PUT', 'GET', 'POST', 'DELETE']
 
 
 @users.route('/api/', methods=httpMethods)
 def index():
-	return json.dumps(['foo', {'bar': ('baz', None, 1.0, 2)}])
+    return json.dumps(['foo', {'bar': ('baz', None, 1.0, 2)}])
+
 
 @users.route('/api/users/', methods=httpMethods)
 def usersRoute():
-	data = toDict(request.data) # toDict takes the request data and converts it to a dictionary
+    data = toDict(request.data)  # toDict takes the request data and converts it to a dictionary
 
-	success = False # assume the response is unsucessful
-	message = "" # assume an empty message
-	status = "" # accepted statues: 'OK', 'DENIED', 'FAILURE', 'WARNING', 'INVALID'
-	response = {} # assume the response is empty dict() for now
-	
-	if request.method == 'POST': 
-		# Create a user and find our whether it is successful or not
-		success = Users.createUser(fname=data['fname'], lname=data['lname'], email=data['email'], password=data['password'], engineer=data['engineer'], display_image=data['display_image'])
-		
-		if success:
-			status = "OK"
-			message = "User added."
-		else:
-			status = "FAILURE"
-			message = "Duplicate Email."
+    success = False  # assume the response is unsucessful
+    message = ""  # assume an empty message
+    status = ""  # accepted statues: 'OK', 'DENIED', 'FAILURE', 'WARNING', 'INVALID'
+    response = {}  # assume the response is empty dict() for now
 
-		response = json.dumps({'success':success,'status': status, 'message':message})
+    if request.method == 'POST':
+        # Create a user and find our whether it is successful or not
+        success = Users.createUser(fname=data['fname'], lname=data['lname'], email=data['email'],
+                                   password=data['password'], engineer=data['engineer'],
+                                   display_image=data['display_image'])
 
-	elif request.method == 'GET': 
-		# Get all users
-		users = Users.getUsers()
+        if success:
+            status = "OK"
+            message = "User added."
+        else:
+            status = "FAILURE"
+            message = "Duplicate Email."
 
-		if users != []:
-			success = True
-			status = "OK"
-			message = "Users returned."
-		else:
-			success = False
-			status = "FAILURE"
-			message = "Duplicate Email"
+        response = json.dumps({'success': success, 'status': status, 'message': message})
 
+    elif request.method == 'GET':
+        # Get all users
+        users = Users.getUsers()
 
-	elif request.method == 'DELETE': 
-		success = False
-		status = "DENIED"
-		message = "Cannot delete all users."
+        if users != []:
+            success = True
+            status = "OK"
+            message = "Users returned."
+        else:
+            success = False
+            status = "FAILURE"
+            message = "Duplicate Email"
 
-	response = json.dumps({'success':success,'status': status, 'message':message, 'users':users})
+    elif request.method == 'DELETE':
+        success = False
+        status = "DENIED"
+        message = "Cannot delete all users."
+
+    response = json.dumps({'success': success, 'status': status, 'message': message, 'users': users})
 
 
 @users.route('/api/users/<string:id>', methods=httpMethods)
 def userRoute(id):
-	data = toDict(request.data)
+    data = toDict(request.data)
 
-	if request.method == 'PUT': 
-		# Modify a user and find our whether it is successful or not
-		success = Users.modifyUser(fname=data['fname'], lname=data['lname'], engineer=data['engineer'], display_image=data['display_image'])
-		
-		if success:
-			status = "OK"
-			message = "User information Updated."
-		else:
-			status = "FAILURE"
-			message = "User does not exist."
+    if request.method == 'PUT':
+        # Modify a user and find our whether it is successful or not
+        success = Users.modifyUser(id, fname=data['fname'], lname=data['lname'], engineer=data['engineer'],
+                                   display_image=data['display_image'])
 
-		response = json.dumps({'success':success,'status': status, 'message':message})
+        if success:
+            status = "OK"
+            message = "User information Updated."
+        else:
+            status = "FAILURE"
+            message = "User does not exist."
 
-	elif request.method == 'GET':
-		# Get the user
-		user = Users.getUserById(id)
+        response = json.dumps({'success': success, 'status': status, 'message': message})
 
-		if user is not None:
-			success = True
-			status = "OK"
-			message = "User returned."
-		else:
-			success = False
-			status = "FAILURE"
-			message = "No user by that id."
+    elif request.method == 'GET':
+        # Get the user
+        user = Users.getUserById(id)
 
-		response = json.dumps({'success':success,'status': status, 'message':message, 'user':user})
+        if user is not None:
+            success = True
+            status = "OK"
+            message = "User returned."
+        else:
+            success = False
+            status = "FAILURE"
+            message = "No user by that id."
 
-	elif request.method == 'DELETE': 
-		# Get the user
-		success = Users.deleteUser(id)
+        response = json.dumps({'success': success, 'status': status, 'message': message, 'user': user})
 
-
+    elif request.method == 'DELETE':
+        # Get the user
+        success = Users.deleteUser(id)
+        if success:
+            status = "OK"
+            message = "User deleted"
+        else:
+            status = "FAILURE"
+            message = "User not found"
+        response = json.dumps({'success': success, 'status': status, 'message': message})
