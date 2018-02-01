@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Modal, Button, FormGroup, FormControl, HelpBlock, ControlLabel, Alert } from 'react-bootstrap'
+import { Modal, Button, FormGroup, FormControl, HelpBlock, ControlLabel, Alert, Image } from 'react-bootstrap'
 import Select from 'react-select'
 class Register extends Component {
     constructor(props) {
@@ -20,13 +20,15 @@ class Register extends Component {
             answer: null,
             alert: '',
 
-            page: 1 
+            page: 1
         }
         this.validateEmail = this.validateEmail.bind(this);
         this.handleClick = this.handleClick.bind(this);
         this.handleAlert = this.handleAlert.bind(this);
         this.cleanState = this.cleanState.bind(this);
         this.handleClose = this.handleClose.bind(this);
+        this.handleNextPage = this.handleNextPage.bind(this);
+        this.handlePreviousPage = this.handlePreviousPage.bind(this);
     }
 
     componentDidUpdate() {
@@ -61,7 +63,7 @@ class Register extends Component {
             && this.state.pw !== ''
             && this.state.role !== ''
             && this.state.fname !== ''
-            && this.state.validEmail === 'success') {
+            && this.state.validEmail == 'success') {
             result = false;
         } else {
             result = true;
@@ -155,10 +157,28 @@ class Register extends Component {
                 role: '',
                 button: false,
                 answer: null,
-                alert: ''
+                alert: '',
             })
         }
     }
+
+    handleNextPage() {
+        let currentPage = this.state.page;
+        currentPage++;
+        this.setState({
+            page: currentPage
+        })
+    }
+
+    handlePreviousPage() {
+        let currentPage = this.state.page;
+        currentPage--;
+        this.setState({
+            page: currentPage
+        })
+
+    }
+
     render() {
         let options = [
             { value: 'software', label: 'Software Engineering' },
@@ -172,73 +192,118 @@ class Register extends Component {
             alert = <Alert bsStyle={this.state.alert}>{this.state.answer.message}</Alert>
         }
         let body
-        if (this.state.page === 1){
-            body = <div>
-                        {alert}
-                        <FieldGroup
-                            type="text"
-                            label="E-mail"
-                            placeholder="E-mail"
-                            valid={this.state.validEmail}
-                            onChange={(e) => {
-                                this.validateEmail(e.target.value)
-                                this.setState({ email: e.target.value })
-                            }}
-                        />
-                        <FieldGroup
-                            label="Password"
-                            type="password"
-                            onChange={(e) => this.setState({ pw: e.target.value })}
-                        />
-                        <FieldGroup
-                            type="text"
-                            label="First Name"
-                            placeholder="John"
-                            onChange={(e) => {
-                                this.setState({ fname: e.target.value })
-                            }}
-                        />
-                        <FieldGroup
-                            type="text"
-                            label="Last Name"
-                            placeholder="McQueen"
-                            onChange={(e) => {
-                                this.setState({ lname: e.target.value })
-                            }}
-                        />
-                        <ControlLabel>Engineering Field</ControlLabel>
-                        <Select
-                            name="form-field-name"
-                            value={this.state.role}
-                            options={options}
-                            onChange={(e) => {
-                                if (e !== null) {
-                                    this.setState({ role: e.value })
-                                } else {
-                                    this.setState({ role: '' })
-                                }
-                            }}
-                        />
-                    </div> }
-        else if (this.state.page === 2 ){
-            body=<div>page2!</div>
-        }
-        return (
-            <Modal show={this.props.show} onHide={this.handleClose}>
-                <Modal.Header>
-                    <Modal.Title>Register</Modal.Title>
-                </Modal.Header>
+        if (this.state.page == 1) {
+            body = <div >
+                <div class = "menu">
+                {alert}
+                <FieldGroup
+                    type="text"
+                    label="E-mail"
+                    placeholder="email"
+                    valid={this.state.validEmail}
+                    onChange={(e) => {
+                        this.validateEmail(e.target.value)
+                        this.setState({ email: e.target.value })
+                    }}
+                />
+              <FieldGroup
+                    label="Password"
+                    type="password"
+                    onChange={(e) => this.setState({ pw: e.target.value })}
+                />
+               </div> 
+            <div class = "picture">
+            <Image src = "https://i.imgur.com/cmPoLVn.jpg" responsive rounded />   
+            </div>    
 
+            </div>
+
+
+        }
+        else if (this.state.page == 2) {
+            body = <div>
+                <div class="menu">
+                <FieldGroup
+                    type="text"
+                    label="First Name"
+                    placeholder="John"
+                    onChange={(e) => {
+                        this.setState({ fname: e.target.value })
+                    }}
+                />
+                <FieldGroup
+                    type="text"
+                    label="Last Name"
+                    placeholder="McQueen"
+                    onChange={(e) => {
+                        this.setState({ lname: e.target.value })
+                    }}
+                />
+            </div> 
+            <div class = "picture">
+            <Image src = "https://i.imgur.com/aZpgMrl.jpg" responsive rounded />   
+            </div>          
+               </div> 
+        }
+        else if(this.state.page == 3){    
+            body = <div>
+                <div class ="menu">
+                <FieldGroup
+                 type="file"
+                 id="formControlsFile"
+                 label="File"
+                  />
+                 
+                <ControlLabel>Engineering Field</ControlLabel>
+                <Select
+                    name="form-field-name"
+                    value={this.state.role}
+                    options={options}
+                    onChange={(e) => {
+                        if (e !== null) {
+                            this.setState({ role: e.value })
+                        } else {
+                            this.setState({ role: '' })
+                        }
+                    }}
+                />
+            </div>
+            <div class = "picture">
+            <Image src = "https://i.imgur.com/RdzM1lU.jpg" responsive rounded />   
+            </div>          
+            </div>
+        }
+        let previousButton, nextButton, saveButton;
+        
+        if (this.state.page == 3) {
+            saveButton = <Button bsStyle="primary" disabled={this.state.button} onClick={this.handleClick}>Save</Button>
+            previousButton= <Button onClick={this.handlePreviousPage}>Previous</Button>
+            nextButton= null
+        }
+
+        else if (this.state.page == 2) {
+            saveButton = null
+            previousButton= <Button onClick={this.handlePreviousPage}>Previous</Button>
+            nextButton= <Button onClick={this.handleNextPage}>Next</Button>
+        }
+
+        else if (this.state.page == 1) {
+            saveButton = null
+            previousButton= null
+            nextButton= <Button onClick={this.handleNextPage}>Next</Button>
+        }
+
+        return (
+            <Modal   dialogClassName="custom-modal" show={this.props.show} onHide={this.handleClose}>
+               
                 <Modal.Body>
                     {body}
                 </Modal.Body>
 
                 <Modal.Footer>
-                    <Button onClick={this.handleClose}>Close</Button>
-                    <Button
-                        bsStyle="primary"
-                        disabled={this.state.button}
-                        onClick={this.handleClick}>Save</Button>
+                    {previousButton}
+                    {nextButton}
+                    {saveButton}
                 </Modal.Footer>
             </Modal>
         );

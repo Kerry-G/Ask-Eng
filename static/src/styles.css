@@ -15,6 +15,41 @@
 h1 {
     margin-left: 0.5em;
 }
+.header h1{
+    font-size:5rem;
+    color:lightgray;
+}
+.header h1 small{
+    color:white;
+}
+h1 {
+    margin-left: 0.5em;
+}
+
+.box-login {
+    border:0.1em solid black;
+    padding: 1em;
+    margin:1em;
+}
+.footer {
+    position: absolute;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    padding: 1rem;
+    background-color: #efefef;
+    text-align: center;
+}
+
+.picture {  float :left;
+            height : 10rem;
+            width : 45rem;
+            margin-left: 2rem;
+           
+}
+.menu{ float: left;
+
+}
 
 .box-login {
     border:0.1em solid black;
