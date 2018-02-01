@@ -159,11 +159,11 @@ class Register extends Component {
 
     render() {
         let options = [
-            { value: 'software', label: 'software' },
-            { value: 'mechanical', label: 'mechanical' },
-            { value: 'computer', label: 'computer' },
-            { value: 'electrical', label: 'electrical' },
-            { value: 'civil', label: 'civil' }
+            { value: 'software', label: 'Software Engineering' },
+            { value: 'mechanical', label: 'Mechanical Engineering' },
+            { value: 'computer', label: 'Computer Engineering' },
+            { value: 'electrical', label: 'Electrical Engineering' },
+            { value: 'civil', label: 'Civil Engineering' }
         ];
         let alert
         if (this.state.answer != null) {
@@ -195,7 +195,7 @@ class Register extends Component {
                         />
                         <FieldGroup
                             type="text"
-                            label="First name"
+                            label="First Name"
                             placeholder="John"
                             onChange={(e) => {
                                 this.setState({ fname: e.target.value })
@@ -203,13 +203,13 @@ class Register extends Component {
                         />
                         <FieldGroup
                             type="text"
-                            label="Last name"
+                            label="Last Name"
                             placeholder="McQueen"
                             onChange={(e) => {
                                 this.setState({ lname: e.target.value })
                             }}
                         />
-                        <ControlLabel>Engineering field</ControlLabel>
+                        <ControlLabel>Engineering Field</ControlLabel>
                         <Select
                             name="form-field-name"
                             value={this.state.role}
