@@ -65,6 +65,7 @@ h1 {
 }
 /* REGISTER MODAL */
 .picture {  
+    float: left;
     width:45rem;
     height:30rem;
     margin-left: 2rem;
