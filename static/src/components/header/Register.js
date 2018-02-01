@@ -5,15 +5,22 @@ class Register extends Component {
     constructor(props) {
         super(props)
         this.state = {
+            //form inputs
             lname: '',
             fname: '',
             email: '',
-            validEmail: null,
             pw: '',
             role: '',
+
+            //validators
+            validEmail: null,
             button: false,
+
+            //alert state
             answer: null,
-            alert: ''
+            alert: '',
+
+            page: 1 
         }
         this.validateEmail = this.validateEmail.bind(this);
         this.handleClick = this.handleClick.bind(this);
@@ -25,7 +32,6 @@ class Register extends Component {
     componentDidUpdate() {
         this.validateButton()
     }
-
     /*
      * validateEmail check if the string in the email field is 
      * in the form *@*.*
@@ -45,10 +51,10 @@ class Register extends Component {
         }
     }
     /*
-    * validateButton check if all the field are ok 
-    * Output: change the state of button to either T/F
-    * @author Kerry Gougeon
-    */
+     * validateButton check if all the field are ok 
+     * Output: change the state of button to either T/F
+     * @author Kerry Gougeon
+     */
     validateButton() {
         let result;
         if (this.state.lname !== ''
@@ -66,13 +72,11 @@ class Register extends Component {
             })
         }
     }
-
     handleClick() {
         this.saveUser();
         this.handleAlert();
         this.cleanState(true);
     }
-
     async saveUser() {
         try {
             let data = {
@@ -120,17 +124,16 @@ class Register extends Component {
             })
         }
     }
-
     handleClose() {
         this.props.handleClose();
         this.cleanState(false);
     }
     /*
-    * cleanState reset the state of the component
-    * Input: a Boolean bool
-    * Output: if T, reset but keep the alert. If F, reset everything
-    * @author Kerry Gougeon
-    */
+     * cleanState reset the state of the component
+     * Input: a Boolean bool
+     * Output: if T, reset but keep the alert. If F, reset everything
+     * @author Kerry Gougeon
+     */
     cleanState(bool) {
         if (bool) {
             this.setState({
@@ -156,7 +159,6 @@ class Register extends Component {
             })
         }
     }
-
     render() {
         let options = [
             { value: 'software', label: 'Software Engineering' },
@@ -169,14 +171,9 @@ class Register extends Component {
         if (this.state.answer != null) {
             alert = <Alert bsStyle={this.state.alert}>{this.state.answer.message}</Alert>
         }
-        return (
-            <div className="static-modal">
-                <Modal show={this.props.show} onHide={this.handleClose}>
-                    <Modal.Header>
-                        <Modal.Title>Register</Modal.Title>
-                    </Modal.Header>
-
-                    <Modal.Body>
+        let body
+        if (this.state.page == 1){
+            body = <div>
                         {alert}
                         <FieldGroup
                             type="text"
@@ -222,18 +219,28 @@ class Register extends Component {
                                 }
                             }}
                         />
+                    </div> }
+        else if (this.state.page == 2 ){
+            body=<div>page2!</div>
+        }
+        return (
+            <Modal show={this.props.show} onHide={this.handleClose}>
+                <Modal.Header>
+                    <Modal.Title>Register</Modal.Title>
+                </Modal.Header>
 
-                    </Modal.Body>
+                <Modal.Body>
+                    {body}
+                </Modal.Body>
 
-                    <Modal.Footer>
-                        <Button onClick={this.handleClose}>Close</Button>
-                        <Button
-                            bsStyle="primary"
-                            disabled={this.state.button}
-                            onClick={this.handleClick}>Save</Button>
-                    </Modal.Footer>
-                </Modal>
-            </div >
+                <Modal.Footer>
+                    <Button onClick={this.handleClose}>Close</Button>
+                    <Button
+                        bsStyle="primary"
+                        disabled={this.state.button}
+                        onClick={this.handleClick}>Save</Button>
+                </Modal.Footer>
+            </Modal>
         );
     }
 }

@@ -7,9 +7,9 @@ class Header extends Component {
     this.handleShowRegister = this.handleShowRegister.bind(this);
     this.handleCloseRegister = this.handleCloseRegister.bind(this);
     this.state = {
-        showRegister: false
+      showRegister: false
     };
-}
+  }
 
   handleCloseRegister() {
     this.setState({ showRegister: false });
@@ -34,7 +34,9 @@ class Header extends Component {
           <span style={registerStyle}><a onClick={this.handleShowRegister}>Register</a></span>
 
         </PageHeader>
-        <Register show={this.state.showRegister} handleClose={this.handleCloseRegister}/>
+        <Register 
+          show={this.state.showRegister} 
+          handleClose={this.handleCloseRegister} />
       </div>
     );
   }
