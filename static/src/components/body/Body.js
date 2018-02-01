@@ -6,13 +6,9 @@ class Body extends Component {
 	constructor(props) {
 	    super(props);
 	    this.state = ({
-	      getDataAns: [],
+	      response: undefined,
 	    })
 	}
-
-  componentDidMount() {
-    this.getUsers()
-  }
 
 
 
@@ -20,10 +16,7 @@ class Body extends Component {
     this.getUsers()
   }
 
-  /* 
-  * getData() is a blueprint for fetching data from the db. 
-  * @author: Jon Mongeau
-  */
+  
   async getUsers() {
     try {
       let myHeaders = new Headers();
@@ -35,31 +28,55 @@ class Body extends Component {
       };
 
       let req = new Request("/api/users/", myInit)
-      console.log(req)
       let response = await fetch(req)
       let responseJson = await response.json()
       console.log(responseJson)
-      this.setState({getDataAns: responseJson})
+      this.setState({response: responseJson})
     } catch (e) { console.error("Error: ", e) }
   }
 
 
-/*
-<div>
-                {this.state.getDataAns.users.map(function(user){
-                    return <li key={ user }>{user}</li>;
-                  })}
-            </div>
- */
+
  
+/*
+
+
+
+
+*/
 
 
   render() {
-  	console.log(this.state.getDataAns)
+   
+
+  let users = [];
+  if (this.state.response !== undefined) {
+    users = this.state.response.users.map((user)=>{ 
+      let display_image = "/images/avatar/" + user.display_image;
+      return (
+      <Media>
+        <Media.Left>
+          <img width={64} height={64} src={display_image} alt="thumbnail" />
+        </Media.Left>
+        <Media.Body>
+          <Media.Heading>{user.fname} {user.lname}</Media.Heading>
+          <p>
+            {user.email} 
+            {user.engineer}
+          </p>
+        </Media.Body>
+      </Media>
+    )})
+
+    // users.map( (user) => {
+    //                   console.log(user)
+    // })
+  }
+
 
    return (
              <div>
-                Hello
+               HELLO:  {users}
             </div>
         )
   }

@@ -81,7 +81,7 @@ class Register extends Component {
                 email: this.state.email,
                 password: this.state.pw,
                 engineer: this.state.role,
-                display_image: "/public/images/avatar/1.png"
+                display_image: "1.png"
             }
             console.log(data)
             let myHeaders = new Headers();
