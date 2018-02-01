@@ -53,11 +53,15 @@ def userExists(email):
 	return User.query.filter_by(email=email).first() is not None
 
 
-# TODO
+
 # Returns true is user is verified
 def userVerified(email, password):
 	verified = False
-	return True
+	user = getUser(email)
+	if user is not None:
+		verified = sha256_crypt.verify(password, user['password_hash'])
+
+	return verified
 
 
 # Returns True if user is created
@@ -84,13 +88,12 @@ def createUser(fname, lname, email, password, engineer='software', display_image
 
 # Returns True if user is found
 def getUser(email):
-		response = False
-		if userExists(email):
-				newUser = User.query.filter_by(email=email).first() # Create the new User
-				response = True
-		else:
-				response = False  # if user doesn't exists then return false
-		return response
+	user = User.query.filter_by(email=email).first()
+	if user is None:
+		return None
+	else:
+		return dict(user)
+
 
 
 # Returns True if user is deleted
@@ -103,7 +106,7 @@ def deleteUser(email):
 			db.session.commit()
 		return response
 
-
+# NOT SURE IF WORKS, SHOULD BE TESTED
 def modifyUser(id, fname, lname, engineer, display_image):
 	response = False
 	user = getUserBy(id)

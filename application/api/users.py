@@ -27,7 +27,6 @@ def index():
 
 @users.route('/api/users/', methods=httpMethods)
 def usersRoute():
-    app.logger.info(request.data)
     data = toDict(request.data)  # toDict takes the request data and converts it to a dictionary
 
     success = False  # assume the response is unsucessful
@@ -35,12 +34,14 @@ def usersRoute():
     status = ""  # accepted statues: 'OK', 'DENIED', 'FAILURE', 'WARNING', 'INVALID'
     response = {}  # assume the response is empty dict() for now
     users = [] # set the users to an empty list
-    
+    user = {} # assume there is none User
+
+
     if request.method == 'POST':
         # Create a user and find our whether it is successful or not
         success = Users.createUser(fname=data['fname'], lname=data['lname'], email=data['email'],
-                                   password=data['password'], engineer=data['engineer'],
-                                   display_image=data['display_image'])
+                                       password=data['password'], engineer=data['engineer'],
+                                       display_image=data['display_image'])
         if success:
             status = "OK"
             message = "User added."
@@ -48,7 +49,8 @@ def usersRoute():
             status = "FAILURE"
             message = "Duplicate Email."
 
-        response = json.dumps({'success': success, 'status': status, 'message': message})
+        # make the response a json object
+        response = json.dumps({'success': success, 'status': status, 'message': message, 'user': user})
 
     elif request.method == 'GET':
         # Get all users
@@ -62,22 +64,25 @@ def usersRoute():
             status = "FAILURE"
             message = "Duplicate Email"
 
+        response = json.dumps({'success': success, 'status': status, 'message': message, 'users': users})
+
     elif request.method == 'DELETE':
         success = False
         status = "DENIED"
         message = "Cannot delete all users."
+        response = json.dumps({'success': success, 'status': status, 'message': message})
     else:
         success = False
         status = "WARNING"
         message = "HTTP method invalid."
+        response = json.dumps({'success': success, 'status': status, 'message': message})
 
-    app.logger.info(str(json.dumps({'success': success, 'status': status, 'message': message, 'users': users})))
-    response = json.dumps({'success': success, 'status': status, 'message': message, 'users': users})
     return response
 
 
 @users.route('/api/users/<string:id>', methods=httpMethods)
 def userRoute(id):
+    # convert request data to dictionary
     data = toDict(request.data)
 
     success = False  # assume the response is unsucessful
@@ -129,6 +134,45 @@ def userRoute(id):
     response = json.dumps({'success': success, 'status': status, 'message': message,'user':user})
 
     return response
+
+
+
+@users.route('/api/users/authenticate/', methods=httpMethods)
+def userAuthenticate(id):
+
+    success = False  # assume the response is unsucessful
+    message = ""  # assume an empty message
+    status = ""  # accepted statues: 'OK', 'DENIED', 'FAILURE', 'WARNING', 'INVALID'
+    response = {}  # assume the response is empty dict() for now
+    
+    # If the reques is GET we assume your trying to login
+    if request.method == 'GET':
+        # Verify User
+        success = Users.userVerified(data['email'], data['password'])
+
+        # if verified then get the user
+        if success:
+            user = Users.getUser(data['email'])
+            message = "User authenticated."
+            status = "OK"
+            response = json.dumps({'success': success, 'status': status, 'message': message,'user':user})
+        # else the user is not authenticates, request is denied
+        else:
+            message = "User not authenticated."
+            status = "DENIED"
+
+    else:
+        message = "HTTP method invalid."
+        status = "WARNING"
+        success = False
+
+    response = json.dumps({'success': success, 'status': status, 'message': message,'user':user})
+    return response
+
+
+
+
+
 
     
 

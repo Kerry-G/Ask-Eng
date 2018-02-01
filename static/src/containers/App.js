@@ -17,7 +17,6 @@ class App extends Component {
    */
   componentDidMount() {
     this.getData()
-    this.sendData()
   }
 
   /* 
@@ -38,7 +37,6 @@ class App extends Component {
       let response = await fetch(req)
 
       let responseJson = await response.json()
-      responseJson = JSON.stringify(responseJson)
       console.log(responseJson)
       this.setState({getDataAns: responseJson})
     } catch (e) { console.error("Error: ", e) }
