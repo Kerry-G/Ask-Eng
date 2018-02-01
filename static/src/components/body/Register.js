@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Modal, Button, FormGroup, FormControl, HelpBlock, ControlLabel, Alert, Image } from 'react-bootstrap'
+import { Grid, Col , Row, Modal, Button, FormGroup, FormControl, HelpBlock, ControlLabel, Alert, Image } from 'react-bootstrap'
 import Select from 'react-select'
 class Register extends Component {
     constructor(props) {
@@ -29,6 +29,10 @@ class Register extends Component {
         this.handleClose = this.handleClose.bind(this);
         this.handleNextPage = this.handleNextPage.bind(this);
         this.handlePreviousPage = this.handlePreviousPage.bind(this);
+    }
+
+    componentDidMount() {
+        console.log("Test")
     }
 
     componentDidUpdate() {
@@ -87,7 +91,7 @@ class Register extends Component {
                 email: this.state.email,
                 password: this.state.pw,
                 engineer: this.state.role,
-                display_image: "/public/images/avatar/1.png"
+                display_Image: "/public/Images/avatar/1.png"
             }
             console.log(data)
             let myHeaders = new Headers();
@@ -193,111 +197,124 @@ class Register extends Component {
         }
         let body
         if (this.state.page == 1) {
-            body = <div >
-                <div class = "menu">
-                {alert}
-                <FieldGroup
-                    type="text"
-                    label="E-mail"
-                    placeholder="email"
-                    valid={this.state.validEmail}
-                    onChange={(e) => {
-                        this.validateEmail(e.target.value)
-                        this.setState({ email: e.target.value })
-                    }}
-                />
-              <FieldGroup
-                    label="Password"
-                    type="password"
-                    onChange={(e) => this.setState({ pw: e.target.value })}
-                />
-               </div> 
-            <div class = "picture">
-            <Image src = "https://i.imgur.com/cmPoLVn.jpg" responsive rounded />   
-            </div>    
-
-            </div>
-
-
+            body = 
+    
+            <div>
+                <Col xs={12} md={4}>
+                    <div className="menu">
+                        <FieldGroup
+                            type="text"
+                            label="E-mail"
+                            placeholder="email"
+                            valid={this.state.validEmail}
+                            onChange={(e) => {
+                                this.validateEmail(e.target.value)
+                                this.setState({ email: e.target.value })
+                            }}
+                        />
+                        <FieldGroup
+                            label="Password"
+                            type="password"
+                            onChange={(e) => this.setState({ pw: e.target.value })}
+                        />
+                    </div>
+                </Col>
+                <Col xs={12} md={8}>
+                <div className="picture">
+                    <Image src="https://i.imgur.com/cmPoLVn.jpg" responsive rounded />
+                </div>
+                </Col>
+                </div>
+    
         }
+
         else if (this.state.page == 2) {
+            body = <div>
+                <Col xs={12} md={4}>
+                <div class="menu">
+                    <FieldGroup
+                        type="text"
+                        label="First Name"
+                        placeholder="John"
+                        onChange={(e) => {
+                            this.setState({ fname: e.target.value })
+                        }}
+                    />
+                    <FieldGroup
+                        type="text"
+                        label="Last Name"
+                        placeholder="McQueen"
+                        onChange={(e) => {
+                            this.setState({ lname: e.target.value })
+                        }}
+                    />
+                </div>
+                </Col>
+                <Col xs={12} md={8}>
+                <div class="picture">
+                    <Image src="https://i.imgur.com/aZpgMrl.jpg" responsive rounded />
+                </div>
+                </Col>
+                </div>
+        }
+        else if (this.state.page == 3) {
             body = <div>
                 <div class="menu">
-                <FieldGroup
-                    type="text"
-                    label="First Name"
-                    placeholder="John"
-                    onChange={(e) => {
-                        this.setState({ fname: e.target.value })
-                    }}
-                />
-                <FieldGroup
-                    type="text"
-                    label="Last Name"
-                    placeholder="McQueen"
-                    onChange={(e) => {
-                        this.setState({ lname: e.target.value })
-                    }}
-                />
-            </div> 
-            <div class = "picture">
-            <Image src = "https://i.imgur.com/aZpgMrl.jpg" responsive rounded />   
-            </div>          
-               </div> 
-        }
-        else if(this.state.page == 3){    
-            body = <div>
-                <div class ="menu">
-                <FieldGroup
-                 type="file"
-                 id="formControlsFile"
-                 label="File"
-                  />
-                 
-                <ControlLabel>Engineering Field</ControlLabel>
-                <Select
-                    name="form-field-name"
-                    value={this.state.role}
-                    options={options}
-                    onChange={(e) => {
-                        if (e !== null) {
-                            this.setState({ role: e.value })
-                        } else {
-                            this.setState({ role: '' })
-                        }
-                    }}
-                />
+                    {alert}
+                    <FieldGroup
+                        type="file"
+                        id="formControlsFile"
+                        label="File"
+                    />
+
+                    <ControlLabel>Engineering Field</ControlLabel>
+                    <Select
+                        name="form-field-name"
+                        value={this.state.role}
+                        options={options}
+                        onChange={(e) => {
+                            if (e !== null) {
+                                this.setState({ role: e.value })
+                            } else {
+                                this.setState({ role: '' })
+                            }
+                        }}
+                    />
+                </div>
+                <div class="picture">
+                    <Image src="https://i.imgur.com/RdzM1lU.jpg" responsive rounded />
+                </div>
             </div>
-            <div class = "picture">
-            <Image src = "https://i.imgur.com/RdzM1lU.jpg" responsive rounded />   
-            </div>          
-            </div>
-        }
-        let previousButton, nextButton, saveButton;
-        
-        if (this.state.page == 3) {
-            saveButton = <Button bsStyle="primary" disabled={this.state.button} onClick={this.handleClick}>Save</Button>
-            previousButton= <Button onClick={this.handlePreviousPage}>Previous</Button>
-            nextButton= null
         }
 
+        let previousButton, nextButton, saveButton;
+        if (this.state.page == 1) {
+            saveButton = null
+            previousButton = null
+            nextButton = <Button onClick={this.handleNextPage}>Next</Button>
+        }
         else if (this.state.page == 2) {
             saveButton = null
-            previousButton= <Button onClick={this.handlePreviousPage}>Previous</Button>
-            nextButton= <Button onClick={this.handleNextPage}>Next</Button>
+            previousButton = <Button onClick={this.handlePreviousPage}>Previous</Button>
+            nextButton = <Button onClick={this.handleNextPage}>Next</Button>
         }
 
-        else if (this.state.page == 1) {
-            saveButton = null
-            previousButton= null
-            nextButton= <Button onClick={this.handleNextPage}>Next</Button>
+        else if (this.state.page == 3) {
+            saveButton = <Button bsStyle="primary" disabled={this.state.button} onClick={this.handleClick}>Save</Button>
+            previousButton = <Button onClick={this.handlePreviousPage}>Previous</Button>
+            nextButton = null
         }
+
 
         return (
-            <Modal   dialogClassName="custom-modal" show={this.props.show} onHide={this.handleClose}>
-               
+            <Modal dialogClassName="custom-modal" show={this.props.show} onHide={this.handleClose}>
+
                 <Modal.Body>
+                    <Grid fluid>
+                        <Row>
                     {body}
+                    </Row>
+                    </Grid>
                 </Modal.Body>
 
                 <Modal.Footer>

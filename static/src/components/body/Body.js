@@ -26,7 +26,7 @@ class Body extends Component {
     return (
       <div>
         <Row>
-          <Col xs={12} md={4} mdOffset={8}>
+          <Col xs={12} md={3} mdOffset={9}>
           <div className="box-login">
             <Login registerModal={this.handleShowRegister}/>
           </div>
