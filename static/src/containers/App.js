@@ -1,7 +1,6 @@
 
 import React, { Component } from 'react';
 import Home from '../components/Home';
-import Col from 'react-bootstrap';
 
 class App extends Component {
   constructor(props) {

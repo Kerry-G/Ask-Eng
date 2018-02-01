@@ -1,70 +1,43 @@
-import React, {Component} from 'react'
-import { Media } from 'react-bootstrap'
+import React, { Component } from 'react'
+import {Row,Col} from'react-bootstrap'
+import Register from './Register'
+import Login from './LoginBox/Login'
 class Body extends Component {
 
-
-	constructor(props) {
-	    super(props);
-	    this.state = ({
-	      getDataAns: [],
-	    })
-	}
-
-  componentDidMount() {
-    this.getUsers()
+  constructor(props) {
+    super(props);
+    this.handleShowRegister = this.handleShowRegister.bind(this);
+    this.handleCloseRegister = this.handleCloseRegister.bind(this);
+    this.state = {
+      showRegister: false,
+    };
   }
 
-
-
-	componentDidMount() {
-    this.getUsers()
+  handleCloseRegister() {
+    this.setState({ showRegister: false });
   }
 
-  /* 
-  * getData() is a blueprint for fetching data from the db. 
-  * @author: Jon Mongeau
-  */
-  async getUsers() {
-    try {
-      let myHeaders = new Headers();
-      myHeaders.append('Content-Type', 'application/json');
-
-      let myInit = {
-        method: 'GET',
-        headers: myHeaders
-      };
-
-      let req = new Request("/api/users/", myInit)
-      console.log(req)
-      let response = await fetch(req)
-      let responseJson = await response.json()
-      console.log(responseJson)
-      this.setState({getDataAns: responseJson})
-    } catch (e) { console.error("Error: ", e) }
+  handleShowRegister() {
+    this.setState({ showRegister: true });
   }
-
-
-/*
-<div>
-                {this.state.getDataAns.users.map(function(user){
-                    return <li key={ user }>{user}</li>;
-                  })}
-            </div>
- */
- 
 
 
   render() {
-  	console.log(this.state.getDataAns)
-
-   return (
-             <div>
-                Hello
-            </div>
-        )
+    return (
+      <div>
+        <Row>
+          <Col xs={12} md={4} mdOffset={8}>
+          <div className="box-login">
+            <Login registerModal={this.handleShowRegister}/>
+          </div>
+          </Col>
+        </Row>
+          <Register 
+          show={this.state.showRegister} 
+          handleClose={this.handleCloseRegister} />
+      </div>
+    )
   }
-
-
 }
 
 export default Body;

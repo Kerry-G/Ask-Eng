@@ -1,3 +1,32 @@
+.header {
+    border-bottom: 0.1em solid;
+    border-color: lightBlue;
+    margin:0px;
+    background: url(https://www.freewebheaders.com/wordpress/wp-content/gallery/metal/blue-punctured-metal-plate-header.jpg);
+    z-index:1;
+}
+.header h1{
+    font-size:5rem;
+    color:lightgray;
+}
+.header h1 small{
+    color:white;
+}
 h1 {
-    position: relative
+    margin-left: 0.5em;
+}
+
+.box-login {
+    border:0.1em solid black;
+    padding: 1em;
+    margin:1em;
+}
+.footer {
+    position: absolute;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    padding: 1rem;
+    background-color: #efefef;
+    text-align: center;
 }

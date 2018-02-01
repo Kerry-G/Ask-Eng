@@ -1,47 +1,34 @@
 import React, { Component } from 'react'
-import { PageHeader } from 'react-bootstrap'
-import Register from './Register'
+import {Col, Row} from 'react-bootstrap'
+import { connect } from 'react-redux'
+
 class Header extends Component {
   constructor(props) {
     super(props);
-    this.handleShowRegister = this.handleShowRegister.bind(this);
-    this.handleCloseRegister = this.handleCloseRegister.bind(this);
-    this.state = {
-      showRegister: false
-    };
   }
 
-  handleCloseRegister() {
-    this.setState({ showRegister: false });
-  }
 
-  handleShowRegister() {
-    this.setState({ showRegister: true });
-  }
 
   render() {
-    let registerStyle = {
-      fontSize: 14,
-      position: 'absolute',
-      bottom: '0px',
-      right: '12px'
-    }
     return (
-      <div>
-        <PageHeader>
-
-          Engineering overflow <small> SOEN341</small>
-          <span style={registerStyle}><a onClick={this.handleShowRegister}>Register</a></span>
-
-        </PageHeader>
-        <Register 
-          show={this.state.showRegister} 
-          handleClose={this.handleCloseRegister} />
-      </div>
+        <Row className="header">
+          <Col xs={12} >
+              <h1>Engineering <small>out of bounds</small></h1>
+          </Col>
+        </Row>
     );
   }
 }
 
 
+function mapStateToProps(state) {
+  return {
+    user: state.login.user
+  }
+}
+
+Header = connect(
+  mapStateToProps,
+)(Header);
 
 export default Header;
