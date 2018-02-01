@@ -96,7 +96,7 @@ class Register extends Component {
             fetch(req).then(res => res.json())
                 .catch(e => console.error('Error:', e))
                 .then(response => {
-                    if (response) {
+                    if (response.success) {
                         this.setState({ answer: response.message })
                     }
                 })

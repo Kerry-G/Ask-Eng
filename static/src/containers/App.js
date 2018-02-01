@@ -40,6 +40,7 @@ class App extends Component {
 
       let responseJson = await response.json()
       responseJson = JSON.stringify(responseJson)
+      console.log(responseJson)
       this.setState({getDataAns: responseJson})
     } catch (e) { console.error("Error: ", e) }
   }
@@ -50,13 +51,10 @@ class App extends Component {
   */
   async sendData() {
     try {
-      let data = { 
-        fname: "kerry",
-        lname: "gougeon", 
-        email: "kerrygougeon@gmail.com", 
-        password: "youshouldnotreadthis", 
-        engineer: "software", 
-        display_image: "/public/images/avatar/73.png" 
+
+      // delcare a variable, we'll use this to ping the backend
+      let data = {
+        ping: true
       }
 
       let myHeaders = new Headers();
@@ -67,22 +65,23 @@ class App extends Component {
         headers: myHeaders
       };
 
-      let req = new Request("/api/users/", myInit)
+      let req = new Request("/api/", myInit)
       fetch(req).then(res => res.json())
       .catch(e => console.error('Error:', e))
       .then(response => {
         console.log(response)
-        this.setState({sendDataAns:response.message})
+        this.setState({sendDataAns:response})
       })
     } catch (e) { console.error("Error:", e) }
   }
+
+  //<p> getData: {this.state.getDataAns} </p>
+  // <p> sendData: {this.state.sendDataAns} </p>
 
   render() {
     return (
       <div>
         <Home />
-        <p> getData: {this.state.getDataAns} </p>
-        <p> sendData: {this.state.sendDataAns} </p>
       </div>
     )
   }

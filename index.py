@@ -13,14 +13,6 @@ app.config.from_pyfile('config.py')
 def index(path):
     return send_from_directory('static/build', 'index.html')
 
-    # if(path == ""):
-    #     return send_from_directory('static/build', 'index.html')
-    # else:
-    #     if(os.path.exists("static/build/" + path)):
-    #         return send_from_directory('static/build', path)
-    #     else:
-    #         return send_from_directory('static/build', 'index.html')
-
 # Create db
 db = SQLAlchemy(app)
 

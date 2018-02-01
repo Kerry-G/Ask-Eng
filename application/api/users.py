@@ -5,6 +5,7 @@ https://en.wikipedia.org/wiki/Representational_state_transfer#Relationship_betwe
 '''
 
 from flask import Flask, Blueprint, redirect, render_template, url_for, session, request, logging
+from index import app
 from application.models import Users
 from application.util import convertRequestDataToDict as toDict
 from passlib.hash import sha256_crypt
@@ -21,24 +22,25 @@ httpMethods = ['PUT', 'GET', 'POST', 'DELETE']
 
 @users.route('/api/', methods=httpMethods)
 def index():
-    return json.dumps(['foo', {'bar': ('baz', None, 1.0, 2)}])
+    return json.dumps({'success': True, 'status': 'OK', 'message': 'Ping is sucussful.'})
 
 
 @users.route('/api/users/', methods=httpMethods)
 def usersRoute():
+    app.logger.info(request.data)
     data = toDict(request.data)  # toDict takes the request data and converts it to a dictionary
 
     success = False  # assume the response is unsucessful
     message = ""  # assume an empty message
     status = ""  # accepted statues: 'OK', 'DENIED', 'FAILURE', 'WARNING', 'INVALID'
     response = {}  # assume the response is empty dict() for now
-
+    users = [] # set the users to an empty list
+    
     if request.method == 'POST':
         # Create a user and find our whether it is successful or not
         success = Users.createUser(fname=data['fname'], lname=data['lname'], email=data['email'],
                                    password=data['password'], engineer=data['engineer'],
                                    display_image=data['display_image'])
-
         if success:
             status = "OK"
             message = "User added."
@@ -51,7 +53,6 @@ def usersRoute():
     elif request.method == 'GET':
         # Get all users
         users = Users.getUsers()
-
         if users != []:
             success = True
             status = "OK"
@@ -65,13 +66,26 @@ def usersRoute():
         success = False
         status = "DENIED"
         message = "Cannot delete all users."
+    else:
+        success = False
+        status = "WARNING"
+        message = "HTTP method invalid."
 
+    app.logger.info(str(json.dumps({'success': success, 'status': status, 'message': message, 'users': users})))
     response = json.dumps({'success': success, 'status': status, 'message': message, 'users': users})
+    return response
 
 
 @users.route('/api/users/<string:id>', methods=httpMethods)
 def userRoute(id):
     data = toDict(request.data)
+
+    success = False  # assume the response is unsucessful
+    message = ""  # assume an empty message
+    status = ""  # accepted statues: 'OK', 'DENIED', 'FAILURE', 'WARNING', 'INVALID'
+    response = {}  # assume the response is empty dict() for now
+    user = {} # set the users to an empty list
+
 
     if request.method == 'PUT':
         # Modify a user and find our whether it is successful or not
@@ -84,8 +98,6 @@ def userRoute(id):
         else:
             status = "FAILURE"
             message = "User does not exist."
-
-        response = json.dumps({'success': success, 'status': status, 'message': message})
 
     elif request.method == 'GET':
         # Get the user
@@ -100,8 +112,6 @@ def userRoute(id):
             status = "FAILURE"
             message = "No user by that id."
 
-        response = json.dumps({'success': success, 'status': status, 'message': message, 'user': user})
-
     elif request.method == 'DELETE':
         # Get the user
         success = Users.deleteUser(id)
@@ -111,4 +121,16 @@ def userRoute(id):
         else:
             status = "FAILURE"
             message = "User not found"
-        response = json.dumps({'success': success, 'status': status, 'message': message})
+    else:
+        success = False
+        status = "WARNING"
+        message = "HTTP method invalid."
+    
+    response = json.dumps({'success': success, 'status': status, 'message': message,'user':user})
+
+    return response
+
+    
+
+
+
