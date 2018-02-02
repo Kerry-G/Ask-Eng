@@ -231,7 +231,7 @@ class Register extends Component {
         else if (this.state.page == 2) {
             body = <div>
                 <Col xs={12} md={4}>
-                <div class="menu">
+                <div className="menu">
                     <FieldGroup
                         type="text"
                         label="First Name"
