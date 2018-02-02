@@ -1,11 +1,11 @@
 # Backend README
-Check out the [API as well](https://github.com/Kerry-G/SOEN341-UB2/wiki/Users-API)
+Check out the [API](https://github.com/Kerry-G/SOEN341-UB2/wiki/Users-API) as well
 
 
 ## Navigating the Backend API
 
-#### What in the world is __init__.py?
-__init__.py is a special python file. It's usually empty. Essentially when __init__.py is put inside a directory it makes the directory a python package. Meaning just like python files themselves, the folder can be imported. This is what allows us to import python files from api and models. api and models are actually python packages and not just regular directories. For more information check out the [Python 3 docs on packages](https://docs.python.org/3/tutorial/modules.html#tut-packages).
+#### What in the world is `__init__.py`?
+`__init__.py` is a special python file. It's usually empty. Essentially when `__init__.py` is put inside a directory it makes the directory a python package. Meaning just like python files themselves, the folder can be imported. This is what allows us to import python files from api and models. api and models are actually python packages and not just regular directories. For more information check out the [Python 3 docs on packages](https://docs.python.org/3/tutorial/modules.html#tut-packages).
 
 
 #### /api/
