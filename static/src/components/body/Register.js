@@ -251,7 +251,7 @@ class Register extends Component {
                 </div>
                 </Col>
                 <Col xs={12} md={8}>
-                <div class="picture">
+                <div className="picture">
                     <Image src="https://i.imgur.com/aZpgMrl.jpg" responsive rounded />
                 </div>
                 </Col>
