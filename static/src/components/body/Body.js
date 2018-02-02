@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import {Row,Col} from'react-bootstrap'
+import {Row,Col, Grid} from'react-bootstrap'
 import Register from './Register'
 import Login from './LoginBox/Login'
 class Body extends Component {
@@ -25,6 +25,7 @@ class Body extends Component {
   render() {
     return (
       <div>
+        <Grid fluid>
         <Row>
           <Col xs={12} md={3} mdOffset={9}>
           <div className="box-login">
@@ -35,6 +36,7 @@ class Body extends Component {
           <Register 
           show={this.state.showRegister} 
           handleClose={this.handleCloseRegister} />
+          </Grid>
       </div>
     )
   }
