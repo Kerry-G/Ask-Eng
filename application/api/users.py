@@ -138,16 +138,20 @@ def userRoute(id):
 
 
 @users.route('/api/users/authenticate/', methods=httpMethods)
-def userAuthenticate(id):
+def userAuthenticate():
+
+    # convert request data to dictionary
+    data = toDict(request.data)
 
     success = False  # assume the response is unsucessful
     message = ""  # assume an empty message
     status = ""  # accepted statues: 'OK', 'DENIED', 'FAILURE', 'WARNING', 'INVALID'
     response = {}  # assume the response is empty dict() for now
+    user = {}
     
-    # If the reques is GET we assume your trying to login
-    if request.method == 'GET':
-        # Verify User
+    # If the reques is POST we assume your trying to login
+    if request.method == 'POST':
+        # Verify User  
         success = Users.userVerified(data['email'], data['password'])
 
         # if verified then get the user

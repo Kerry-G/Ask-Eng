@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Grid, Col , Row, Modal, Button, FormGroup, FormControl, HelpBlock, ControlLabel, Alert, Image } from 'react-bootstrap'
+import { Grid, Col, Row, Modal, Button, FormGroup, FormControl, HelpBlock, ControlLabel, Image } from 'react-bootstrap'
 import Select from 'react-select'
 class Register extends Component {
     constructor(props) {
@@ -18,23 +18,16 @@ class Register extends Component {
 
             //alert state
             answer: null,
-            alert: '',
 
             page: 1
         }
         this.validateEmail = this.validateEmail.bind(this);
         this.handleClick = this.handleClick.bind(this);
-        this.handleAlert = this.handleAlert.bind(this);
         this.cleanState = this.cleanState.bind(this);
         this.handleClose = this.handleClose.bind(this);
         this.handleNextPage = this.handleNextPage.bind(this);
         this.handlePreviousPage = this.handlePreviousPage.bind(this);
     }
-
-    componentDidMount() {
-        console.log("Test")
-    }
-
     componentDidUpdate() {
         this.validateButton()
     }
@@ -67,7 +60,7 @@ class Register extends Component {
             && this.state.pw !== ''
             && this.state.role !== ''
             && this.state.fname !== ''
-            && this.state.validEmail == 'success') {
+            && this.state.validEmail === 'success') {
             result = false;
         } else {
             result = true;
@@ -79,9 +72,9 @@ class Register extends Component {
         }
     }
     handleClick() {
+        this.props.handleClose();
         this.saveUser();
-        this.handleAlert();
-        this.cleanState(true);
+        this.cleanState();
     }
     async saveUser() {
         try {
@@ -91,9 +84,8 @@ class Register extends Component {
                 email: this.state.email,
                 password: this.state.pw,
                 engineer: this.state.role,
-                display_Image: "/public/Images/avatar/1.png"
+                display_image: "1.png"
             }
-            console.log(data)
             let myHeaders = new Headers();
             myHeaders.append('Content-Type', 'application/json');
             let myInit = {
@@ -101,7 +93,6 @@ class Register extends Component {
                 body: JSON.stringify(data),
                 headers: myHeaders
             };
-
             let req = new Request("/api/users/", myInit)
             fetch(req).then(res => res.json())
                 .catch(e => console.error('Error:', e))
@@ -112,27 +103,9 @@ class Register extends Component {
                 })
         } catch (e) { console.error("Error:", e) }
     }
-    handleAlert() {
-        if (this.state.alert) {
-            if (this.state.answer.success) {
-                this.setState({
-                    alert: "success"
-                })
-            } else {
-                this.setState({
-                    alert: "danger"
-                })
-            }
-        } else {
-            this.setState({
-                alert: "warning",
-                answer: { message: 'The query failed' }
-            })
-        }
-    }
     handleClose() {
         this.props.handleClose();
-        this.cleanState(false);
+        this.cleanState();
     }
     /*
      * cleanState reset the state of the component
@@ -140,30 +113,18 @@ class Register extends Component {
      * Output: if T, reset but keep the alert. If F, reset everything
      * @author Kerry Gougeon
      */
-    cleanState(bool) {
-        if (bool) {
-            this.setState({
-                lname: '',
-                fname: '',
-                email: '',
-                validEmail: null,
-                pw: '',
-                role: '',
-                button: false,
-            })
-        } else {
-            this.setState({
-                lname: '',
-                fname: '',
-                email: '',
-                validEmail: null,
-                pw: '',
-                role: '',
-                button: false,
-                answer: null,
-                alert: '',
-            })
-        }
+    cleanState() {
+        this.setState({
+            lname: '',
+            fname: '',
+            email: '',
+            validEmail: null,
+            pw: '',
+            role: '',
+            button: false,
+            answer: null,
+            page:1
+        })
     }
 
     handleNextPage() {
@@ -191,50 +152,50 @@ class Register extends Component {
             { value: 'electrical', label: 'Electrical Engineering' },
             { value: 'civil', label: 'Civil Engineering' }
         ];
-        let alert
-        if (this.state.answer != null) {
-            alert = <Alert bsStyle={this.state.alert}>{this.state.answer.message}</Alert>
-        }
         let body
         if (this.state.page == 1) {
-            body = 
-    
-            <div>
-                <Col xs={12} md={4}>
-                    <div className="menu">
-                        <FieldGroup
-                            type="text"
-                            label="E-mail"
-                            placeholder="email"
-                            valid={this.state.validEmail}
-                            onChange={(e) => {
-                                this.validateEmail(e.target.value)
-                                this.setState({ email: e.target.value })
-                            }}
-                        />
-                        <FieldGroup
-                            label="Password"
-                            type="password"
-                            onChange={(e) => this.setState({ pw: e.target.value })}
-                        />
-                    </div>
-                </Col>
-                <Col xs={12} md={8}>
-                <div className="picture">
-                    <Image src="https://i.imgur.com/cmPoLVn.jpg" responsive rounded />
+            body =
+
+                <div>
+                    <Col xs={12} md={6}>
+                        <div className="menu">
+                            <FieldGroup
+                                type="text"
+                                label="E-mail"
+                                placeholder="soen341@email.com"
+                                value={this.state.email}
+                                valid={this.state.validEmail}
+                                onChange={(e) => {
+                                    this.validateEmail(e.target.value)
+                                    this.setState({ email: e.target.value })
+                                }}
+                            />
+                            <FieldGroup
+                                label="Password"
+                                type="password"
+                                placeholder="password"
+                                value={this.state.pw}
+                                onChange={(e) => this.setState({ pw: e.target.value })}
+                            />
+                        </div>
+                    </Col>
+                    <Col xs={12} md={6}>
+                        <div className="picture">
+                            <Image src="https://i.imgur.com/cmPoLVn.jpg" responsive rounded />
+                        </div>
+                    </Col>
                 </div>
-                </Col>
-                </div>
-    
+
         }
 
-        else if (this.state.page == 2) {
+        else if (this.state.page === 2) {
             body = <div>
-                <Col xs={12} md={4}>
-                <div class="menu">
+                <Col xs={12} md={6}>
+                <div className="menu">
                     <FieldGroup
                         type="text"
                         label="First Name"
+                        value={this.state.fname}
                         placeholder="John"
                         onChange={(e) => {
                             this.setState({ fname: e.target.value })
@@ -244,77 +205,84 @@ class Register extends Component {
                         type="text"
                         label="Last Name"
                         placeholder="McQueen"
+                        value={this.state.lname}
                         onChange={(e) => {
                             this.setState({ lname: e.target.value })
                         }}
                     />
                 </div>
                 </Col>
-                <Col xs={12} md={8}>
-                <div class="picture">
-                    <Image src="https://i.imgur.com/aZpgMrl.jpg" responsive rounded />
+                <Col xs={12} md={6}>
+                <div className="picture">
+                    <Image src="https://i.imgur.com/H8wshWs.jpg" responsive rounded />
                 </div>
                 </Col>
                 </div>
         }
-        else if (this.state.page == 3) {
+        else if (this.state.page === 3) {
             body = <div>
-                <div class="menu">
-                    {alert}
-                    <FieldGroup
-                        type="file"
-                        id="formControlsFile"
-                        label="File"
-                    />
+                <Col xs={12} md={6}>
+                    <div className="menu">
+                       
+                        <ControlLabel>Engineering Field</ControlLabel>
+                        <Select
+                            name="form-field-name"
+                            value={this.state.role}
+                            options={options}
+                            onChange={(e) => {
+                                if (e !== null) {
+                                    this.setState({ role: e.value })
+                                } else {
+                                    this.setState({ role: '' })
+                                }
+                            }}
+                        />
 
-                    <ControlLabel>Engineering Field</ControlLabel>
-                    <Select
-                        name="form-field-name"
-                        value={this.state.role}
-                        options={options}
-                        onChange={(e) => {
-                            if (e !== null) {
-                                this.setState({ role: e.value })
-                            } else {
-                                this.setState({ role: '' })
-                            }
-                        }}
-                    />
+
+                        <FieldGroup
+                            type="file"
+                            id="formControlsFile"
+                            label="Upload your engineering certificate"
+                        />
+                    </div>
+                </Col>
+                <Col xs={12} md={6}>
+                <div className="picture">
+                    <Image src="https://i.imgur.com/m06zvaZ.jpg]]]" responsive rounded />
                 </div>
-                <div class="picture">
-                    <Image src="https://i.imgur.com/RdzM1lU.jpg" responsive rounded />
-                </div>
+                </Col>
             </div>
         }
 
         let previousButton, nextButton, saveButton;
-        if (this.state.page == 1) {
+        if (this.state.page === 1) {
             saveButton = null
             previousButton = null
             nextButton = <Button onClick={this.handleNextPage}>Next</Button>
         }
-        else if (this.state.page == 2) {
+        else if (this.state.page === 2) {
             saveButton = null
             previousButton = <Button onClick={this.handlePreviousPage}>Previous</Button>
             nextButton = <Button onClick={this.handleNextPage}>Next</Button>
         }
-
-        else if (this.state.page == 3) {
+        else if (this.state.page === 3) {
             saveButton = <Button bsStyle="primary" disabled={this.state.button} onClick={this.handleClick}>Save</Button>
             previousButton = <Button onClick={this.handlePreviousPage}>Previous</Button>
             nextButton = null
-        }
+        } 
 
 
         return (
             <Modal dialogClassName="custom-modal" show={this.props.show} onHide={this.handleClose}>
 
                 <Modal.Body>
+
                     <Grid fluid>
                         <Row>
-                    {body}
-                    </Row>
+                            {body}
+                        </Row>
                     </Grid>
+
                 </Modal.Body>
 
                 <Modal.Footer>

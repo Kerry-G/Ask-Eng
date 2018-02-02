@@ -1,52 +1,60 @@
 import React, { Component } from 'react'
 import { Form, FormGroup, ControlLabel, FormControl } from 'react-bootstrap'
-import {login} from '../../../store/auth'
-import { connect } from 'react-redux'
+import { login } from '../../../store/auth'
 class Login extends Component {
   constructor(props) {
     super(props);
     this.handleLogin = this.handleLogin.bind(this)
     this.state = {
       email: "",
-      pw: ""
+      passw: ""
     };
   }
 
   handleLogin() {
-    let user ={"id":100, "fname": 'Jon', "lname": 'Mongeau', "email":'jon@jonmongeau.com', "password_hash":'PASSWORD_HASH_HERE', "register_date": '2017-30-01', "engineer": 'software', "display_image": '/path/to/img/1.jpg', "verified": 1 , "ups":0, "downs":0}
-    login(user)
+    let user = { email: this.state.email, password: this.state.password }
+    this.sendLoginInfo(user)
+  }
+
+  async sendLoginInfo(user) {
+    try {
+      let myHeaders = new Headers();
+      myHeaders.append('Content-Type', 'application/json');
+      let myInit = {
+        method: 'POST',
+        body: JSON.stringify(user),
+        headers: myHeaders
+      };
+      let req = new Request("/api/users/authenticate/", myInit)
+      fetch(req).then(res => (res.json()))
+        .catch(e => console.error('Error:', e))
+        .then(response => {
+          try{
+          if (response.success) {
+            login(response.user)
+          }} catch(e){console.error("Error",e)}
+        })
+    } catch (e) { console.error("Error: ", e) }
   }
 
   render() {
 
-    console.log("user:"+ JSON.stringify(this.props.user))
     return (
             <Form>
               <FormGroup bsSize="sm">
                 <ControlLabel>E-mail</ControlLabel>{' '}
-                <FormControl bsSize="sm" type="email" onChange={(e)=>{this.setState({email:e.target.value})}} placeholder="jon.raiz@example.com" />
+                <FormControl bsSize="sm" type="email" onChange={(e)=>{this.setState({email:e.target.value})}} placeholder="soen341@email.com" />
               </FormGroup>{' '}
               <FormGroup bsSize="sm">
                 <ControlLabel>Password</ControlLabel>{' '}
-                <FormControl bsSize="sm" type="password" onChange={(e)=>{this.setState({pw:e.target.value})}} />
+                <FormControl bsSize="sm" placeholder="password" type="password" onChange={(e)=>{this.setState({password:e.target.value})}}  />
               </FormGroup>{' '}
-              <a onClick={this.handleLogin}>Login </a>
-              or
-              <a onClick={this.props.registerModal}> Register</a>
+              <p><a  className="link"  onClick={this.handleLogin}>Login</a>
+              <span> or </span>
+              <a className="link" onClick={this.props.registerModal}>Register</a>
+              </p>
             </Form>
     );
   }
 }
-
-
-function mapStateToProps(state) {
-  return {
-    user: state.login.user
-  }
-}
-
-Login = connect(
-  mapStateToProps,
-)(Login);
-
 export default Login;
