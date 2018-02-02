@@ -18,9 +18,9 @@
   /* Opera 11.10+ */
   background: -o-linear-gradient(top, #2F2727, #1a82f7);    z-index:1;
 }
-.header:hover {
+.header {
   /* Safari 5.1, Chrome 10+ */
-  background: -webkit-linear-gradient(top, #1a82f7, #2F2727);
+  background: 	rgb(59,89,152);
 
 }
 .header h1{
@@ -63,10 +63,10 @@ h1 {
     background-color: #efefef;
     text-align: center;
 }
+
 /* REGISTER MODAL */
 .picture {  
     float: left;
-    width:45rem;
     height:30rem;
     margin-left: 2rem;
 }
@@ -76,4 +76,12 @@ h1 {
 .custom-modal{
     background-color:lightgray;
     width:50%;
+}
+
+.modal-body{
+    background-color :rgb(247,247,247);
+}
+.modal-footer{
+    background-color: 	rgb(59,89,152);
+    border: 0;
 }

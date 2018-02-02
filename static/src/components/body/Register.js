@@ -259,7 +259,7 @@ class Register extends Component {
         }
         else if (this.state.page == 3) {
             body = <div>
-                <div class="menu">
+                <div className="menu">
                     {alert}
                     <FieldGroup
                         type="file"
@@ -281,9 +281,11 @@ class Register extends Component {
                         }}
                     />
                 </div>
-                <div class="picture">
-                    <Image src="https://i.imgur.com/RdzM1lU.jpg" responsive rounded />
+                <Col xs={12} md={8}>
+                <div className="picture">
+                    <Image src="https://i.imgur.com/m06zvaZ.jpg" responsive rounded />
                 </div>
+                </Col>
             </div>
         }
 
@@ -310,11 +312,13 @@ class Register extends Component {
             <Modal dialogClassName="custom-modal" show={this.props.show} onHide={this.handleClose}>
 
                 <Modal.Body>
+                    
                     <Grid fluid>
                         <Row>
                     {body}
                     </Row>
                     </Grid>
+                    
                 </Modal.Body>
 
                 <Modal.Footer>
