@@ -72,6 +72,10 @@ h1 {
     margin: 2rem;
 }
 
+.Select {
+    margin-bottom: 2rem;
+}
+
 .link{
     cursor:pointer;
 }

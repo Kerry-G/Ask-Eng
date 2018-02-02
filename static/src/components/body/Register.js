@@ -224,12 +224,6 @@ class Register extends Component {
                 <Col xs={12} md={6}>
                 <div className="menu">
                     {alert}
-                    <FieldGroup
-                        type="file"
-                        id="formControlsFile"
-                        label="Upload your engineering certificate"
-                    />
-
                     <ControlLabel>Engineering Field</ControlLabel>
                     <Select
                         name="form-field-name"
@@ -242,6 +236,13 @@ class Register extends Component {
                                 this.setState({ role: '' })
                             }
                         }}
+                    />
+
+
+                    <FieldGroup
+                        type="file"
+                        id="formControlsFile"
+                        label="Upload your engineering certificate"
                     />
                 </div>
                 </Col>
