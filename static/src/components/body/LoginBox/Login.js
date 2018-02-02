@@ -43,11 +43,11 @@ class Login extends Component {
             <Form>
               <FormGroup bsSize="sm">
                 <ControlLabel>E-mail</ControlLabel>{' '}
-                <FormControl bsSize="sm" type="email" onChange={(e)=>{this.setState({email:e.target.value})}} placeholder="jon.raiz@example.com" />
+                <FormControl bsSize="sm" type="email" onChange={(e)=>{this.setState({email:e.target.value})}} placeholder="soen341@email.com" />
               </FormGroup>{' '}
               <FormGroup bsSize="sm">
                 <ControlLabel>Password</ControlLabel>{' '}
-                <FormControl bsSize="sm" type="password" onChange={(e)=>{this.setState({password:e.target.value})}} />
+                <FormControl bsSize="sm" placeholder="password" type="password" onChange={(e)=>{this.setState({password:e.target.value})}}  />
               </FormGroup>{' '}
               <p><a  className="link"  onClick={this.handleLogin}>Login</a>
               <span> or </span>

@@ -153,38 +153,39 @@ class Register extends Component {
             { value: 'civil', label: 'Civil Engineering' }
         ];
         let body
-        if (this.state.page === 1) {
-            body = 
-    
-            <div>
-                <Col xs={12} md={6}>
-                    <div className="menu">
-                        <FieldGroup
-                            type="text"
-                            label="First Name"
-                            placeholder="John"
-                            value={this.state.fname}
-                            onChange={(e) => {
-                                this.setState({ fname: e.target.value })
-                            }}
-                        />
-                        <FieldGroup
-                            type="text"
-                            label="Last Name"
-                            placeholder="McQueen"
-                            value={this.state.lname}
-                            onChange={(e) => {
-                                this.setState({ lname: e.target.value })
-                            }}
-                        />
-                    </div>
-                </Col>
-                <Col xs={12} md={6}>
-                <div className="picture">
-                    <Image src="https://i.imgur.com/cmPoLVn.jpg" responsive rounded />
+        if (this.state.page == 1) {
+            body =
+
+                <div>
+                    <Col xs={12} md={6}>
+                        <div className="menu">
+                            <FieldGroup
+                                type="text"
+                                label="E-mail"
+                                placeholder="soen341@email.com"
+                                value={this.state.email}
+                                valid={this.state.validEmail}
+                                onChange={(e) => {
+                                    this.validateEmail(e.target.value)
+                                    this.setState({ email: e.target.value })
+                                }}
+                            />
+                            <FieldGroup
+                                label="Password"
+                                type="password"
+                                placeholder="password"
+                                value={this.state.pw}
+                                onChange={(e) => this.setState({ pw: e.target.value })}
+                            />
+                        </div>
+                    </Col>
+                    <Col xs={12} md={6}>
+                        <div className="picture">
+                            <Image src="https://i.imgur.com/cmPoLVn.jpg" responsive rounded />
+                        </div>
+                    </Col>
                 </div>
-                </Col>
-            </div>
+
         }
 
         else if (this.state.page === 2) {
@@ -194,6 +195,7 @@ class Register extends Component {
                     <FieldGroup
                         type="text"
                         label="First Name"
+                        value={this.state.fname}
                         placeholder="John"
                         onChange={(e) => {
                             this.setState({ fname: e.target.value })
@@ -203,6 +205,7 @@ class Register extends Component {
                         type="text"
                         label="Last Name"
                         placeholder="McQueen"
+                        value={this.state.lname}
                         onChange={(e) => {
                             this.setState({ lname: e.target.value })
                         }}
