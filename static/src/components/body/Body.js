@@ -49,9 +49,6 @@ class Body extends Component {
     )
   }
 }
-function isEmptyObject(obj) {
-  return JSON.stringify(obj) === '{}';
-}
 
 function mapStateToProps(state) {
   return {

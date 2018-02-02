@@ -28,11 +28,6 @@ class Register extends Component {
         this.handleNextPage = this.handleNextPage.bind(this);
         this.handlePreviousPage = this.handlePreviousPage.bind(this);
     }
-
-    componentDidMount() {
-        console.log("Test")
-    }
-
     componentDidUpdate() {
         this.validateButton()
     }
@@ -65,7 +60,7 @@ class Register extends Component {
             && this.state.pw !== ''
             && this.state.role !== ''
             && this.state.fname !== ''
-            && this.state.validEmail == 'success') {
+            && this.state.validEmail === 'success') {
             result = false;
         } else {
             result = true;
@@ -158,7 +153,7 @@ class Register extends Component {
             { value: 'civil', label: 'Civil Engineering' }
         ];
         let body
-        if (this.state.page == 1) {
+        if (this.state.page === 1) {
             body = 
     
             <div>
@@ -192,7 +187,7 @@ class Register extends Component {
             </div>
         }
 
-        else if (this.state.page == 2) {
+        else if (this.state.page === 2) {
             body = <div>
                 <Col xs={12} md={6}>
                 <div className="menu">
@@ -221,7 +216,7 @@ class Register extends Component {
                 </Col>
                 </div>
         }
-        else if (this.state.page == 3) {
+        else if (this.state.page === 3) {
             body = <div>
                 <Col xs={12} md={6}>
                 <div className="menu">
@@ -256,17 +251,17 @@ class Register extends Component {
         }
 
         let previousButton, nextButton, saveButton;
-        if (this.state.page == 1) {
+        if (this.state.page === 1) {
             saveButton = null
             previousButton = null
             nextButton = <Button onClick={this.handleNextPage}>Next</Button>
         }
-        else if (this.state.page == 2) {
+        else if (this.state.page === 2) {
             saveButton = null
             previousButton = <Button onClick={this.handlePreviousPage}>Previous</Button>
             nextButton = <Button onClick={this.handleNextPage}>Next</Button>
         }
-        else if (this.state.page == 3) {
+        else if (this.state.page === 3) {
             saveButton = <Button bsStyle="primary" disabled={this.state.button} onClick={this.handleClick}>Save</Button>
             previousButton = <Button onClick={this.handlePreviousPage}>Previous</Button>
             nextButton = null

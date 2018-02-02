@@ -6,3 +6,9 @@ export const login = (user) => {
         payload: user
     })
 }
+
+export const logOut = () => {
+    store.dispatch({
+        type:"LOG_OUT"
+    })
+}

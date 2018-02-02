@@ -1,15 +1,14 @@
 import React, { Component } from 'react'
 import {Col, Row} from 'react-bootstrap'
 import { connect } from 'react-redux'
-
+import {logOut} from '../../store/auth'
 class Header extends Component {
 
   render() {
     let user;
     if (!(Object.keys(this.props.user).length === 0 && this.props.user.constructor === Object)){
-      user = <p className="header-name"> Hello {this.props.user.fname} {this.props.user.lname}</p>
+      user = <p className="header-name"> Hello {this.props.user.fname} {this.props.user.lname} <a onClick={logOut}> log out</a></p>
     }
-    console.log(this.props.user)
     return (
         <Row className="header">
           <Col xs={10} >
@@ -21,10 +20,6 @@ class Header extends Component {
         </Row>
     );
   }
-}
-
-function isEmptyObject(obj){
-  return JSON.stringify(obj) === '{}';
 }
 
 function mapStateToProps(state) {

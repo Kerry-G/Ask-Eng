@@ -20,7 +20,7 @@ const loginReducer = (state = INITIAL_STATE_LOGIN, action) => {
             return { ...state, logged: action.payload }
         }
         case 'LOG_OUT': {
-            return { state: INITIAL_STATE_LOGIN }
+            return {...state, online:false, user:{}, error:"" }
         }
         default: {
             return state

@@ -25,7 +25,6 @@ class Login extends Component {
         body: JSON.stringify(user),
         headers: myHeaders
       };
-      console.log(user)
       let req = new Request("/api/users/authenticate/", myInit)
       fetch(req).then(res => (res.json()))
         .catch(e => console.error('Error:', e))
