@@ -1,7 +1,6 @@
 import React, { Component } from 'react'
 import { Form, FormGroup, ControlLabel, FormControl } from 'react-bootstrap'
-import {login} from '../../../store/auth'
-import { connect } from 'react-redux'
+import { login } from '../../../store/auth'
 class Login extends Component {
   constructor(props) {
     super(props);
@@ -13,13 +12,12 @@ class Login extends Component {
   }
 
   handleLogin() {
-    let user ={email:this.state.email, password:this.state.password}
+    let user = { email: this.state.email, password: this.state.password }
     this.sendLoginInfo(user)
-    //login(user)
   }
 
-  async sendLoginInfo(user){
-    try{
+  async sendLoginInfo(user) {
+    try {
       let myHeaders = new Headers();
       myHeaders.append('Content-Type', 'application/json');
       let myInit = {
@@ -29,44 +27,34 @@ class Login extends Component {
       };
       console.log(user)
       let req = new Request("/api/users/authenticate/", myInit)
-      fetch(req).then(res =>(res.json()))
-      .catch(e => console.error('Error:', e))
-      .then(response => {
-        console.log(response)
-      })
-    } catch (e) {console.error("Error: ", e)}
+      fetch(req).then(res => (res.json()))
+        .catch(e => console.error('Error:', e))
+        .then(response => {
+          try{
+          if (response.success) {
+            login(response.user)
+          }} catch(e){console.error("Error",e)}
+        })
+    } catch (e) { console.error("Error: ", e) }
   }
 
   render() {
 
-    console.log("user:"+ JSON.stringify(this.props.user))
     return (
-            <Form>
-              <FormGroup bsSize="sm">
-                <ControlLabel>E-mail</ControlLabel>{' '}
-                <FormControl bsSize="sm" type="email" onChange={(e)=>{this.setState({email:e.target.value})}} placeholder="jon.raiz@example.com" />
-              </FormGroup>{' '}
-              <FormGroup bsSize="sm">
-                <ControlLabel>Password</ControlLabel>{' '}
-                <FormControl bsSize="sm" type="password" onChange={(e)=>{this.setState({password:e.target.value})}} />
-              </FormGroup>{' '}
-              <a onClick={this.handleLogin}>Login </a>
-              or
+      <Form>
+        <FormGroup bsSize="sm">
+          <ControlLabel>E-mail</ControlLabel>{' '}
+          <FormControl bsSize="sm" type="email" onChange={(e) => { this.setState({ email: e.target.value }) }} placeholder="jon.raiz@example.com" />
+        </FormGroup>{' '}
+        <FormGroup bsSize="sm">
+          <ControlLabel>Password</ControlLabel>{' '}
+          <FormControl bsSize="sm" type="password" onChange={(e) => { this.setState({ password: e.target.value }) }} />
+        </FormGroup>{' '}
+        <a onClick={this.handleLogin}>Login </a>
+        or
               <a onClick={this.props.registerModal}> Register</a>
-            </Form>
+      </Form>
     );
   }
 }
-
-
-function mapStateToProps(state) {
-  return {
-    user: state.login.user
-  }
-}
-
-Login = connect(
-  mapStateToProps,
-)(Login);
-
 export default Login;
