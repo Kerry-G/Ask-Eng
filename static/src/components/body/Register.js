@@ -259,7 +259,7 @@ class Register extends Component {
         }
         else if (this.state.page == 3) {
             body = <div>
-                <div className="menu">
+                <div className="menu3">
                     {alert}
                     <FieldGroup
                         type="file"
@@ -283,7 +283,7 @@ class Register extends Component {
                 </div>
                 <Col xs={12} md={8}>
                 <div className="picture">
-                    <Image src="https://i.imgur.com/m06zvaZ.jpg" responsive rounded />
+                    <Image src="https://i.imgur.com/m06zvaZ.jpg]]]" responsive rounded />
                 </div>
                 </Col>
             </div>
