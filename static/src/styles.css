@@ -69,15 +69,27 @@ h1 {
 .picture {  
     float: left;
     height:30rem;
-    margin-left: 2rem;
+    margin: 2rem;
 }
-.menu{ float: left;
-       
+
+.link{
+    cursor:pointer;
 }
-.menu3{
+
+
+.modal-content {
+    border: 0;
+}
+
+.menu{ 
     float: left;
-    width: 30%;
+    width: 100%;  
 }
+
+label{
+    font-weight: 300;
+}
+
 .custom-modal{
     background-color:lightgray;
     width:50%;
@@ -89,4 +101,24 @@ h1 {
 .modal-footer{
     background-color: 	#00647f;
     border: 0;
+}
+
+
+
+
+@media only screen and (max-width:70em) {
+    
+    .picture {
+        margin-left: 0;
+    }
+
+    .menu{
+        padding-bottom: 15px;
+    }
+
+    .custom-modal {
+        width: 90%;
+        margin: 1rem auto 1rem auto;
+    }
+
 }

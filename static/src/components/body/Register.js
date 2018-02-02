@@ -159,41 +159,10 @@ class Register extends Component {
         ];
         let body
         if (this.state.page == 1) {
-            body =
-
-                <div>
-                    <Col xs={12} md={4}>
-                        <div className="menu">
-                            <FieldGroup
-                                type="text"
-                                label="E-mail"
-                                placeholder="email"
-                                value={this.state.email}
-                                valid={this.state.validEmail}
-                                onChange={(e) => {
-                                    this.validateEmail(e.target.value)
-                                    this.setState({ email: e.target.value })
-                                }}
-                            />
-                            <FieldGroup
-                                label="Password"
-                                type="password"
-                                value={this.state.pw}
-                                onChange={(e) => this.setState({ pw: e.target.value })}
-                            />
-                        </div>
-                    </Col>
-                    <Col xs={12} md={8}>
-                        <div className="picture">
-                            <Image src="https://i.imgur.com/cmPoLVn.jpg" responsive rounded />
-                        </div>
-                    </Col>
-                </div>
-
-        }
-        else if (this.state.page == 2) {
-            body = <div>
-                <Col xs={12} md={4}>
+            body = 
+    
+            <div>
+                <Col xs={12} md={6}>
                     <div className="menu">
                         <FieldGroup
                             type="text"
@@ -215,20 +184,52 @@ class Register extends Component {
                         />
                     </div>
                 </Col>
-                <Col xs={12} md={8}>
-                    <div className="picture">
-                        <Image src="https://i.imgur.com/aZpgMrl.jpg" responsive rounded />
-                    </div>
+                <Col xs={12} md={6}>
+                <div className="picture">
+                    <Image src="https://i.imgur.com/cmPoLVn.jpg" responsive rounded />
+                </div>
                 </Col>
             </div>
         }
+
+        else if (this.state.page == 2) {
+            body = <div>
+                <Col xs={12} md={6}>
+                <div className="menu">
+                    <FieldGroup
+                        type="text"
+                        label="First Name"
+                        placeholder="John"
+                        onChange={(e) => {
+                            this.setState({ fname: e.target.value })
+                        }}
+                    />
+                    <FieldGroup
+                        type="text"
+                        label="Last Name"
+                        placeholder="McQueen"
+                        onChange={(e) => {
+                            this.setState({ lname: e.target.value })
+                        }}
+                    />
+                </div>
+                </Col>
+                <Col xs={12} md={6}>
+                <div className="picture">
+                    <Image src="https://i.imgur.com/H8wshWs.jpg" responsive rounded />
+                </div>
+                </Col>
+                </div>
+        }
         else if (this.state.page == 3) {
             body = <div>
-                <div className="menu3">
+                <Col xs={12} md={6}>
+                <div className="menu">
+                    {alert}
                     <FieldGroup
                         type="file"
                         id="formControlsFile"
-                        label="File"
+                        label="Upload your engineering certificate"
                     />
 
                     <ControlLabel>Engineering Field</ControlLabel>
@@ -245,10 +246,11 @@ class Register extends Component {
                         }}
                     />
                 </div>
-                <Col xs={12} md={8}>
-                    <div className="picture">
-                        <Image src="https://i.imgur.com/m06zvaZ.jpg]]]" responsive rounded />
-                    </div>
+                </Col>
+                <Col xs={12} md={6}>
+                <div className="picture">
+                    <Image src="https://i.imgur.com/m06zvaZ.jpg]]]" responsive rounded />
+                </div>
                 </Col>
             </div>
         }
@@ -268,7 +270,7 @@ class Register extends Component {
             saveButton = <Button bsStyle="primary" disabled={this.state.button} onClick={this.handleClick}>Save</Button>
             previousButton = <Button onClick={this.handlePreviousPage}>Previous</Button>
             nextButton = null
-        }
+        } 
 
 
         return (

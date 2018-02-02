@@ -41,19 +41,20 @@ class Login extends Component {
   render() {
 
     return (
-      <Form>
-        <FormGroup bsSize="sm">
-          <ControlLabel>E-mail</ControlLabel>{' '}
-          <FormControl bsSize="sm" type="email" onChange={(e) => { this.setState({ email: e.target.value }) }} placeholder="jon.raiz@example.com" />
-        </FormGroup>{' '}
-        <FormGroup bsSize="sm">
-          <ControlLabel>Password</ControlLabel>{' '}
-          <FormControl bsSize="sm" type="password" onChange={(e) => { this.setState({ password: e.target.value }) }} />
-        </FormGroup>{' '}
-        <a onClick={this.handleLogin}>Login </a>
-        or
-              <a onClick={this.props.registerModal}> Register</a>
-      </Form>
+            <Form>
+              <FormGroup bsSize="sm">
+                <ControlLabel>E-mail</ControlLabel>{' '}
+                <FormControl bsSize="sm" type="email" onChange={(e)=>{this.setState({email:e.target.value})}} placeholder="jon.raiz@example.com" />
+              </FormGroup>{' '}
+              <FormGroup bsSize="sm">
+                <ControlLabel>Password</ControlLabel>{' '}
+                <FormControl bsSize="sm" type="password" onChange={(e)=>{this.setState({password:e.target.value})}} />
+              </FormGroup>{' '}
+              <p><a  className="link"  onClick={this.handleLogin}>Login</a>
+              <span> or </span>
+              <a className="link" onClick={this.props.registerModal}>Register</a>
+              </p>
+            </Form>
     );
   }
 }
