@@ -8,13 +8,33 @@ class Login extends Component {
     this.handleLogin = this.handleLogin.bind(this)
     this.state = {
       email: "",
-      pw: ""
+      passw: ""
     };
   }
 
   handleLogin() {
-    let user ={"id":100, "fname": 'Jon', "lname": 'Mongeau', "email":'jon@jonmongeau.com', "password_hash":'PASSWORD_HASH_HERE', "register_date": '2017-30-01', "engineer": 'software', "display_image": '/path/to/img/1.jpg', "verified": 1 , "ups":0, "downs":0}
-    login(user)
+    let user ={email:this.state.email, password:this.state.password}
+    this.sendLoginInfo(user)
+    //login(user)
+  }
+
+  async sendLoginInfo(user){
+    try{
+      let myHeaders = new Headers();
+      myHeaders.append('Content-Type', 'application/json');
+      let myInit = {
+        method: 'POST',
+        body: JSON.stringify(user),
+        headers: myHeaders
+      };
+      console.log(user)
+      let req = new Request("/api/users/authenticate/", myInit)
+      fetch(req).then(res =>(res.json()))
+      .catch(e => console.error('Error:', e))
+      .then(response => {
+        console.log(response)
+      })
+    } catch (e) {console.error("Error: ", e)}
   }
 
   render() {
@@ -28,7 +48,7 @@ class Login extends Component {
               </FormGroup>{' '}
               <FormGroup bsSize="sm">
                 <ControlLabel>Password</ControlLabel>{' '}
-                <FormControl bsSize="sm" type="password" onChange={(e)=>{this.setState({pw:e.target.value})}} />
+                <FormControl bsSize="sm" type="password" onChange={(e)=>{this.setState({password:e.target.value})}} />
               </FormGroup>{' '}
               <a onClick={this.handleLogin}>Login </a>
               or
