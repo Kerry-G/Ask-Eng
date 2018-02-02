@@ -200,7 +200,7 @@ class Register extends Component {
             body = 
     
             <div>
-                <Col xs={12} md={4}>
+                <Col xs={12} md={6}>
                     <div className="menu">
                         <FieldGroup
                             type="text"
@@ -219,7 +219,7 @@ class Register extends Component {
                         />
                     </div>
                 </Col>
-                <Col xs={12} md={8}>
+                <Col xs={12} md={6}>
                 <div className="picture">
                     <Image src="https://i.imgur.com/cmPoLVn.jpg" responsive rounded />
                 </div>
@@ -230,7 +230,7 @@ class Register extends Component {
 
         else if (this.state.page == 2) {
             body = <div>
-                <Col xs={12} md={4}>
+                <Col xs={12} md={6}>
                 <div className="menu">
                     <FieldGroup
                         type="text"
@@ -250,21 +250,22 @@ class Register extends Component {
                     />
                 </div>
                 </Col>
-                <Col xs={12} md={8}>
+                <Col xs={12} md={6}>
                 <div className="picture">
-                    <Image src="https://i.imgur.com/aZpgMrl.jpg" responsive rounded />
+                    <Image src="https://i.imgur.com/H8wshWs.jpg" responsive rounded />
                 </div>
                 </Col>
                 </div>
         }
         else if (this.state.page == 3) {
             body = <div>
-                <div className="menu3">
+                <Col xs={12} md={6}>
+                <div className="menu">
                     {alert}
                     <FieldGroup
                         type="file"
                         id="formControlsFile"
-                        label="File"
+                        label="Upload your engineering certificate"
                     />
 
                     <ControlLabel>Engineering Field</ControlLabel>
@@ -281,7 +282,8 @@ class Register extends Component {
                         }}
                     />
                 </div>
-                <Col xs={12} md={8}>
+                </Col>
+                <Col xs={12} md={6}>
                 <div className="picture">
                     <Image src="https://i.imgur.com/m06zvaZ.jpg]]]" responsive rounded />
                 </div>
@@ -305,7 +307,7 @@ class Register extends Component {
             saveButton = <Button bsStyle="primary" disabled={this.state.button} onClick={this.handleClick}>Save</Button>
             previousButton = <Button onClick={this.handlePreviousPage}>Previous</Button>
             nextButton = null
-        }
+        } 
 
 
         return (

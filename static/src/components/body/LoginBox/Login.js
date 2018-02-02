@@ -50,9 +50,10 @@ class Login extends Component {
                 <ControlLabel>Password</ControlLabel>{' '}
                 <FormControl bsSize="sm" type="password" onChange={(e)=>{this.setState({password:e.target.value})}} />
               </FormGroup>{' '}
-              <a onClick={this.handleLogin}>Login </a>
-              or
-              <a onClick={this.props.registerModal}> Register</a>
+              <p><a  className="link"  onClick={this.handleLogin}>Login</a>
+              <span> or </span>
+              <a className="link" onClick={this.props.registerModal}>Register</a>
+              </p>
             </Form>
     );
   }
