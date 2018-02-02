@@ -28,8 +28,24 @@
 .header-name{
     color:white;
     font-size:2rem;
-    margin-top:47px;
+    margin: auto 0 auto 0;
+    margin: 3rem 0.5em 1em 0.5em;
+    text-align: right;
 }
+.logoutBtn{
+    color: #ffffff;
+    cursor: pointer;
+}
+
+.logoutBtn:hover{
+    color: #8ae6ff;
+    text-decoration: none;
+}
+
+.para{
+    margin-top: 1.5rem;
+}
+
 /* END HEADER */
 h1 {
     margin: 0.3em 0.5em 0.3em 0.5em;
@@ -64,6 +80,11 @@ h1 {
     background-color: #efefef;
     text-align: center;
 }
+
+
+
+
+
 
 /* REGISTER MODAL */
 .picture {  

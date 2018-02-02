@@ -222,29 +222,29 @@ class Register extends Component {
         else if (this.state.page === 3) {
             body = <div>
                 <Col xs={12} md={6}>
-                <div className="menu">
-                    {alert}
-                    <ControlLabel>Engineering Field</ControlLabel>
-                    <Select
-                        name="form-field-name"
-                        value={this.state.role}
-                        options={options}
-                        onChange={(e) => {
-                            if (e !== null) {
-                                this.setState({ role: e.value })
-                            } else {
-                                this.setState({ role: '' })
-                            }
-                        }}
-                    />
+                    <div className="menu">
+                       
+                        <ControlLabel>Engineering Field</ControlLabel>
+                        <Select
+                            name="form-field-name"
+                            value={this.state.role}
+                            options={options}
+                            onChange={(e) => {
+                                if (e !== null) {
+                                    this.setState({ role: e.value })
+                                } else {
+                                    this.setState({ role: '' })
+                                }
+                            }}
+                        />
 
 
-                    <FieldGroup
-                        type="file"
-                        id="formControlsFile"
-                        label="Upload your engineering certificate"
-                    />
-                </div>
+                        <FieldGroup
+                            type="file"
+                            id="formControlsFile"
+                            label="Upload your engineering certificate"
+                        />
+                    </div>
                 </Col>
                 <Col xs={12} md={6}>
                 <div className="picture">
