@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Form, FormGroup, ControlLabel, FormControl } from 'react-bootstrap'
+import { Form, FormGroup, ControlLabel, FormControl, Button} from 'react-bootstrap'
 import { login } from '../../../store/auth'
 class Login extends Component {
   constructor(props) {
@@ -32,7 +32,8 @@ class Login extends Component {
           try{
           if (response.success) {
             login(response.user)
-          }} catch(e){console.error("Error",e)}
+          }
+        } catch(e){console.error("Error",e)}
         })
     } catch (e) { console.error("Error: ", e) }
   }
@@ -49,7 +50,8 @@ class Login extends Component {
                 <ControlLabel>Password</ControlLabel>{' '}
                 <FormControl bsSize="sm" placeholder="password" type="password" onChange={(e)=>{this.setState({password:e.target.value})}}  />
               </FormGroup>{' '}
-              <p><a  className="link"  onClick={this.handleLogin}>Login</a>
+              <p>
+                <Button bsStyle="primary" onClick={this.handleLogin}>Login</Button>
               <span> or </span>
               <a className="link" onClick={this.props.registerModal}>Register</a>
               </p>
