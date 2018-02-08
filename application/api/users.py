@@ -38,6 +38,8 @@ def usersRoute():
 
 
     if request.method == 'POST':
+
+
         # Create a user and find our whether it is successful or not
         success = Users.createUser(fname=data['fname'], lname=data['lname'], email=data['email'],
                                        password=data['password'], engineer=data['engineer'],
@@ -51,7 +53,7 @@ def usersRoute():
 
         # make the response a json object
         response = json.dumps({'success': success, 'status': status, 'message': message, 'user': user})
-
+        app.logger.info(response)
     elif request.method == 'GET':
         # Get all users
         users = Users.getUsers()
@@ -151,6 +153,7 @@ def userAuthenticate():
     
     # If the reques is POST we assume your trying to login
     if request.method == 'POST':
+        app.logger.info(data)
         # Verify User  
         success = Users.userVerified(data['email'], data['password'])
 
@@ -173,6 +176,39 @@ def userAuthenticate():
     response = json.dumps({'success': success, 'status': status, 'message': message,'user':user})
     return response
 
+
+@users.route('/api/users/email/', methods=httpMethods)
+def emailRoute():
+
+    # convert request data to dictionary
+    data = toDict(request.data)
+
+    success = False  # assume the response is unsucessful
+    message = ""  # assume an empty message
+    status = ""  # accepted statues: 'OK', 'DENIED', 'FAILURE', 'WARNING', 'INVALID'
+    response = {}  # assume the response is empty dict() for now
+
+
+    # If the request is POST we assume your trying to get email
+    if request.method == 'POST':
+        app.logger.info(data)
+        # Check if user exists
+        success = Users.exists(data['email'])
+
+        if success:
+            message = "User exists."
+            status = "WARNING"
+        else:
+            message = "User does not exist."
+            status = "OK"
+    else:
+        message = "HTTP method invalid."
+        status = "WARNING"
+        success = False
+
+    response = json.dumps({'success': success, 'status': status, 'message': message})
+    return response
+    
 
 
 
