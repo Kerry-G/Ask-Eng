@@ -193,7 +193,7 @@ def emailRoute():
     if request.method == 'POST':
         app.logger.info(data)
         # Check if user exists
-        success = Users.exists(data['email'])
+        success = Users.userExists(data['email'])
 
         if success:
             message = "User exists."

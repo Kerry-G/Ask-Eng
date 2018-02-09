@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { Grid, Col, Row, Modal, Button, FormGroup, FormControl, HelpBlock, ControlLabel, Image, Alert } from 'react-bootstrap'
 import Select from 'react-select'
-import {fetchAPI} from './../utility'
+import { fetchAPI } from './../utility'
 class Register extends Component {
     constructor(props) {
         super(props)
@@ -21,7 +21,7 @@ class Register extends Component {
             answer: null,
 
             page: 1,
-            error: true
+            error: false
         }
         this.validateEmail = this.validateEmail.bind(this);
         this.handleClick = this.handleClick.bind(this);
@@ -88,7 +88,7 @@ class Register extends Component {
                 engineer: this.state.role,
                 display_image: "1.png"
             }
-            fetchAPI("POST", "/api/users", data).then(response => {
+            fetchAPI("POST", "/api/users/", data).then(response => {
                 if (response.success) {
                     this.setState({ answer: response.message })
                 }
@@ -126,14 +126,22 @@ class Register extends Component {
 
     handleNextPage() {
         let currentPage = this.state.page;
-        
-        
-        
-        currentPage++;
-        this.setState({
-            page: currentPage
-        })
-    }
+        let data = {
+            email: this.state.email
+        }
+        fetchAPI("POST", "/api/users/email/", data).then((response) => {
+            console.log(response);
+            if (response.success) {
+                this.setState({
+                    error: true
+                })
+            }
+            else {
+                    currentPage++;
+                    this.setState({ page: currentPage })
+               }
+        }).catch((e) => console.error("Error:", e))
+   }
 
     handlePreviousPage() {
         let currentPage = this.state.page;
@@ -141,7 +149,6 @@ class Register extends Component {
         this.setState({
             page: currentPage
         })
-
     }
 
     render() {
@@ -259,7 +266,7 @@ class Register extends Component {
         if (this.state.page === 1) {
             saveButton = null
             previousButton = null
-            
+
             if (this.state.error === true) {
                 alert = <Alert bsStyle="warning">Invalid email or password!</Alert>
             }
@@ -289,9 +296,9 @@ class Register extends Component {
 
                     <Grid fluid>
                         <Row>
-                        {alert}
+                            {alert}
                             {body}
-                            
+
                         </Row>
                     </Grid>
 
@@ -301,7 +308,7 @@ class Register extends Component {
                     {previousButton}
                     {nextButton}
                     {saveButton}
-                    
+
                 </Modal.Footer>
             </Modal>
         );
