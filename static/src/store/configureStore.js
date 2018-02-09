@@ -1,21 +1,22 @@
 import { createStore, applyMiddleware, compose } from 'redux'
 import createHistory from 'history/createBrowserHistory'
+import {persistStore, persistReducer} from 'redux-persist'
 import rootReducer from './reducers'
-import promiseMiddleware from 'redux-promise';
+import storage from 'redux-persist/lib/storage'
 //import * as allActions from '../actions/auth';
 
 
 export const history = createHistory();
-
-
-const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
-
+//redux-persist
+const persistConfig = {
+    key: 'root',
+    storage,
+  }
+const persistedReducer = persistReducer(persistConfig, rootReducer)
 
 let store = createStore(
-    rootReducer,
-    composeEnhancers(
-        applyMiddleware(promiseMiddleware),
-    )
+    persistedReducer
 )
+let persistor = persistStore(store)
 //export const actions = allActions;
-export default store
+export default {store,persistor}

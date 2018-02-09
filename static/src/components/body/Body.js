@@ -38,12 +38,13 @@ class Body extends Component {
       <div>
         <Grid fluid>
           <Row>
-            <Col xs={12} md={9}><Grid fluid>
+            <Col mdOffset={0} xs={12}  lgOffset={2} lg={8}>
+            <Grid>
               {/* body part */}
               {askQuestion}
             </Grid>
             </Col>
-            <Col xs={12} md={3}>
+            <Col xs={12} lg={2}>
               {/* sidebar */}
               {login}
             </Col>

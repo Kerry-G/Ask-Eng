@@ -15,7 +15,7 @@ class Header extends Component {
           <Col xs={8} >
               <h1>Ask&nbsp;<small>Eng</small></h1>
           </Col>
-          <Col xs={4}>
+          <Col xsHidden md={4}>
             {user}
           </Col>
         </Row>

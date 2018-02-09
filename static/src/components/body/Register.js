@@ -34,6 +34,7 @@ class Register extends Component {
     componentDidUpdate() {
         this.validateButton()
     }
+    
     /*
      * validateEmail check if the string in the email field is 
      * in the form *@*.*
@@ -203,7 +204,6 @@ class Register extends Component {
                     </Col>
                 </div>
         }
-
         else if (this.state.page === 2) {
             body = <div>
                 <Col xs={12} md={6}>
@@ -271,8 +271,6 @@ class Register extends Component {
                 </Col>
             </div>
         }
-
-
 
         let previousButton, nextButton, saveButton, alert = null;
         if (this.state.page === 1) {

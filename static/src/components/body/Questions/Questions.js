@@ -5,13 +5,15 @@ class Questions extends Component {
   constructor(props) {
     super(props);
     this.state = {
-    
+
     };
   }
 
   render() {
     return (
-      <div> question box </div>
+      <div>
+
+      </div>
     )
   }
 }
