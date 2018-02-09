@@ -125,7 +125,15 @@ label{
     border: 0;
 }
 
+.alert-warning{
 
+    background-image: none;
+    border-color: rgb(192, 61, 61);
+    background-color: none;
+    color: black;
+    background-color: #eee;
+    
+}
 
 
 @media only screen and (max-width:70em) {
@@ -144,3 +152,9 @@ label{
     }
 
 }
+
+
+#welcome {
+    animation-duration: 1s;
+    animation-iteration-count: 1;
+  }

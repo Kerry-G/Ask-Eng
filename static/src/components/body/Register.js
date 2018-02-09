@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Grid, Col, Row, Modal, Button, FormGroup, FormControl, HelpBlock, ControlLabel, Image } from 'react-bootstrap'
+import { Grid, Col, Row, Modal, Button, FormGroup, FormControl, HelpBlock, ControlLabel, Image, Alert } from 'react-bootstrap'
 import Select from 'react-select'
 import {fetchAPI} from './../utility'
 class Register extends Component {
@@ -20,7 +20,8 @@ class Register extends Component {
             //alert state
             answer: null,
 
-            page: 1
+            page: 1,
+            error: true
         }
         this.validateEmail = this.validateEmail.bind(this);
         this.handleClick = this.handleClick.bind(this);
@@ -119,12 +120,17 @@ class Register extends Component {
             role: '',
             button: false,
             answer: null,
-            page: 1
+            page: 1,
+            alert: false,
+            error: false
         })
     }
 
     handleNextPage() {
         let currentPage = this.state.page;
+        
+        
+        
         currentPage++;
         this.setState({
             page: currentPage
@@ -148,10 +154,10 @@ class Register extends Component {
             { value: 'electrical', label: 'Electrical Engineering' },
             { value: 'civil', label: 'Civil Engineering' }
         ];
+
         let body
         if (this.state.page == 1) {
             body =
-
                 <div>
                     <Col xs={12} md={6}>
                         <div className="menu">
@@ -181,7 +187,6 @@ class Register extends Component {
                         </div>
                     </Col>
                 </div>
-
         }
 
         else if (this.state.page === 2) {
@@ -250,11 +255,22 @@ class Register extends Component {
             </div>
         }
 
-        let previousButton, nextButton, saveButton;
+
+
+        let previousButton, nextButton, saveButton, alert = null;
         if (this.state.page === 1) {
             saveButton = null
             previousButton = null
+            
+            if (this.state.error === true) {
+                alert = <Alert bsStyle="warning">Invalid email or password!</Alert>
+            }
+            else {
+                alert = null
+            }
+
             nextButton = <Button onClick={this.handleNextPage}>Next</Button>
+
         }
         else if (this.state.page === 2) {
             saveButton = null
@@ -275,7 +291,9 @@ class Register extends Component {
 
                     <Grid fluid>
                         <Row>
+                        {alert}
                             {body}
+                            
                         </Row>
                     </Grid>
 
@@ -285,6 +303,7 @@ class Register extends Component {
                     {previousButton}
                     {nextButton}
                     {saveButton}
+                    
                 </Modal.Footer>
             </Modal>
         );

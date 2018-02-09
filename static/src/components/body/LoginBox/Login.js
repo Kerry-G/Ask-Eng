@@ -14,6 +14,10 @@ class Login extends Component{
   }
 
   handleLogin(){
+    this.setState({
+      alert: false
+    }
+    )   
     let user = { email: this.state.email, password: this.state.password }
     this.sendLoginInfo(user)
   }
@@ -37,7 +41,7 @@ class Login extends Component{
   render(){
     let alert = null
     if (this.state.alert){
-      alert = <Alert bsStyle="warning"><strong>Invalid email or password!</strong> Try again.</Alert>
+      alert = <div className="flash animated" id="welcome"><Alert bsStyle="warning">Invalid email or password!</Alert></div>
     }
     else{
       alert = null

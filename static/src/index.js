@@ -8,7 +8,9 @@ import AppRoutes from './Routes'
 import 'bootstrap/dist/css/bootstrap.css';
 import 'bootstrap/dist/css/bootstrap-theme.css';
 import 'react-select/dist/react-select.css';
-import './styles.css'
+import './styles.css';
+import './animated.css';
+
 const target = document.querySelector('#root');
 
 ReactDOM.render(
