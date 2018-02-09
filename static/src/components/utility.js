@@ -2,6 +2,8 @@
  * Input: 
  * String method ex. 'POST'
  * String routes ex.  /api/users/
+ * JSON body ex. {user:'lol' password:'pass1234'}
+ * return a promise 
  */
 export function fetchAPI(method, routes, body = null) {
     let bodyData = JSON.stringify(body) 
