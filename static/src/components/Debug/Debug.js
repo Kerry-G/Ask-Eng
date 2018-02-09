@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { FormGroup, FormControl, ControlLabel, Button } from 'react-bootstrap'
+import { Grid, FormGroup, FormControl, ControlLabel, Button } from 'react-bootstrap'
 import Select from 'react-select'
 import { fetchAPI } from '../utility'
 import { connect } from 'react-redux'
@@ -34,45 +34,63 @@ class Debug extends Component {
         ]
         let answer = JSON.stringify(this.state.answer)
         return (
-            <form>
-                <Select
-                    name="form-field-name"
-                    value={this.state.method}
-                    options={options}
-                    onChange={(e) => {
-                        if (e !== null) {
-                            this.setState({ method: e.value })
-                        } else {
-                            this.setState({ method: '' })
-                        }
-                    }}
-                />
-                <FormGroup
-                    controlId="formBasicText"
-                >
-                    <ControlLabel>route</ControlLabel>
-                    <FormControl
-                        type="text"
-                        value={this.state.route}
-                        placeholder="Enter text"
-                        onChange={(e) => { this.setState({ route: e.target.value }) }}
+            <Grid>
+                <form>
+                    <Select
+                        name="form-field-name"
+                        value={this.state.method}
+                        options={options}
+                        onChange={(e) => {
+                            if (e !== null) {
+                                this.setState({ method: e.value })
+                            } else {
+                                this.setState({ method: '' })
+                            }
+                        }}
                     />
-                </FormGroup>
-                <FormGroup
-                    controlId="formBasicText"
-                >
-                    <ControlLabel>body</ControlLabel>
-                    <FormControl
-                        type="text"
-                        value={this.state.body}
-                        placeholder="Enter text"
-                        onChange={(e) => { this.setState({ body: e.target.value }) }}
-                    />
-                </FormGroup>
-                <Button onClick={this.handleClick}>Submit</Button>
-                <br />
-                <code className="prettyprint">{answer}</code>
-            </form>
+                    <FormGroup
+                        controlId="formBasicText"
+                    >
+                        <ControlLabel>route</ControlLabel>
+                        <FormControl
+                            type="text"
+                            value={this.state.route}
+                            placeholder="Enter text"
+                            onChange={(e) => { this.setState({ route: e.target.value }) }}
+                        />
+                    </FormGroup>
+                    <FormGroup
+                        controlId="formBasicText"
+                    >
+                        <ControlLabel>body</ControlLabel>
+                        <FormControl
+                            type="text"
+                            value={this.state.body}
+                            placeholder="Enter text"
+                            onChange={(e) => { this.setState({ body: e.target.value }) }}
+                        />
+                    </FormGroup>
+                    <br />
+                    <p contenteditable="true">
+                        {JSON.stringify({
+                            fname: 'kerry',
+                            lname: 'gougeon',
+                            email: '2@2.com',
+                            password: 'pass1234',
+                            engineer: 'software engineer',
+                            display_image: "1.png"
+                        })}
+                        <br />
+                        {JSON.stringify({
+                            email: '2@2.com', password: 'pass1234'
+                        })}
+                    </p>
+                    <br />
+                    <Button onClick={this.handleClick}>Submit</Button>
+                    <br />
+                    <code className="prettyprint">{answer}</code>
+                </form>
+            </Grid>
         )
     }
 }
