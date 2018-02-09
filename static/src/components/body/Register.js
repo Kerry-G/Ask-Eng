@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import { Grid, Col, Row, Modal, Button, FormGroup, FormControl, HelpBlock, ControlLabel, Image } from 'react-bootstrap'
 import Select from 'react-select'
+import {fetchAPI} from './../utility'
 class Register extends Component {
     constructor(props) {
         super(props)
@@ -86,22 +87,15 @@ class Register extends Component {
                 engineer: this.state.role,
                 display_image: "1.png"
             }
-            let myHeaders = new Headers();
-            myHeaders.append('Content-Type', 'application/json');
-            let myInit = {
-                method: 'POST',
-                body: JSON.stringify(data),
-                headers: myHeaders
-            };
-            let req = new Request("/api/users/", myInit)
-            fetch(req).then(res => res.json())
-                .catch(e => console.error('Error:', e))
-                .then(response => {
-                    if (response.success) {
-                        this.setState({ answer: response.message })
-                    }
-                })
-        } catch (e) { console.error("Error:", e) }
+            fetchAPI("POST", "/api/users", data).then(response => {
+                if (response.success) {
+                    this.setState({ answer: response.message })
+                }
+            }).catch((e) => console.error("Error:", e))
+        }
+        catch (e) {
+            console.error("Error:", e)
+        }
     }
     handleClose() {
         this.props.handleClose();
@@ -123,7 +117,7 @@ class Register extends Component {
             role: '',
             button: false,
             answer: null,
-            page:1
+            page: 1
         })
     }
 
@@ -191,39 +185,39 @@ class Register extends Component {
         else if (this.state.page === 2) {
             body = <div>
                 <Col xs={12} md={6}>
-                <div className="menu">
-                    <FieldGroup
-                        type="text"
-                        label="First Name"
-                        value={this.state.fname}
-                        placeholder="John"
-                        onChange={(e) => {
-                            this.setState({ fname: e.target.value })
-                        }}
-                    />
-                    <FieldGroup
-                        type="text"
-                        label="Last Name"
-                        placeholder="McQueen"
-                        value={this.state.lname}
-                        onChange={(e) => {
-                            this.setState({ lname: e.target.value })
-                        }}
-                    />
-                </div>
+                    <div className="menu">
+                        <FieldGroup
+                            type="text"
+                            label="First Name"
+                            value={this.state.fname}
+                            placeholder="John"
+                            onChange={(e) => {
+                                this.setState({ fname: e.target.value })
+                            }}
+                        />
+                        <FieldGroup
+                            type="text"
+                            label="Last Name"
+                            placeholder="McQueen"
+                            value={this.state.lname}
+                            onChange={(e) => {
+                                this.setState({ lname: e.target.value })
+                            }}
+                        />
+                    </div>
                 </Col>
                 <Col xs={12} md={6}>
-                <div className="picture">
-                    <Image src="https://i.imgur.com/H8wshWs.jpg" responsive rounded />
-                </div>
+                    <div className="picture">
+                        <Image src="https://i.imgur.com/H8wshWs.jpg" responsive rounded />
+                    </div>
                 </Col>
-                </div>
+            </div>
         }
         else if (this.state.page === 3) {
             body = <div>
                 <Col xs={12} md={6}>
                     <div className="menu">
-                       
+
                         <ControlLabel>Engineering Field</ControlLabel>
                         <Select
                             name="form-field-name"
@@ -247,9 +241,9 @@ class Register extends Component {
                     </div>
                 </Col>
                 <Col xs={12} md={6}>
-                <div className="picture">
-                    <Image src="https://i.imgur.com/m06zvaZ.jpg]]]" responsive rounded />
-                </div>
+                    <div className="picture">
+                        <Image src="https://i.imgur.com/m06zvaZ.jpg]]]" responsive rounded />
+                    </div>
                 </Col>
             </div>
         }
@@ -269,7 +263,7 @@ class Register extends Component {
             saveButton = <Button bsStyle="primary" disabled={this.state.button} onClick={this.handleClick}>Save</Button>
             previousButton = <Button onClick={this.handlePreviousPage}>Previous</Button>
             nextButton = null
-        } 
+        }
 
 
         return (
