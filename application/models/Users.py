@@ -58,7 +58,6 @@ def userExists(email):
 def userVerified(email, password):
 	verified = False
 	user = getUser(email)
-	app.logger.info(user)
 	if user is not None:
 		verified = sha256_crypt.verify(password, user['password_hash'])
 

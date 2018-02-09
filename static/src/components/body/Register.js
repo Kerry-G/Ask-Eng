@@ -12,6 +12,7 @@ class Register extends Component {
             email: '',
             pw: '',
             role: '',
+            display_image: '',
 
             //validators
             validEmail: null,
@@ -88,7 +89,7 @@ class Register extends Component {
                 email: this.state.email,
                 password: this.state.pw,
                 engineer: this.state.role,
-                display_image: "1.png"
+                display_image: this.state.display_image
             }
             fetchAPI("POST", "/api/users/", data).then(response => {
                 if (response.success) {
@@ -131,7 +132,8 @@ class Register extends Component {
         let data = {
             email: this.state.email
         }
-        fetchAPI("POST", "/api/users/email/", data).then((response) => {
+        if (this.state.page === 1){
+            fetchAPI("POST", "/api/users/email/", data).then((response) => {
             console.log(response);
             if (response.success) {
                 this.setState({
@@ -142,7 +144,13 @@ class Register extends Component {
                     currentPage++;
                     this.setState({ page: currentPage })
                }
-        }).catch((e) => console.error("Error:", e))
+            }).catch((e) => console.error("Error:", e))
+
+        } else {
+            currentPage++;
+            this.setState({ page: currentPage })
+        }
+
    }
 
     handlePreviousPage() {
@@ -190,7 +198,7 @@ class Register extends Component {
                     </Col>
                     <Col xs={12} md={6}>
                         <div className="picture">
-                            <Image src="https://i.imgur.com/cmPoLVn.jpg" responsive rounded />
+                            <Image className="animated fadeIn" src="https://i.imgur.com/cmPoLVn.jpg" responsive rounded />
                         </div>
                     </Col>
                 </div>
@@ -222,7 +230,9 @@ class Register extends Component {
                 </Col>
                 <Col xs={12} md={6}>
                     <div className="picture">
+                        <div className="animated fadeIn">
                         <Image src="https://i.imgur.com/H8wshWs.jpg" responsive rounded />
+                        </div>
                     </div>
                 </Col>
             </div>
@@ -256,7 +266,7 @@ class Register extends Component {
                 </Col>
                 <Col xs={12} md={6}>
                     <div className="picture">
-                        <Image src="https://i.imgur.com/m06zvaZ.jpg]]]" responsive rounded />
+                        <Image className="animated fadeIn" src="https://i.imgur.com/m06zvaZ.jpg]]]" responsive rounded />
                     </div>
                 </Col>
             </div>

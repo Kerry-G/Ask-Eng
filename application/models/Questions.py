@@ -1,6 +1,5 @@
 from index import db
 from datetime import datetime
-from models import Answers, Users
 
 class Question(db.Model):
 	id = db.Column(db.Integer, primary_key=True)

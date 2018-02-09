@@ -47,7 +47,15 @@ class Login extends Component{
       alert = null
     } 
     return(
-      <Form>
+      <Form
+        onKeyDown={(e) => {
+            if (e.key === 'Enter') {
+              e.preventDefault();
+              this.handleLogin();
+            }
+          }
+        }
+      >
         {alert}
         <FormGroup bsSize="sm">
           <ControlLabel>E-mail</ControlLabel>{' '}

@@ -53,7 +53,7 @@ def usersRoute():
 
         # make the response a json object
         response = json.dumps({'success': success, 'status': status, 'message': message, 'user': user})
-        app.logger.info(response)
+
     elif request.method == 'GET':
         # Get all users
         users = Users.getUsers()
@@ -153,7 +153,6 @@ def userAuthenticate():
     
     # If the reques is POST we assume your trying to login
     if request.method == 'POST':
-        app.logger.info(data)
         # Verify User  
         success = Users.userVerified(data['email'], data['password'])
 
@@ -191,7 +190,7 @@ def emailRoute():
 
     # If the request is POST we assume your trying to get email
     if request.method == 'POST':
-        app.logger.info(data)
+
         # Check if user exists
         success = Users.userExists(data['email'])
 
