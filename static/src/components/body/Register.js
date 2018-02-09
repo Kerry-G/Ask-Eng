@@ -73,11 +73,13 @@ class Register extends Component {
             })
         }
     }
+    
     handleClick() {
         this.props.handleClose();
         this.saveUser();
         this.cleanState();
     }
+
     async saveUser() {
         try {
             let data = {
