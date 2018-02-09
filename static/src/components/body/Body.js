@@ -3,7 +3,7 @@ import { Row, Col, Grid } from 'react-bootstrap'
 import Register from './Register'
 import Login from './LoginBox/Login'
 import AskQuestion from './AskQuestion/AskQuestion'
-import AskCallToRegister from './AskQuestion/AskCallToRegister'
+import DefaultAskQuestion from './AskQuestion/DefaultAskQuestion'
 import { connect } from 'react-redux'
 class Body extends Component {
 
@@ -29,7 +29,7 @@ class Body extends Component {
     let login, askQuestion;
     if ((Object.keys(this.props.user).length === 0 && this.props.user.constructor === Object)) { //if no user is login 
       login = <div className="box-login"> <Login registerModal={this.handleShowRegister} /> </div>
-      askQuestion = <AskCallToRegister register={this.handleShowRegister} />
+      askQuestion = <DefaultAskQuestion register={this.handleShowRegister} />
     } else {
       askQuestion = <div className="ask-question-box"> <AskQuestion /> </div>
     }
