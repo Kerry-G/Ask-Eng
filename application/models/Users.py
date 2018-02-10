@@ -1,4 +1,4 @@
-from index import db
+from index import db, app
 from datetime import datetime
 from passlib.hash import sha256_crypt
 
@@ -148,9 +148,13 @@ def getUsers(limit=20):
 	return response
 
 
+# Returns user if user is found
 def getUserById(id):
-	return User.query.filter_by(id=id).first()
-
+	user = User.query.filter_by(id=id).first()
+	if user is None:
+		return None
+	else:
+		return dict(user)
 
 def deleteUser(id):
 	response = False

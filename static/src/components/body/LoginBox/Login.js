@@ -1,59 +1,76 @@
 import React, { Component } from 'react'
-import { Form, FormGroup, ControlLabel, FormControl } from 'react-bootstrap'
+import { Form, FormGroup, ControlLabel, FormControl, Button, Alert} from 'react-bootstrap'
 import { login } from '../../../store/auth'
-class Login extends Component {
-  constructor(props) {
-    super(props);
+import {fetchAPI} from '../../utility'
+class Login extends Component{
+  constructor(props){
+    super(props)
     this.handleLogin = this.handleLogin.bind(this)
     this.state = {
       email: "",
-      passw: ""
-    };
+      password: "",
+      alert: false
+    }
   }
 
-  handleLogin() {
+  handleLogin(){
+    this.setState({
+      alert: false
+    }
+    )   
     let user = { email: this.state.email, password: this.state.password }
     this.sendLoginInfo(user)
   }
 
-  async sendLoginInfo(user) {
-    try {
-      let myHeaders = new Headers();
-      myHeaders.append('Content-Type', 'application/json');
-      let myInit = {
-        method: 'POST',
-        body: JSON.stringify(user),
-        headers: myHeaders
-      };
-      let req = new Request("/api/users/authenticate/", myInit)
-      fetch(req).then(res => (res.json()))
-        .catch(e => console.error('Error:', e))
-        .then(response => {
-          try{
-          if (response.success) {
+  async sendLoginInfo(user){
+    fetchAPI("POST", "/api/users/authenticate/", user).then(
+      response => {
+        try{
+          if (response.success){
             login(response.user)
-          }} catch(e){console.error("Error",e)}
-        })
-    } catch (e) { console.error("Error: ", e) }
+            this.setState({alert: false})
+          }
+          else{
+            this.setState({alert: true})
+          }
+        } catch(e){console.error("Error", e)}
+      }
+    ).catch((e)=>console.error("Error:", e))
   }
 
-  render() {
-
-    return (
-            <Form>
-              <FormGroup bsSize="sm">
-                <ControlLabel>E-mail</ControlLabel>{' '}
-                <FormControl bsSize="sm" type="email" onChange={(e)=>{this.setState({email:e.target.value})}} placeholder="soen341@email.com" />
-              </FormGroup>{' '}
-              <FormGroup bsSize="sm">
-                <ControlLabel>Password</ControlLabel>{' '}
-                <FormControl bsSize="sm" placeholder="password" type="password" onChange={(e)=>{this.setState({password:e.target.value})}}  />
-              </FormGroup>{' '}
-              <p><a  className="link"  onClick={this.handleLogin}>Login</a>
-              <span> or </span>
-              <a className="link" onClick={this.props.registerModal}>Register</a>
-              </p>
-            </Form>
+  render(){
+    let alert = null
+    if (this.state.alert){
+      alert = <div className="flash animated" id="welcome"><Alert bsStyle="warning">Invalid email or password!</Alert></div>
+    }
+    else{
+      alert = null
+    } 
+    return(
+      <Form
+        onKeyDown={(e) => {
+            if (e.key === 'Enter') {
+              e.preventDefault();
+              this.handleLogin();
+            }
+          }
+        }
+      >
+        {alert}
+        <FormGroup bsSize="sm">
+          <ControlLabel>E-mail</ControlLabel>{' '}
+          <FormControl bsSize="sm" type="email" onChange={(e)=>{this.setState({email:e.target.value})}} placeholder="soen341@email.com" />
+        </FormGroup>{' '}
+        <FormGroup bsSize="sm">
+          <ControlLabel>Password</ControlLabel>{' '}
+          <FormControl bsSize="sm" placeholder="password" type="password" onChange={(e)=>{this.setState({password:e.target.value})}}  />
+        </FormGroup>{' '}
+        <p>
+          <Button bsStyle="primary" onClick={this.handleLogin}>Login</Button>
+          <span> or </span>
+          <a className="link" onClick={this.props.registerModal}>Register</a>
+        </p>
+      </Form>
     );
   }
 }

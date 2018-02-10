@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
-import { Grid, Col, Row, Modal, Button, FormGroup, FormControl, HelpBlock, ControlLabel, Image } from 'react-bootstrap'
+import { Grid, Col, Row, Modal, Button, FormGroup, FormControl, HelpBlock, ControlLabel, Image, Alert } from 'react-bootstrap'
 import Select from 'react-select'
+import { fetchAPI } from './../utility'
 class Register extends Component {
     constructor(props) {
         super(props)
@@ -11,6 +12,7 @@ class Register extends Component {
             email: '',
             pw: '',
             role: '',
+            display_image: '',
 
             //validators
             validEmail: null,
@@ -19,7 +21,8 @@ class Register extends Component {
             //alert state
             answer: null,
 
-            page: 1
+            page: 1,
+            error: false
         }
         this.validateEmail = this.validateEmail.bind(this);
         this.handleClick = this.handleClick.bind(this);
@@ -31,6 +34,7 @@ class Register extends Component {
     componentDidUpdate() {
         this.validateButton()
     }
+    
     /*
      * validateEmail check if the string in the email field is 
      * in the form *@*.*
@@ -71,11 +75,13 @@ class Register extends Component {
             })
         }
     }
+    
     handleClick() {
         this.props.handleClose();
         this.saveUser();
         this.cleanState();
     }
+
     async saveUser() {
         try {
             let data = {
@@ -84,24 +90,17 @@ class Register extends Component {
                 email: this.state.email,
                 password: this.state.pw,
                 engineer: this.state.role,
-                display_image: "1.png"
+                display_image: this.state.display_image
             }
-            let myHeaders = new Headers();
-            myHeaders.append('Content-Type', 'application/json');
-            let myInit = {
-                method: 'POST',
-                body: JSON.stringify(data),
-                headers: myHeaders
-            };
-            let req = new Request("/api/users/", myInit)
-            fetch(req).then(res => res.json())
-                .catch(e => console.error('Error:', e))
-                .then(response => {
-                    if (response.success) {
-                        this.setState({ answer: response.message })
-                    }
-                })
-        } catch (e) { console.error("Error:", e) }
+            fetchAPI("POST", "/api/users/", data).then(response => {
+                if (response.success) {
+                    this.setState({ answer: response.message })
+                }
+            }).catch((e) => console.error("Error:", e))
+        }
+        catch (e) {
+            console.error("Error:", e)
+        }
     }
     handleClose() {
         this.props.handleClose();
@@ -123,17 +122,37 @@ class Register extends Component {
             role: '',
             button: false,
             answer: null,
-            page:1
+            page: 1,
+            alert: false,
+            error: false
         })
     }
 
     handleNextPage() {
         let currentPage = this.state.page;
-        currentPage++;
-        this.setState({
-            page: currentPage
-        })
-    }
+        let data = {
+            email: this.state.email
+        }
+        if (this.state.page === 1){
+            fetchAPI("POST", "/api/users/email/", data).then((response) => {
+            console.log(response);
+            if (response.success) {
+                this.setState({
+                    error: true
+                })
+            }
+            else {
+                    currentPage++;
+                    this.setState({ page: currentPage })
+               }
+            }).catch((e) => console.error("Error:", e))
+
+        } else {
+            currentPage++;
+            this.setState({ page: currentPage })
+        }
+
+   }
 
     handlePreviousPage() {
         let currentPage = this.state.page;
@@ -141,7 +160,6 @@ class Register extends Component {
         this.setState({
             page: currentPage
         })
-
     }
 
     render() {
@@ -152,10 +170,10 @@ class Register extends Component {
             { value: 'electrical', label: 'Electrical Engineering' },
             { value: 'civil', label: 'Civil Engineering' }
         ];
+
         let body
         if (this.state.page == 1) {
             body =
-
                 <div>
                     <Col xs={12} md={6}>
                         <div className="menu">
@@ -181,49 +199,49 @@ class Register extends Component {
                     </Col>
                     <Col xs={12} md={6}>
                         <div className="picture">
-                            <Image src="https://i.imgur.com/cmPoLVn.jpg" responsive rounded />
+                            <Image className="animated fadeIn" src="https://i.imgur.com/cmPoLVn.jpg" responsive rounded />
                         </div>
                     </Col>
                 </div>
-
         }
-
         else if (this.state.page === 2) {
             body = <div>
                 <Col xs={12} md={6}>
-                <div className="menu">
-                    <FieldGroup
-                        type="text"
-                        label="First Name"
-                        value={this.state.fname}
-                        placeholder="John"
-                        onChange={(e) => {
-                            this.setState({ fname: e.target.value })
-                        }}
-                    />
-                    <FieldGroup
-                        type="text"
-                        label="Last Name"
-                        placeholder="McQueen"
-                        value={this.state.lname}
-                        onChange={(e) => {
-                            this.setState({ lname: e.target.value })
-                        }}
-                    />
-                </div>
+                    <div className="menu">
+                        <FieldGroup
+                            type="text"
+                            label="First Name"
+                            value={this.state.fname}
+                            placeholder="John"
+                            onChange={(e) => {
+                                this.setState({ fname: e.target.value })
+                            }}
+                        />
+                        <FieldGroup
+                            type="text"
+                            label="Last Name"
+                            placeholder="McQueen"
+                            value={this.state.lname}
+                            onChange={(e) => {
+                                this.setState({ lname: e.target.value })
+                            }}
+                        />
+                    </div>
                 </Col>
                 <Col xs={12} md={6}>
-                <div className="picture">
-                    <Image src="https://i.imgur.com/H8wshWs.jpg" responsive rounded />
-                </div>
+                    <div className="picture">
+                        <div className="animated fadeIn">
+                        <Image src="https://i.imgur.com/H8wshWs.jpg" responsive rounded />
+                        </div>
+                    </div>
                 </Col>
-                </div>
+            </div>
         }
         else if (this.state.page === 3) {
             body = <div>
                 <Col xs={12} md={6}>
                     <div className="menu">
-                       
+
                         <ControlLabel>Engineering Field</ControlLabel>
                         <Select
                             name="form-field-name"
@@ -247,18 +265,27 @@ class Register extends Component {
                     </div>
                 </Col>
                 <Col xs={12} md={6}>
-                <div className="picture">
-                    <Image src="https://i.imgur.com/m06zvaZ.jpg]]]" responsive rounded />
-                </div>
+                    <div className="picture">
+                        <Image className="animated fadeIn" src="https://i.imgur.com/m06zvaZ.jpg]]]" responsive rounded />
+                    </div>
                 </Col>
             </div>
         }
 
-        let previousButton, nextButton, saveButton;
+        let previousButton, nextButton, saveButton, alert = null;
         if (this.state.page === 1) {
             saveButton = null
             previousButton = null
+
+            if (this.state.error === true) {
+                alert = <Alert bsStyle="warning">Invalid email or password!</Alert>
+            }
+            else {
+                alert = null
+            }
+
             nextButton = <Button onClick={this.handleNextPage}>Next</Button>
+
         }
         else if (this.state.page === 2) {
             saveButton = null
@@ -269,7 +296,7 @@ class Register extends Component {
             saveButton = <Button bsStyle="primary" disabled={this.state.button} onClick={this.handleClick}>Save</Button>
             previousButton = <Button onClick={this.handlePreviousPage}>Previous</Button>
             nextButton = null
-        } 
+        }
 
 
         return (
@@ -279,7 +306,9 @@ class Register extends Component {
 
                     <Grid fluid>
                         <Row>
+                            {alert}
                             {body}
+
                         </Row>
                     </Grid>
 
@@ -289,6 +318,7 @@ class Register extends Component {
                     {previousButton}
                     {nextButton}
                     {saveButton}
+
                 </Modal.Footer>
             </Modal>
         );
