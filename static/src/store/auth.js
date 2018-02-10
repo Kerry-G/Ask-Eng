@@ -1,14 +1,14 @@
-import store from './configureStore'
+import configureStore from './configureStore'
 
 export const login = (user) => {
-    store.dispatch({
+    configureStore.store.dispatch({
         type:"USER_CONNECTION",
         payload: user
     })
 }
 
 export const logOut = () => {
-    store.dispatch({
+    configureStore.store.dispatch({
         type:"LOG_OUT"
     })
 }

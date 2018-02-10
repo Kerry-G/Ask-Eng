@@ -2,6 +2,8 @@ import React, { Component } from 'react'
 import { Row, Col, Grid } from 'react-bootstrap'
 import Register from './Register'
 import Login from './LoginBox/Login'
+import AskQuestion from './AskQuestion/AskQuestion'
+import DefaultAskQuestion from './AskQuestion/DefaultAskQuestion'
 import { connect } from 'react-redux'
 class Body extends Component {
 
@@ -24,52 +26,26 @@ class Body extends Component {
 
 
   render() {
-    let login;
-    if ((Object.keys(this.props.user).length === 0 && this.props.user.constructor === Object)) {
-      login = <div className="box-login">
-        <Login registerModal={this.handleShowRegister} />
-      </div>
+    let login, askQuestion;
+    if ((Object.keys(this.props.user).length === 0 && this.props.user.constructor === Object)) { //if no user is login 
+      login = <div className="box-login"> <Login registerModal={this.handleShowRegister} /> </div>
+      askQuestion = <DefaultAskQuestion register={this.handleShowRegister} />
+    } else {
+      askQuestion = <div className="ask-question-box"> <AskQuestion /> </div>
     }
+
     return (
       <div>
         <Grid fluid>
           <Row>
-            <Col xs={12} md={9}><Grid fluid>
-              <p className="para">
-                Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
-tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
-quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
-consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
-cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
-proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
-              </p>
-              <p className="para">
-                Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
-tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
-quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
-consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
-cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
-proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
-              </p>
-              <p className="para">
-                Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
-tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
-quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
-consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
-cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
-proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
-              </p>
-              <p className="para">
-                Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
-tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
-quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
-consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
-cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
-proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
-              </p>
-              </Grid>
-              </Col>
-            <Col xs={12} md={3}>
+            <Col mdOffset={0} xs={12}  lgOffset={2} lg={8}>
+            <Grid>
+              {/* body part */}
+              {askQuestion}
+            </Grid>
+            </Col>
+            <Col xs={12} lg={2}>
+              {/* sidebar */}
               {login}
             </Col>
           </Row>
