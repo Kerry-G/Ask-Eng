@@ -15,7 +15,7 @@ class Profile extends Component{
             <br />
             <Glyphicon glyph="envelope" />&nbsp;&nbsp;&nbsp;&nbsp;{this.props.user.email}
             <br />
-            <Glyphicon glyph="calendar" />&nbsp;&nbsp;&nbsp;&nbsp;member since:
+            <Glyphicon glyph="calendar" />&nbsp;&nbsp;&nbsp;&nbsp;member since: {this.props.user.register_date}
             <br />
             <Glyphicon glyph="cog" />&nbsp;&nbsp;&nbsp;&nbsp;my settings
           </ListGroupItem>
@@ -24,9 +24,9 @@ class Profile extends Component{
             <br />
             <Glyphicon glyph="comment" />&nbsp;&nbsp;&nbsp;&nbsp;my answers
             <br />
-            <Glyphicon glyph="thumbs-up" />&nbsp;&nbsp;&nbsp;&nbsp;ups
+            <Glyphicon glyph="thumbs-up" />&nbsp;&nbsp;&nbsp;&nbsp;{this.props.user.ups}
             <br />
-            <Glyphicon glyph="thumbs-down" />&nbsp;&nbsp;&nbsp;&nbsp;downs
+            <Glyphicon glyph="thumbs-down" />&nbsp;&nbsp;&nbsp;&nbsp;{this.props.user.downs}
           </ListGroupItem>
         </ListGroup>
       </Panel>
