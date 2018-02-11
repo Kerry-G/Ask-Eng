@@ -11,15 +11,13 @@ class Profile extends Component{
         </Panel.Heading>
         <ListGroup>
           <ListGroupItem>
-              <Glyphicon glyph="envelope" />&nbsp;&nbsp;&nbsp;&nbsp;{this.props.user.email}
-              <br />
-              <Glyphicon glyph="user" />&nbsp;&nbsp;&nbsp;&nbsp;{this.props.user.engineer} engineering
-              <br />
-              <Glyphicon glyph="ok-circle" />&nbsp;&nbsp;&nbsp;&nbsp;verified
-              <br />
-              <Glyphicon glyph="calendar" />&nbsp;&nbsp;&nbsp;&nbsp;member since:
-              <br />
-              <Glyphicon glyph="cog" />&nbsp;&nbsp;&nbsp;&nbsp;my settings
+            <Glyphicon glyph="user" />&nbsp;&nbsp;&nbsp;&nbsp;{this.props.user.engineer} engineering
+            <br />
+            <Glyphicon glyph="envelope" />&nbsp;&nbsp;&nbsp;&nbsp;{this.props.user.email}
+            <br />
+            <Glyphicon glyph="calendar" />&nbsp;&nbsp;&nbsp;&nbsp;member since:
+            <br />
+            <Glyphicon glyph="cog" />&nbsp;&nbsp;&nbsp;&nbsp;my settings
           </ListGroupItem>
           <ListGroupItem>
             <Glyphicon glyph="comment" />&nbsp;&nbsp;&nbsp;&nbsp;my questions
