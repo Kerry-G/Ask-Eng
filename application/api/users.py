@@ -231,7 +231,7 @@ def userConfirm(id):
         status = "OK"
         success = True
     else:
-        messsage = "User does not exist or already confirmed"
+        message = "User does not exist or already confirmed"
         status = "WARNING"
         success = False
 
