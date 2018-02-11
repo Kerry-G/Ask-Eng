@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Panel } from 'react-bootstrap'
+import { Panel, Glyphicon, ListGroup, ListGroupItem } from 'react-bootstrap'
 import { connect } from 'react-redux'
 
 class Profile extends Component{
@@ -9,14 +9,28 @@ class Profile extends Component{
         <Panel.Heading>
           <Panel.Title componentClass="h3">{this.props.user.fname} {this.props.user.lname}'s Profile</Panel.Title>
         </Panel.Heading>
-        <Panel.Body>
-          <small>{this.props.user.engineer} engineering</small>
-          <p>
+        <ListGroup>
+          <ListGroupItem>
+              <Glyphicon glyph="envelope" />&nbsp;&nbsp;&nbsp;&nbsp;{this.props.user.email}
+              <br />
+              <Glyphicon glyph="user" />&nbsp;&nbsp;&nbsp;&nbsp;{this.props.user.engineer} engineering
+              <br />
+              <Glyphicon glyph="ok-circle" />&nbsp;&nbsp;&nbsp;&nbsp;verified
+              <br />
+              <Glyphicon glyph="calendar" />&nbsp;&nbsp;&nbsp;&nbsp;member since:
+              <br />
+              <Glyphicon glyph="cog" />&nbsp;&nbsp;&nbsp;&nbsp;my settings
+          </ListGroupItem>
+          <ListGroupItem>
+            <Glyphicon glyph="comment" />&nbsp;&nbsp;&nbsp;&nbsp;my questions
             <br />
-            <i class="glyphicon glyphicon-envelope"></i>&nbsp;{this.props.user.email}
+            <Glyphicon glyph="comment" />&nbsp;&nbsp;&nbsp;&nbsp;my answers
             <br />
-          </p>
-        </Panel.Body>
+            <Glyphicon glyph="thumbs-up" />&nbsp;&nbsp;&nbsp;&nbsp;ups
+            <br />
+            <Glyphicon glyph="thumbs-down" />&nbsp;&nbsp;&nbsp;&nbsp;downs
+          </ListGroupItem>
+        </ListGroup>
       </Panel>
     );
   }

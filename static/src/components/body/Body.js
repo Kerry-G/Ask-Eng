@@ -32,18 +32,18 @@ class Body extends Component {
       askQuestion = <DefaultAskQuestion register={this.handleShowRegister} />
     } else {
       askQuestion = <div className="ask-question-box"> <AskQuestion /> </div>
-      profileCard = <div className="profile-card"> <br /><Profile /> </div>
+      profileCard = <div className="profile-card"><Profile /> </div>
     }
 
     return (
       <div>
         <Grid>
           <Row>
-            <Col xs={12} lg={9}>
+            <Col xs={12} lg={8}>
               {/* body part */}
               {askQuestion}
             </Col>
-            <Col xs={12} lg={3}>
+            <Col xs={12} lgOffset={1} lg={3}>
               {/* sidebar */}
               {login}
               {profileCard}
