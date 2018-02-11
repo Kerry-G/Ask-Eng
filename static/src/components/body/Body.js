@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import { Row, Col, Grid } from 'react-bootstrap'
 import Register from './Register'
 import Login from './LoginBox/Login'
+import Profile from './LoginBox/Profile'
 import AskQuestion from './AskQuestion/AskQuestion'
 import DefaultAskQuestion from './AskQuestion/DefaultAskQuestion'
 import { connect } from 'react-redux'
@@ -24,29 +25,28 @@ class Body extends Component {
     this.setState({ showRegister: true });
   }
 
-
   render() {
-    let login, askQuestion;
+    let login, askQuestion, profileCard;
     if ((Object.keys(this.props.user).length === 0 && this.props.user.constructor === Object)) { //if no user is login 
       login = <div className="box-login"> <Login registerModal={this.handleShowRegister} /> </div>
       askQuestion = <DefaultAskQuestion register={this.handleShowRegister} />
     } else {
       askQuestion = <div className="ask-question-box"> <AskQuestion /> </div>
+      profileCard = <div className="profile-card"> <br /><Profile /> </div>
     }
 
     return (
       <div>
-        <Grid fluid>
+        <Grid>
           <Row>
-            <Col mdOffset={0} xs={12}  lgOffset={2} lg={8}>
-            <Grid>
+            <Col xs={12} lg={9}>
               {/* body part */}
               {askQuestion}
-            </Grid>
             </Col>
-            <Col xs={12} lg={2}>
+            <Col xs={12} lg={3}>
               {/* sidebar */}
               {login}
+              {profileCard}
             </Col>
           </Row>
           <Register
