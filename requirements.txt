@@ -1,6 +1,7 @@
 click==6.7
 Flask==0.12.2
 Flask-Cors==3.0.3
+Flask-MAil==0.9.1
 Flask-SQLAlchemy==2.3.2
 itsdangerous==0.24
 Jinja2==2.10

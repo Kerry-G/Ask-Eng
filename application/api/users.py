@@ -5,6 +5,7 @@ https://en.wikipedia.org/wiki/Representational_state_transfer#Relationship_betwe
 '''
 
 from flask import Flask, Blueprint, redirect, render_template, url_for, session, request, logging
+from flask_mail import Message, Mail
 from index import app
 from application.models import Users
 from application.util import convertRequestDataToDict as toDict
@@ -15,6 +16,7 @@ import json
 # In /index.py we import this object and attach it to the Flask object app
 # This way all the routes attached to this object will be mapped to app as well.
 users = Blueprint('users', __name__)
+
 
 # A list of the accepted http methods
 httpMethods = ['PUT', 'GET', 'POST', 'DELETE']
@@ -46,7 +48,13 @@ def usersRoute():
                                        display_image=data['display_image'])
         if success:
             status = "OK"
-            message = "User added."
+            user_id = Users.getUserId(email=data['email'])
+            mail = Mail(app)
+            msg = Message("Email confirmation",
+                          recipients=[data['email']])
+            msg.html = "<body>To confirm your email please click on this link: /api/users/confirm/"\
+                       + str(user_id) + "<body>"
+            mail.send(msg)
         else:
             status = "FAILURE"
             message = "Duplicate Email."
@@ -207,10 +215,29 @@ def emailRoute():
 
     response = json.dumps({'success': success, 'status': status, 'message': message})
     return response
-    
 
 
+@users.route('/api/users/confirm/<string:id>', methods=httpMethods)
+def userConfirm(id):
+    # convert request data to dictionary
 
+    success = False  # assume the response is unsucessful
+    message = ""  # assume an empty message
+    status = ""  # accepted statues: 'OK', 'DENIED', 'FAILURE', 'WARNING', 'INVALID'
+    response = {}  # assume the response is empty dict() for now
+
+    if Users.confirmUser(id):
+        message = "User confirmed"
+        status = "OK"
+        success = True
+    else:
+        messsage = "User does not exist or already confirmed"
+        status = "WARNING"
+        success = False
+
+    assert Users.userIsConfirmed(id)
+    response = json.dumps({'success': success, 'status': status, 'message': message})
+    return response
 
 
     
