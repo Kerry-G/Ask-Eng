@@ -2,7 +2,7 @@ import React from 'react'
 import { Jumbotron, Button, Row, Col, Grid } from 'react-bootstrap'
 
 const DefaultAskQuestion = (props) => (
-    <Grid fluid>
+    <Grid>
       <Col xs={12} lg={8}>
           <Jumbotron>
             <h2>Hello you!</h2>

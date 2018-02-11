@@ -150,7 +150,7 @@ label{
 .ask-box-footer{
     width: 100%;
     display: flex;
-    flex-wrap:wrap;
+    flex-wrap: wrap;
     justify-content: center;
 }
 @media only screen and (max-width:70em){
