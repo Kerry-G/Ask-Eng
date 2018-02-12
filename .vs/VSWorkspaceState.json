@@ -1,0 +1,15 @@
+{
+  "ExpandedNodes": [
+    "",
+    "\\application",
+    "\\application\\api",
+    "\\static",
+    "\\static\\src",
+    "\\static\\src\\components",
+    "\\static\\src\\components\\body",
+    "\\static\\src\\components\\body\\Profile",
+    "\\static\\src\\components\\header"
+  ],
+  "SelectedNode": "\\application\\api\\qa.py",
+  "PreviewInSolutionExplorer": false
+}
