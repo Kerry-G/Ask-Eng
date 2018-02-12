@@ -1,37 +1,22 @@
 import React, { Component } from 'react'
 import { Row, Col, Grid } from 'react-bootstrap'
-import Register from '../Register'
-import Login from '../LoginBox/Login'
 import { connect } from 'react-redux'
-class Body extends Component {
+import { BrowserRouter, Route, Switch, Link } from 'react-router-dom';
+class ProfileArea extends Component {
 
   constructor(props) {
     super(props);
-    this.handleShowRegister = this.handleShowRegister.bind(this);
-    this.handleCloseRegister = this.handleCloseRegister.bind(this);
-    this.state = {
-      showRegister: false,
-    };
-  }
-
-  handleCloseRegister() {
-    this.setState({ showRegister: false });
-  }
-
-  handleShowRegister() {
-    this.setState({ showRegister: true });
-  }
-
+	}
 
   render() {
-    let login,user;
-    if ((Object.keys(this.props.user).length === 0 && this.props.user.constructor === Object)) 
-      login = <div className="box-login"> <Login registerModal={this.handleShowRegister} /> </div>
-	user = <div className = "profile"> <h2> {this.props.user.fname} {this.props.user.lname} {this.props.user.id}</h2> 
-		<p> Discipline: {this.props.user.engineer} engineer <br></br>
-			Contact information: {this.props.user.email}
-		</p></div>
-    
+	console.log(this.props);
+    let user; 
+	 user = <div> <h1> {this.props.user.fname} {this.props.user.lname} </h1>
+					<h3>	&nbsp;&nbsp;&nbsp;Discipline: {this.props.user.engineer} engineering <br></br><br></br>
+							&nbsp;&nbsp;&nbsp;Contact information: {this.props.user.email}
+					</h3>
+					<h4> <br></br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;User ID: {this.props.user.id} </h4>
+	 </div>
 
     return (
       <div>
@@ -39,18 +24,11 @@ class Body extends Component {
           <Row>
             <Col mdOffset={0} xs={12}  lgOffset={2} lg={8}>
             </Col>
-            <Col xs={12} lg={2}>
-              {/* sidebar */}
-              {login}
-            </Col>
           </Row>
-          <Register
-            show={this.state.showRegister}
-            handleClose={this.handleCloseRegister} />
         </Grid>
 		<Grid fluid>
 			<Row>
-			<Col mdOffset = {0} xs={10}>
+			<Col mdOffset = {0} xs={8} lgOffset={1}>
 				{user}
 			</Col>
 			</Row>
@@ -66,8 +44,8 @@ function mapStateToProps(state) {
   }
 }
 
-Body = connect(
+ProfileArea = connect(
   mapStateToProps,
-)(Body);
+)(ProfileArea);
 
-export default Body;
+export default ProfileArea;

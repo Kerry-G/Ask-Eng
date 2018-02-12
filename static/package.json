@@ -4,9 +4,11 @@
   "private": true,
   "proxy": "http://localhost:5000",
   "dependencies": {
+    "axios": "^0.17.1",
     "bootstrap": "^3.3.7",
     "history": "^4.7.2",
     "moment": "^2.20.1",
+    "npm": "^4.6.1",
     "react": "^16.2.0",
     "react-bootstrap": "^0.32.1",
     "react-dom": "^16.2.0",
