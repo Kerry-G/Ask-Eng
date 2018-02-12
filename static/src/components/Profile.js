@@ -1,7 +1,6 @@
 import React, {Component} from 'react'
 import Header from './header/Header';
 import Footer from './footer/Footer';
-import ProfileArea from './body/Profile/ProfileArea';
 import ProfileBody from './body/Profile/ProfileBody';
 import {Col, Row, Grid} from 'react-bootstrap'
 import { connect } from 'react-redux'
@@ -14,12 +13,30 @@ class Profile extends Component {
 	}
 
   render() {
-  console.log(this.props);
+
+  console.log(this.props.match.params);
+
+
+   let ProfileInfo;
+	 ProfileInfo = <div> <h1> {this.props.user.fname} {this.props.user.lname} </h1>
+					<h3>	&nbsp;&nbsp;&nbsp;Discipline: {this.props.user.engineer} engineering <br></br><br></br>
+							&nbsp;&nbsp;&nbsp;Contact information: {this.props.user.email}
+					</h3>
+					<h4> <br></br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;User ID: {this.props.match.params.id} </h4>
+	 </div>
     return (
         <div>
             <Header/>
 			<ProfileBody/>
-			<ProfileArea/>
+			<div>
+				<Grid fluid>
+					<Row>
+						<Col mdOffset = {0} xs={8} lgOffset={1}>
+							{ProfileInfo}
+						</Col>
+					</Row>
+				</Grid>
+			</div>
             <Footer/>
         </div>
     );

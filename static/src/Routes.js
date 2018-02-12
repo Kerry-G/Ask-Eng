@@ -1,5 +1,6 @@
 import React from 'react';
 import { BrowserRouter, Route, Switch, Link } from 'react-router-dom';
+import ReactDOM from 'react-dom';
 import App from './containers/App';
 import About from './containers/About';
 import Debug from './components/Debug/Debug.js';
@@ -10,13 +11,13 @@ export default () => {
     return (
         <BrowserRouter>
             <Switch>
-                <Route exact path='/' component={App} />
-                <Route path='/about' component={About} />
-                <Route path='/debug' component={Debug} />
+                <Route exact path='/' component={App}/>
+				<Route path='/about' component={About} />
+				<Route path='/debug' component={Debug} />
 				<Route path='/Home' component={Home} />
-				<Route path='/user/:id' name="user" component={Profile} />
-	
+				<Route path='/user/:id' component={Profile} />
             </Switch>
         </BrowserRouter>
     )
+	document.getElementById('app');
 }
