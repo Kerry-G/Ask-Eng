@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Panel, Glyphicon, ListGroup, ListGroupItem } from 'react-bootstrap'
+import { Panel, Glyphicon, ListGroup, ListGroupItem, Table } from 'react-bootstrap'
 import { connect } from 'react-redux'
 
 class Profile extends Component{
@@ -9,26 +9,29 @@ class Profile extends Component{
         <Panel.Heading>
           <Panel.Title componentClass="h3">{this.props.user.fname} {this.props.user.lname}'s Profile</Panel.Title>
         </Panel.Heading>
-        <ListGroup>
-          <ListGroupItem>
-            <Glyphicon glyph="user" />&nbsp;&nbsp;&nbsp;&nbsp;{this.props.user.engineer} engineering
-            <br />
-            <Glyphicon glyph="envelope" />&nbsp;&nbsp;&nbsp;&nbsp;{this.props.user.email}
-            <br />
-            <Glyphicon glyph="calendar" />&nbsp;&nbsp;&nbsp;&nbsp;member since: {this.props.user.register_date}
-            <br />
-            <Glyphicon glyph="cog" />&nbsp;&nbsp;&nbsp;&nbsp;my settings
-          </ListGroupItem>
-          <ListGroupItem>
-            <Glyphicon glyph="comment" />&nbsp;&nbsp;&nbsp;&nbsp;my questions
-            <br />
-            <Glyphicon glyph="comment" />&nbsp;&nbsp;&nbsp;&nbsp;my answers
-            <br />
-            <Glyphicon glyph="thumbs-up" />&nbsp;&nbsp;&nbsp;&nbsp;{this.props.user.ups}
-            <br />
-            <Glyphicon glyph="thumbs-down" />&nbsp;&nbsp;&nbsp;&nbsp;{this.props.user.downs}
-          </ListGroupItem>
-        </ListGroup>
+          <ListGroup>
+            <ListGroupItem>
+              <Glyphicon glyph="user" />&nbsp;&nbsp;&nbsp;&nbsp;{this.props.user.engineer} engineering
+              <br />
+              <Glyphicon glyph="envelope" />&nbsp;&nbsp;&nbsp;&nbsp;{this.props.user.email}
+              <br />
+              <Glyphicon glyph="cog" />&nbsp;&nbsp;&nbsp;&nbsp;my settings
+              <Table>
+                <tr>
+                  <td>
+                    <Glyphicon glyph="comment" />&nbsp;&nbsp;&nbsp;&nbsp;my questions
+                    <br />
+                    <Glyphicon glyph="comment" />&nbsp;&nbsp;&nbsp;&nbsp;my answers
+                  </td>
+                  <td>
+                    <Glyphicon glyph="thumbs-up" />&nbsp;&nbsp;&nbsp;&nbsp;{this.props.user.ups}
+                    <br />
+                    <Glyphicon glyph="thumbs-down" />&nbsp;&nbsp;&nbsp;&nbsp;{this.props.user.downs}
+                  </td>
+                </tr>
+              </Table>
+            </ListGroupItem>
+          </ListGroup>
       </Panel>
     );
   }
