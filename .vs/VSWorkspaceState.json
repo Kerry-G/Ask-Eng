@@ -9,8 +9,7 @@
     "\\static\\src",
     "\\static\\src\\components",
     "\\static\\src\\components\\body",
-    "\\static\\src\\components\\body\\Profile",
-    "\\static\\src\\containers"
+    "\\static\\src\\components\\body\\Profile"
   ],
   "SelectedNode": "\\application\\models\\Users.py",
   "PreviewInSolutionExplorer": false
