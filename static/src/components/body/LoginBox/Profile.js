@@ -21,24 +21,23 @@ class Profile extends Component {
               <Image src={avatarPath} width={64} circle />
             </Media.Left>
             <Media.Body>
-            <Media.Heading>
-              <Panel.Title>{this.props.user.fname}&nbsp;{this.props.user.lname}'s Profile</Panel.Title>
-            </Media.Heading>
-              {this.props.user.engineer} engineering
+              <Media.Heading>
+                <Panel.Title>{this.props.user.fname}&nbsp;{this.props.user.lname}'s Profile</Panel.Title>
+              </Media.Heading>
+                {this.props.user.engineer} engineering
             </Media.Body>
-
           </Media>
         </Panel.Heading>
         <Panel.Body>
           <Glyphicon glyph="envelope" />&nbsp;&nbsp;&nbsp;&nbsp;{this.props.user.email}
           <br />
           <Glyphicon glyph="cog" />&nbsp;&nbsp;&nbsp;&nbsp;my settings
-              <br />
+          <br />
           <Glyphicon glyph="comment" />&nbsp;&nbsp;&nbsp;&nbsp;my questions
-              <div style={points}><Glyphicon glyph="thumbs-up" />&nbsp;&nbsp;&nbsp;&nbsp;{this.props.user.ups}</div>
+          <div style={points}><Glyphicon glyph="thumbs-up" />&nbsp;&nbsp;&nbsp;&nbsp;{this.props.user.ups}</div>
           <br />
           <Glyphicon glyph="comment" />&nbsp;&nbsp;&nbsp;&nbsp;my answers
-              <div style={points}><Glyphicon glyph="thumbs-down" />&nbsp;&nbsp;&nbsp;&nbsp;{this.props.user.downs}</div>
+          <div style={points}><Glyphicon glyph="thumbs-down" />&nbsp;&nbsp;&nbsp;&nbsp;{this.props.user.downs}</div>
         </Panel.Body>
       </Panel>
     );
