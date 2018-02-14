@@ -47,12 +47,16 @@ class Profile extends Component {
   console.log(this.props.match.params);
 	
 	let ProfileInfo;
+	if (!this.state.alert){
 	 ProfileInfo = <div> <h1> {this.state.fname} {this.state.lname} </h1>
 					<h3>	&nbsp;&nbsp;&nbsp;Discipline: {this.state.engineer} engineering <br></br><br></br>
 							&nbsp;&nbsp;&nbsp;Contact information: {this.state.email}
 					</h3>
 					<h4> <br></br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;User ID: {this.props.match.params.id} </h4>
-	 </div>
+					</div>
+	 } else {
+	 	 ProfileInfo = <div> <h1> User was not found. </h1> </div>
+	 }
     return (
         <div>
             <Header/>
