@@ -18,7 +18,10 @@ class Header extends Component {
     return (
         <Row className="header">
           <Col xs={6}>
-            <h1><Image src={image} width={64} circle />&nbsp;Ask&nbsp;<small>Eng</small></h1>
+            <h1><Link to='/Home' style={{textDecoration: 'none', color: 'white'}}>
+                <Image src={image} width={64} circle />&nbsp;Ask&nbsp;<small>Eng</small>
+                </Link>
+              </h1>
           </Col>
           <Col xs={6}>
             {user}
