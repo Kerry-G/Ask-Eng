@@ -13,6 +13,22 @@ qa = Blueprint('qa', __name__)
 # A list of the accepted http methods
 httpMethods = ['PUT', 'GET', 'POST', 'DELETE']
 
+
+def answersResponse(question_id):
+    answers = []
+    for answer in Answers.getAnswersByQuestion(question_id):
+        answer['user'] = Users.getUser(answer['user_id'])
+        answers.append(answer)
+    return answers
+
+
+def validateQuestionRequest(request):
+    try:
+        return request['title'] != '' and request['text'] != '' and request['engineer'] != '' and request['user_id']
+    except KeyError:
+        return False
+
+
 @qa.route('/api/qa/', methods=httpMethods)
 def index():
     return json.dumps({'success': True, 'status': 'OK', 'message': 'Ping is sucussful.'})
@@ -20,115 +36,227 @@ def index():
 
 @qa.route('/api/qa/questions/', methods=httpMethods)
 def questionsRoute():
-	data = toDict(request.data)  # toDict takes the request data and converts it to a dictionary
+    data = toDict(request.data)  # toDict takes the request data and converts it to a dictionary
 
-	success = False  # assume the response is unsucessful
-	message = ""  # assume an empty message
-	status = ""  # accepted statues: 'OK', 'DENIED', 'FAILURE', 'WARNING', 'INVALID'
-	response = {}  # assume the response is empty dict() for now
-	question = {}
-	answers = []
+    success = False  # assume the response is unsucessful
+    message = ""  # assume an empty message
+    status = ""  # accepted statues: 'OK', 'DENIED', 'FAILURE', 'WARNING', 'INVALID'
+    response = {}  # assume the response is empty dict() for now
+    question = {}
+    answers = []
 
-	if request.method == 'POST':
-		app.logger.info(data)
-		# Create a user and find our whether it is successful or not
-		question = Questions.createQuestion(data['title'], data['text'], data['engineer'], data['user_id'])
+    if not validateQuestionRequest(data):
+        message = "Invalid data request object (title, text, engineer, user_id)."
+        status = "FAILURE"
+        # make the response a json object
+        response = json.dumps(
+            {'success': success, 'status': status, 'message': message, 'question': question, 'answers': answers})
+    elif request.method == 'POST':
 
-		if question:
-			success = True
-			status = "OK"
-			message = "Question added."
-			for answer in Answers.getAnswerByQuestion(question['id']):
-				anwser['user'] = Users.getUser(anwser['user_id'])
-				anwsers.append(answer)
-		else:
-			success = False
-			status = "FAILURE"
-			message = "Error."
-			answers = []
+        # Create a user and find our whether it is successful or not
+        question = Questions.createQuestion(data['title'], data['text'], data['engineer'], data['user_id'])
 
-		# make the response a json object
-		response = json.dumps({'success': success, 'status': status, 'message': message, 'question': question, 'answers':answers})
-	elif request.method == 'GET':
-		questions = Questions.getQuestions(limit=20)
+        app.logger.info(question)
+        if question:
+            success = True
+            status = "OK"
+            message = "Question added."
+            answers = answersResponse(question['id'])
+        else:
+            success = False
+            status = "FAILURE"
+            message = "Error."
+            answers = []
 
-		# make the response a json object
-		response = json.dumps({'success': success, 'status': status, 'message': message, 'questions': questions})
-	
+        # make the response a json object
+        response = json.dumps(
+            {'success': success, 'status': status, 'message': message, 'question': question, 'answers': answers})
+    elif request.method == 'GET':
+        questions = Questions.getQuestions(limit=20)
 
+        # make the response a json object
+        response = json.dumps({'success': success, 'status': status, 'message': message, 'questions': questions})
+    else:
+        success = False
+        status = "WARNING"
+        message = "HTTP method invalid."
+        response = json.dumps({'success': success, 'status': status, 'message': message})
 
-	else:
-		success = False
-		status = "WARNING"
-		message = "HTTP method invalid."
-		response = json.dumps({'success': success, 'status': status, 'message': message})
+    return response
 
-	return response
 
 @qa.route('/api/qa/questions/<string:id>', methods=httpMethods)
 def questionRoute(id):
-	# convert request data to dictionary
-	data = toDict(request.data)  # toDict takes the request data and converts it to a dictionary
+    # convert request data to dictionary
+    data = toDict(request.data)  # toDict takes the request data and converts it to a dictionary
 
-	success = False  # assume the response is unsucessful
-	message = ""  # assume an empty message
-	status = ""  # accepted statues: 'OK', 'DENIED', 'FAILURE', 'WARNING', 'INVALID'
-	response = {}  # assume the response is empty dict() for now
-	question = {}
-	answers = []
+    success = False  # assume the response is unsucessful
+    message = ""  # assume an empty message
+    status = ""  # accepted statues: 'OK', 'DENIED', 'FAILURE', 'WARNING', 'INVALID'
+    response = {}  # assume the response is empty dict() for now
+    question = {}
+    answers = []
 
-	if request.method == 'PUT':
-		# Modify a user and find our whether it is successful or not
-		question = Questions.modifyQuestion(id, data['title'], data['text'], data['engineer'])
+    if request.method == 'PUT':
+        # Modify a user and find our whether it is successful or not
+        question = Questions.modifyQuestion(id, data['title'], data['text'], data['engineer'])
 
-		if question:
-			success = True
-			status = "OK"
-			message = "Question added."
-			for answer in Answers.getAnswerByQuestion(question['id']):
-				anwser['user'] = Users.getUser(anwser['user_id'])
-				anwsers.append(answer)
-		else:
-			success = False
-			status = "FAILURE"
-			message = "Error."
-			answers = []
+        if question:
+            success = True
+            status = "OK"
+            message = "Question added."
+            for answer in Answers.getAnswersByQuestion(question['id']):
+                answer['user'] = Users.getUser(answer['user_id'])
+                answers.append(answer)
+        else:
+            success = False
+            status = "FAILURE"
+            message = "Error."
+            answers = []
 
-	elif request.method == 'GET':
-		# Get the question
-		question = Questions.getQuestion(id)
+    elif request.method == 'GET':
+        # Get the question
+        question = Questions.getQuestion(id)
 
-		if question is not None:
-			success = True
-			status = "OK"
-			message = "Question returned."
-			for answer in Answers.getAnswerByQuestion(question['id']):
-				anwser['user'] = Users.getUser(anwser['user_id'])
-				anwsers.append(answer)
-		else:
-			success = False
-			status = "FAILURE"
-			message = "No user by that id."
+        if question is not None:
+            success = True
+            status = "OK"
+            message = "Question returned."
+            for answer in Answers.getAnswersByQuestion(question['id']):
+                answer['user'] = Users.getUser(answer['user_id'])
+                answers.append(answer)
+        else:
+            success = False
+            status = "FAILURE"
+            message = "No user by that id."
 
-	elif request.method == 'DELETE':
-		# Get the user
-		success = Users.deleteUser(id)
+    elif request.method == 'DELETE':
+        # Get the user
+        success = Users.deleteUser(id)
 
-		if success:
-			status = "OK"
-			message = "User deleted"
-		else:
-			status = "FAILURE"
-			message = "User not found"
-	else:
-		success = False
-		status = "WARNING"
-		message = "HTTP method invalid."
-	
+        if success:
+            status = "OK"
+            message = "User deleted"
+        else:
+            status = "FAILURE"
+            message = "User not found"
+    else:
+        success = False
+        status = "WARNING"
+        message = "HTTP method invalid."
 
-	response = json.dumps({'success': success, 'status': status, 'message': message, 'question': question, 'answers':answers})
-
-
+    response = json.dumps(
+        {'success': success, 'status': status, 'message': message, 'question': question, 'answers': answers})
 
 
+@qa.route('/api/qa/answers/', methods=httpMethods)
+def answersRoute():
+    data = toDict(request.data)  # toDict takes the request data and converts it to a dictionary
 
+    success = False  # assume the response is unsucessful
+    message = ""  # assume an empty message
+    status = ""  # accepted statues: 'OK', 'DENIED', 'FAILURE', 'WARNING', 'INVALID'
+    response = {}  # assume the response is empty dict() for now
+    question = {}
+    answers = []
+
+    if request.method == 'POST':
+        app.logger.info(data)
+        # Create a user and find our whether it is successful or not
+        question = Questions.createQuestion(data['title'], data['text'], data['engineer'], data['user_id'])
+
+        if question:
+            success = True
+            status = "OK"
+            message = "Question added."
+            for answer in Answers.getAnswersByQuestion(question['id']):
+                answer['user'] = Users.getUser(answer['user_id'])
+                answers.append(answer)
+        else:
+            success = False
+            status = "FAILURE"
+            message = "Error."
+            answers = []
+
+        # make the response a json object
+        response = json.dumps(
+            {'success': success, 'status': status, 'message': message, 'question': question, 'answers': answers})
+    elif request.method == 'GET':
+        questions = Questions.getQuestions(limit=20)
+
+        # make the response a json object
+        response = json.dumps({'success': success, 'status': status, 'message': message, 'questions': questions})
+
+
+
+    else:
+        success = False
+        status = "WARNING"
+        message = "HTTP method invalid."
+        response = json.dumps({'success': success, 'status': status, 'message': message})
+
+    return response
+
+
+@qa.route('/api/qa/answers/<string:id>', methods=httpMethods)
+def answerRoute(id):
+    # convert request data to dictionary
+    data = toDict(request.data)  # toDict takes the request data and converts it to a dictionary
+
+    success = False  # assume the response is unsucessful
+    message = ""  # assume an empty message
+    status = ""  # accepted statues: 'OK', 'DENIED', 'FAILURE', 'WARNING', 'INVALID'
+    response = {}  # assume the response is empty dict() for now
+    question = {}
+    answers = []
+
+    if request.method == 'PUT':
+        # Modify a user and find our whether it is successful or not
+        question = Questions.modifyQuestion(id, data['title'], data['text'], data['engineer'])
+
+        if question:
+            success = True
+            status = "OK"
+            message = "Question added."
+            for answer in Answers.getAnswersByQuestion(question['id']):
+                answer['user'] = Users.getUser(answer['user_id'])
+                answers.append(answer)
+        else:
+            success = False
+            status = "FAILURE"
+            message = "Error."
+            answers = []
+
+    elif request.method == 'GET':
+        # Get the question
+        question = Questions.getQuestion(id)
+
+        if question is not None:
+            success = True
+            status = "OK"
+            message = "Question returned."
+            for answer in Answers.getAnswersByQuestion(question['id']):
+                answer['user'] = Users.getUser(answer['user_id'])
+                answers.append(answer)
+        else:
+            success = False
+            status = "FAILURE"
+            message = "No user by that id."
+
+    elif request.method == 'DELETE':
+        # Get the user
+        success = Users.deleteUser(id)
+
+        if success:
+            status = "OK"
+            message = "User deleted"
+        else:
+            status = "FAILURE"
+            message = "User not found"
+    else:
+        success = False
+        status = "WARNING"
+        message = "HTTP method invalid."
+
+    response = json.dumps(
+        {'success': success, 'status': status, 'message': message, 'question': question, 'answers': answers})
