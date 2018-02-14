@@ -44,7 +44,7 @@ class Body extends Component {
               {askQuestion}
               
             </Col>
-            <Col md={4} sm={4} lgOffset={0} lg={3}>
+            <Col md={4} sm={4} lgOffset={1} lg={3}>
               {/* sidebar */}
               {login}
               {profileCard}
