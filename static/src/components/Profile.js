@@ -8,7 +8,6 @@ import { BrowserRouter, Route, Switch, Link } from 'react-router-dom';
 import {fetchAPI} from './utility'
 import ReactDOM from 'react-dom';
 
-
 class Profile extends Component {
   constructor(props) {
     super(props);
@@ -21,6 +20,8 @@ class Profile extends Component {
 		engineer: "",
 		ups:"",
 		downs:"",
+		register_date:"",
+		display_image:"",
 		}
 	}
 	
@@ -36,7 +37,7 @@ class Profile extends Component {
         try{
           if (response.success){
 		  console.log(response.user)
-				this.setState({alert: false, email: response.user.email, fname: response.user.fname, lname: response.user.lname, engineer: response.user.engineer, ups: response.user.ups, downs: response.user.downs})
+				this.setState({alert: false, display_image: response.user.display_image, register_date: response.user.register_date, email: response.user.email, fname: response.user.fname, lname: response.user.lname, engineer: response.user.engineer, ups: response.user.ups, downs: response.user.downs})
           }
           else{
             this.setState({alert: true})
@@ -53,10 +54,10 @@ class Profile extends Component {
       float: "right"
     }
     let avatarPath;
-    if (this.props.user.display_image != ""){
-      avatarPath = "images\\avatar\\" + this.props.user.display_image
+    if (this.state.display_image != ""){
+      avatarPath = "\\images\\avatar\\" + this.state.display_image
     } else {
-      avatarPath = "images\\avatar\\3.png"
+      avatarPath = "\\images\\avatar\\3.png"
     }
 	let ProfileInfo, fname, lname, email, engineer, ups, downs;
 	//Own account
@@ -86,6 +87,8 @@ class Profile extends Component {
 							  <br />
 							  <Glyphicon glyph="comment" />&nbsp;&nbsp;&nbsp;&nbsp;my answers
 							  <div style={points}><Glyphicon glyph="thumbs-down" />&nbsp;&nbsp;&nbsp;&nbsp;{this.state.downs}</div>
+							  <br/><br/>
+							  Date registered: {this.state.register_date}
 							</Panel.Body>
 						  </Panel>
 					</div>
@@ -96,7 +99,7 @@ class Profile extends Component {
 							<Panel.Heading>
 							  <Media>
 								<Media.Left>
-								  <Image src={avatarPath} width={64} circle />
+								  <Image src={avatarPath} width={64} circle /> 
 								</Media.Left>
 								<Media.Body>
 								  <Media.Heading>
@@ -114,6 +117,8 @@ class Profile extends Component {
 							  <br />
 							  <Glyphicon glyph="comment" />&nbsp;&nbsp;&nbsp;&nbsp; answers
 							  <div style={points}><Glyphicon glyph="thumbs-down" />&nbsp;&nbsp;&nbsp;&nbsp;{this.state.downs}</div>
+							  <br/><br/>
+							  Date registered: {this.state.register_date}
 							</Panel.Body>
 						  </Panel>
 					</div>
@@ -124,16 +129,17 @@ class Profile extends Component {
     return (
         <div>
             <Header/>
-			<ProfileBody/>
-			<div>
-				<Grid fluid>
-					<Row>
-					    <Col mdOffset = {0} xs={8} lgOffset={1}>
-							{ProfileInfo} 
-						</Col>
-					</Row>
-				</Grid>
-			</div>
+			<Grid rows={1} cols={2}>
+			  <Row>
+				<Col lg={7} lgOffset={0}>
+				  {/* body part */}
+				  {ProfileInfo}
+				</Col>
+				<Col lg={4}>
+					<ProfileBody/>
+				</Col>
+			  </Row>
+			</Grid>
             <Footer/>
         </div>
     );

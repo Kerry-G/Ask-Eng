@@ -14,7 +14,7 @@ class Header extends Component {
       user = <p className="header-name"> Hello <Link to={`/users/${this.props.user.id}`} style={{color: 'white'}}>{this.props.user.fname} {this.props.user.lname}</Link>&nbsp;|&nbsp;&nbsp;<a className="logoutBtn" onClick={logOut}>log out</a></p>
     }
     let image;
-      image = "images\\ask-eng.png"
+      image = "\\images\\ask-eng.png"
     return (
         <Row className="header">
           <Col xs={6}>
