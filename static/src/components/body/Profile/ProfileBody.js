@@ -30,11 +30,9 @@ class ProfileBody extends Component {
 
     return (
       <div>
-        <Grid fluid>
+        <Grid fluid rows={1} cols={1}>
           <Row>
-            <Col mdOffset={0} xs={12}  lgOffset={2} lg={8}>
-            </Col>
-            <Col xs={12} lg={2}>
+            <Col xs={2} lg={12} mdOffset={8}>
               {/* sidebar */}
               {login}
             </Col>
@@ -43,12 +41,6 @@ class ProfileBody extends Component {
             show={this.state.showRegister}
             handleClose={this.handleCloseRegister} />
         </Grid>
-		<Grid fluid>
-			<Row>
-			<Col mdOffset = {0} xs={8} lgOffset={1}>
-			</Col>
-			</Row>
-		</Grid>
       </div>
     )
   }
