@@ -16,12 +16,8 @@ tall:       (min-height: 780px), */
     border-bottom: 0.1em solid;
     margin: 0px;
     margin-bottom: 25px;
-    /* Safari 4-5, Chrome 1-9 */
-    background: #4267b2;
-}
-.header{
-    /* Safari 5.1, Chrome 10+ */
-    background: #00647f;
+    background: #2e6da4;
+   
 }
 .header h1{
     font-size: 5rem;
@@ -243,8 +239,8 @@ label{
     padding-left: 10px;
 }
 .ask-box.type:hover{
-    color: orange;
-    border: 2px solid orange;
+    color: #c7d0d2;
+    border: 2px solid #c7d0d2;
     text-decoration: none;
     cursor: pointer;
 }
