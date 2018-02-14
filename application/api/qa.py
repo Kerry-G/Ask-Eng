@@ -13,6 +13,21 @@ qa = Blueprint('qa', __name__)
 # A list of the accepted http methods
 httpMethods = ['PUT', 'GET', 'POST', 'DELETE']
 
+
+def answersResponse(question_id):
+	answers = []
+	for answer in Answers.getAnswersByQuestion(question_id):
+				anwser['user'] = Users.getUser(anwser['user_id'])
+				anwsers.append(answer)
+	return answers
+
+def validateQuestionRequest(request):
+	try:
+		return request['title'] != '' and request['text'] != '' and request['engineer'] != '' and request['user_id']
+	except KeyError:
+		return False
+
+
 @qa.route('/api/qa/', methods=httpMethods)
 def index():
     return json.dumps({'success': True, 'status': 'OK', 'message': 'Ping is sucussful.'})
@@ -29,18 +44,23 @@ def questionsRoute():
 	question = {}
 	answers = []
 
-	if request.method == 'POST':
-		app.logger.info(data)
+	if not validateQuestionRequest(data):
+		message = "Invalid data request object (title, text, engineer, user_id)."
+		status = "FAILURE"
+		# make the response a json object
+		response = json.dumps({'success': success, 'status': status, 'message': message, 'question': question, 'answers':answers})
+	elif request.method == 'POST':
+
+
 		# Create a user and find our whether it is successful or not
 		question = Questions.createQuestion(data['title'], data['text'], data['engineer'], data['user_id'])
-
+		
+		app.logger.info(question)
 		if question:
 			success = True
 			status = "OK"
 			message = "Question added."
-			for answer in Answers.getAnswerByQuestion(question['id']):
-				anwser['user'] = Users.getUser(anwser['user_id'])
-				anwsers.append(answer)
+			answers = answersResponse(question['id'])
 		else:
 			success = False
 			status = "FAILURE"
@@ -54,9 +74,6 @@ def questionsRoute():
 
 		# make the response a json object
 		response = json.dumps({'success': success, 'status': status, 'message': message, 'questions': questions})
-	
-
-
 	else:
 		success = False
 		status = "WARNING"
@@ -85,9 +102,7 @@ def questionRoute(id):
 			success = True
 			status = "OK"
 			message = "Question added."
-			for answer in Answers.getAnswerByQuestion(question['id']):
-				anwser['user'] = Users.getUser(anwser['user_id'])
-				anwsers.append(answer)
+			answers = questionResponse(question['id'])
 		else:
 			success = False
 			status = "FAILURE"
