@@ -157,7 +157,6 @@ def getUserById(id):
     else:
         return dict(user)
 
-
 def deleteUser(id):
     response = False
     user = getUserById(id)
