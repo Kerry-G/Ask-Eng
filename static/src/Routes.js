@@ -15,7 +15,7 @@ export default () => {
 				<Route path='/about' component={About} />
 				<Route path='/debug' component={Debug} />
 				<Route path='/Home' component={Home} />
-				<Route path='/users/:id' component={Profile} />
+				<Route exact path='/users/:id' component={Profile} />
             </Switch>
         </BrowserRouter>
     )

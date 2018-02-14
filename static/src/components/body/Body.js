@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import { Row, Col, Grid } from 'react-bootstrap'
 import Register from './Register'
 import Login from './LoginBox/Login'
-import Profile from './LoginBox/Profile'
+import ProfileCard from './LoginBox/ProfileCard'
 import AskQuestion from './AskQuestion/AskQuestion'
 import DefaultAskQuestion from './AskQuestion/DefaultAskQuestion'
 import { connect } from 'react-redux'
@@ -32,7 +32,7 @@ class Body extends Component {
       askQuestion = <DefaultAskQuestion register={this.handleShowRegister} />
     } else {
       askQuestion = <div className="ask-question-box"> <AskQuestion /> </div>
-      profileCard = <div className="profile-card"><Profile /> </div>
+      profileCard = <div className="profile-card"><ProfileCard /> </div>
     }
 
     return (
