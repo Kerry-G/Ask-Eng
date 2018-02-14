@@ -88,6 +88,8 @@ class Profile extends Component {
 							  <Glyphicon glyph="comment" />&nbsp;&nbsp;&nbsp;&nbsp;my answers
 							  <div style={points}><Glyphicon glyph="thumbs-down" />&nbsp;&nbsp;&nbsp;&nbsp;{this.state.downs}</div>
 							  <br/><br/>
+							  User ID: {this.props.match.params.id}
+							  <br/>
 							  Date registered: {this.state.register_date}
 							</Panel.Body>
 						  </Panel>
@@ -118,6 +120,8 @@ class Profile extends Component {
 							  <Glyphicon glyph="comment" />&nbsp;&nbsp;&nbsp;&nbsp; answers
 							  <div style={points}><Glyphicon glyph="thumbs-down" />&nbsp;&nbsp;&nbsp;&nbsp;{this.state.downs}</div>
 							  <br/><br/>
+							  User ID: {this.props.match.params.id}
+							  <br/>
 							  Date registered: {this.state.register_date}
 							</Panel.Body>
 						  </Panel>

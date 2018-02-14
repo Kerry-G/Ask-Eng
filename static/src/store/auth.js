@@ -14,3 +14,7 @@ export const logOut = () => {
     })
 	window.location.reload();
 }
+
+export const reload = () => {
+	window.location.reload();
+}
