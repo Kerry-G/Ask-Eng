@@ -72,7 +72,7 @@ class Profile extends Component {
 								  <Media.Heading>
 									<Panel.Title>{this.state.fname}&nbsp;{this.state.lname}'s Profile</Panel.Title>
 								  </Media.Heading>
-									{this.props.user.engineer} engineering
+									{this.state.engineer} engineering
 								</Media.Body>
 							  </Media>
 							</Panel.Heading>
@@ -102,7 +102,7 @@ class Profile extends Component {
 								  <Media.Heading>
 									<Panel.Title>{this.state.fname}&nbsp;{this.state.lname}'s Profile</Panel.Title>
 								  </Media.Heading>
-									{this.props.user.engineer} engineering
+									{this.state.engineer} engineering
 								</Media.Body>
 							  </Media>
 							</Panel.Heading>

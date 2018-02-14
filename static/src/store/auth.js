@@ -5,10 +5,12 @@ export const login = (user) => {
         type:"USER_CONNECTION",
         payload: user
     })
+	window.location.reload();
 }
 
 export const logOut = () => {
     configureStore.store.dispatch({
         type:"LOG_OUT"
     })
+	window.location.reload();
 }
