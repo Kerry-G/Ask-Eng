@@ -66,9 +66,9 @@ class Profile extends Component {
 						<Panel bsStyle="primary">
 							<Panel.Heading>
 							  <Media>
-								<Media.Left>
-								  <Image src={avatarPath} width={64} circle />
-								</Media.Left>
+									<Media.Left>
+										<Image src={avatarPath} width={64} circle />
+									</Media.Left>
 								<Media.Body>
 								  <Media.Heading>
 									<Panel.Title>{this.state.fname}&nbsp;{this.state.lname}'s Profile</Panel.Title>
@@ -78,19 +78,19 @@ class Profile extends Component {
 							  </Media>
 							</Panel.Heading>
 							<Panel.Body>
-							  <Glyphicon glyph="envelope" />&nbsp;&nbsp;&nbsp;&nbsp;{this.state.email}
+								<Glyphicon glyph="user" />&nbsp;&nbsp;&nbsp;&nbsp;user id: {this.props.match.params.id}
+							  <br/>
+								<Glyphicon glyph="envelope" />&nbsp;&nbsp;&nbsp;&nbsp;{this.state.email}
 							  <br />
+								<Glyphicon glyph="calendar" />&nbsp;&nbsp;&nbsp;&nbsp;date registered: {this.state.register_date}
+								<br />
 							  <Glyphicon glyph="cog" />&nbsp;&nbsp;&nbsp;&nbsp;my settings
-							  <br />
+							  <br /><br />
 							  <Glyphicon glyph="comment" />&nbsp;&nbsp;&nbsp;&nbsp;my questions
 							  <div style={points}><Glyphicon glyph="thumbs-up" />&nbsp;&nbsp;&nbsp;&nbsp;{this.state.ups}</div>
 							  <br />
 							  <Glyphicon glyph="comment" />&nbsp;&nbsp;&nbsp;&nbsp;my answers
 							  <div style={points}><Glyphicon glyph="thumbs-down" />&nbsp;&nbsp;&nbsp;&nbsp;{this.state.downs}</div>
-							  <br/><br/>
-							  User ID: {this.props.match.params.id}
-							  <br/>
-							  Date registered: {this.state.register_date}
 							</Panel.Body>
 						  </Panel>
 					</div>
@@ -112,17 +112,17 @@ class Profile extends Component {
 							  </Media>
 							</Panel.Heading>
 							<Panel.Body>
-							  <Glyphicon glyph="envelope" />&nbsp;&nbsp;&nbsp;&nbsp;{this.state.email}
+								<Glyphicon glyph="user" />&nbsp;&nbsp;&nbsp;&nbsp;user id: {this.props.match.params.id}
+							  <br/>
+								<Glyphicon glyph="envelope" />&nbsp;&nbsp;&nbsp;&nbsp;{this.state.email}
 							  <br />
-							  <Glyphicon glyph="comment" />&nbsp;&nbsp;&nbsp;&nbsp;questions
+								<Glyphicon glyph="calendar" />&nbsp;&nbsp;&nbsp;&nbsp;date registered: {this.state.register_date}
+							  <br /><br />
+							  <Glyphicon glyph="comment" />&nbsp;&nbsp;&nbsp;&nbsp;my questions
 							  <div style={points}><Glyphicon glyph="thumbs-up" />&nbsp;&nbsp;&nbsp;&nbsp;{this.state.ups}</div>
 							  <br />
-							  <Glyphicon glyph="comment" />&nbsp;&nbsp;&nbsp;&nbsp; answers
+							  <Glyphicon glyph="comment" />&nbsp;&nbsp;&nbsp;&nbsp;my answers
 							  <div style={points}><Glyphicon glyph="thumbs-down" />&nbsp;&nbsp;&nbsp;&nbsp;{this.state.downs}</div>
-							  <br/><br/>
-							  User ID: {this.props.match.params.id}
-							  <br/>
-							  Date registered: {this.state.register_date}
 							</Panel.Body>
 						  </Panel>
 					</div>
