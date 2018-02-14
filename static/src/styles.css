@@ -104,6 +104,9 @@ h1{
     height: 20rem;
     margin: 2rem;
 }
+.picture img{
+    max-height: 100%;
+}
 .Select{
     margin-bottom: 2rem;
 }
