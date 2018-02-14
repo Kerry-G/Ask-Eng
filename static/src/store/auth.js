@@ -16,5 +16,6 @@ export const logOut = () => {
 }
 
 export const reload = () => {
+	if (this.props.location.pathname == "/users/:id")
 	window.location.reload();
 }
