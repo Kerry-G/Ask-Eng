@@ -24,3 +24,5 @@ from application.api.qa import qa
 # Attach api to app
 app.register_blueprint(users)
 app.register_blueprint(qa)
+
+

@@ -57,7 +57,7 @@ class Login extends Component{
         }
       >
         {alert}
-        <FormGroup bsSize="sm">
+        <FormGroup bsSize="sm" className="loginBox">
           <ControlLabel>E-mail</ControlLabel>{' '}
           <FormControl bsSize="sm" type="email" onChange={(e)=>{this.setState({email:e.target.value})}} placeholder="soen341@email.com" />
         </FormGroup>{' '}

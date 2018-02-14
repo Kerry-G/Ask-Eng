@@ -19,7 +19,7 @@ class Header extends Component {
         <Row className="header">
           <Col xs={6}>
             <h1><Link to='/Home' style={{textDecoration: 'none', color: 'white'}}>
-                <Image src={image} width={64} circle />&nbsp;Ask&nbsp;<small>Eng</small>
+                <Image src={image} width={64} circle />&nbsp;Ask<small>ENG</small>
                 </Link>
               </h1>
           </Col>

@@ -39,11 +39,12 @@ class Body extends Component {
       <div>
         <Grid>
           <Row>
-            <Col xs={12} lg={8}>
+            <Col lg={8} sm={8} md={8}>
               {/* body part */}
               {askQuestion}
+              
             </Col>
-            <Col xs={12} lgOffset={1} lg={3}>
+            <Col md={4} sm={4} lgOffset={0} lg={3}>
               {/* sidebar */}
               {login}
               {profileCard}

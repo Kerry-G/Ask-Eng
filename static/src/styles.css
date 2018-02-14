@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css?family=Raleway:400,600,800');
+@import url('https://fonts.googleapis.com/css?family=Mukta+Mahee');
 
 /* xsmall:     (max-width: 479px),
 small:      (max-width: 599px),
@@ -9,7 +9,7 @@ xxl:        (min-width: 1200px),
 tall:       (min-height: 780px), */
 
 *{
-    font-family: 'Raleway', 'sans-serif';
+    font-family: 'Mukta Mahee', 'sans-serif';
 }
 /* HEADER */
 .header{
@@ -64,12 +64,23 @@ h1{
     text-align: center;
 }
 /* END FOOTER */
+
+
 .box-login {
     border: 0.1em solid #c7d0d2;
     border-radius: 0.2em;
     box-shadow: inset 0 1.5px 3px rgba(190, 190, 190, .4), 0 0 0 5px #f5f7f8;
     padding: 1em;
 }
+
+.box-login label{
+    font-size: 1.5rem;
+}
+
+.box-login input{
+    font-size: 1.5rem !important; /* yes I added important, sorry */
+}
+
 .footer {
     position: absolute;
     right: 0;
@@ -79,6 +90,8 @@ h1{
     background-color: #efefef;
     text-align: center;
 }
+
+
 
 
 
@@ -152,6 +165,7 @@ label{
     border-radius: 0.2em;
     box-shadow: inset 0 1.5px 3px rgba(190, 190, 190, .4), 0 0 0 5px #f5f7f8;
     padding: 1em;
+    margin-bottom: 2rem;
 }
 .ask-box .title{
     border:none;
@@ -181,18 +195,43 @@ label{
         height: 50%;
         margin-left: auto;
         float: right;
+        color: #fff;
+        background-color: #337ab7;
+        border-color: #2e6da4;
+        width: 100px;
+        color: white;
+        cursor: pointer;
+        text-align: center;
+        border-radius: 100px;
+        padding: 5px;
+        padding-right: 10px;
+        padding-left: 10px;
     }
+
 }
 .ask-box.type.selected{
-    color: orange;
     border: 2px solid orange;
     text-decoration: none;
+    color: #fff;
+    background-color: #337ab7;
+    border-color: #2e6da4;
 }
+
+.ask-box.type.selected:hover{
+    border: 2px solid orange;
+    text-decoration: none;
+    color: #fff;
+    background-color: #337ab7;
+    border-color: #2e6da4;
+}
+
+
 .ask-box.type{
     width: 100px;
     color: black;
     cursor: pointer;
     margin-right: 10px;
+    margin-bottom: 10px;
     text-align: center;
     border: 2px solid #c7d0d2;
     border-radius: 100px;
@@ -208,11 +247,25 @@ label{
 }
 #ask-box-button{
     width: 100px;
-    border-radius: 100px;
+    cursor: pointer;
     margin-right: 10px;
+    margin-bottom: 10px;
+    text-align: center;
+    border-radius: 100px;
+    padding: 5px;
     padding-right: 10px;
     padding-left: 10px;
+
     /* padding-left: 55px; */
     /* padding-right: 55px; */
 }
 /* END ASK-BOX */
+
+
+
+/* MOBILE RESPONSIVE */ 
+
+@media only screen and (max-width:50em) {
+  
+
+}

@@ -113,7 +113,6 @@ class AskQuestion extends Component {
     render() {
         let engineerTypeCSS = this.state.engineerTypeCSS
         return (
-            <Row>
             <div className="ask-box main">
                 <div>
                     <textarea
@@ -141,10 +140,9 @@ class AskQuestion extends Component {
                         onClick={(e, a = 3) => { this.handleClick(a) }}>Electrical</a>
                     <a className={engineerTypeCSS[4] ? "ask-box type selected" : "ask-box type"}
                         onClick={(e, a = 4) => { this.handleClick(a) }}>Civil</a>
-                    <Button id="ask-box-button" bsStyle="primary" onClick={() => this.handleAsk()}>Ask</Button>
+                    <Button  id="ask-box-button" bsStyle="primary" onClick={() => this.handleAsk()}>Ask</Button>
                 </div>
             </div>
-            </Row>
         )
     }
 }
