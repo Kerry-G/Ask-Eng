@@ -51,7 +51,7 @@ def createQuestion(title, text, engineer, user_id):
         db.session.commit()
 
         # set the response to the question
-        response = question
+        response = dict(question)
     except:
         response = {}
 
