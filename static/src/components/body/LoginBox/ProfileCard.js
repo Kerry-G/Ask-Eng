@@ -7,11 +7,11 @@ class Profile extends Component {
 
   constructor(props) {
     super(props);
-    this.handleShowAvatar = this.handleShowAvatar.bind(this);
-    this.handleCloseAvatar = this.handleCloseAvatar.bind(this);
     this.state = {
       showAvatar: false,
     };
+    this.handleShowAvatar = this.handleShowAvatar.bind(this);
+    this.handleCloseAvatar = this.handleCloseAvatar.bind(this);
   }
 
   handleCloseAvatar() {
@@ -19,7 +19,6 @@ class Profile extends Component {
   }
 
   handleShowAvatar() {
-    console.log('show')
     this.setState({ showAvatar: true });
   }
 
@@ -41,8 +40,9 @@ class Profile extends Component {
             <Media.Left>
               <Image src={avatarPath} onClick={this.handleShowAvatar} width={64} circle />
               <ChooseAvatar 
-              props={this.props}
               show={this.state.showAvatar}
+              user = {this.props.user}
+              handleOpen={this.handleOpen}
               handleClose={this.handleCloseAvatar}/>
             </Media.Left>
             <Media.Body>

@@ -10,6 +10,9 @@ const loginReducer = (state = INITIAL_STATE_LOGIN, action) => {
         case 'USER_CONNECTION': {
             return { ...state, user: action.payload, online: true,}
         }
+        case 'USER_UPDATE': {
+            return { ...state, user: action.payload}
+        }
         case 'ERROR_LOGIN': {
             return { ...state, error: action.payload }
         }

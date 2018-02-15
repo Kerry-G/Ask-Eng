@@ -17,7 +17,7 @@ class Debug extends Component {
     }
 
     handleClick() {
-        if (this.state.body != "") {
+        if (this.state.body !== "") {
             fetchAPI(this.state.method, this.state.route, this.state.body).then(response => this.setState({ answer: response }))
         } else {
             fetchAPI(this.state.method, this.state.route).then(response => this.setState({ answer: response }))

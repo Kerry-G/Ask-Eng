@@ -3,7 +3,7 @@ import React, { Component } from 'react';
 import Body from '../components/body/Body';
 import Header from '../components/header/Header';
 import Footer from '../components/footer/Footer';
-import { BrowserRouter as Router, Route, Link } from 'react-router-dom';
+import { BrowserRouter as Router, Route } from 'react-router-dom';
 import Debug from '../components/Debug/Debug.js';
 
 class App extends Component {

@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
-import { Panel, Glyphicon, Image, Media, Modal, Button } from 'react-bootstrap'
-import { connect } from 'react-redux'
+import { Image, Modal, Button } from 'react-bootstrap'
 import { fetchAPI } from '../../utility'
+import { updateUser } from '../../../store/auth'
 
 class ChooseAvatar extends Component {
 
@@ -9,71 +9,64 @@ class ChooseAvatar extends Component {
   constructor(props){
     super(props);
     this.state = {
-      rand: Math.floor(Math.random() * 83) + 1,
-      user_id: props.props.user.id,
+      rand: this.getRandomNumber(),
+      user_id: this.props.user.id,
       buttonMsg: 'Pick one!',
-      show: props.show
     };
 
     this.refreshImage = this.refreshImage.bind(this);
     this.updateAvatar = this.updateAvatar.bind(this);
-    this.handleShow = this.handleShow.bind(this);
-    this.handleClose = this.handleClose.bind(this);
-
-    this.refreshImage();
   }
 
-  handleClose() {
-    this.setState({ show: false });
-  }
-
-  handleShow() {
-    this.setState({ show: true });
-  }
 
   refreshImage() {
     this.setState({
-      rand: Math.floor(Math.random() * 83) + 1,
+      rand: this.getRandomNumber(),
       buttonMsg: 'Save it!'
     });
   }
 
   async updateAvatar() {
-        this.setState({
-          buttonMsg: 'Awesome!!!'
-        });
         try {
             let data = {
-              user_id: this.state.user_id,
+              user_id: this.props.user.id,
               display_image: this.state.rand+'.png'
             }
             console.log(data)
             fetchAPI("PUT", "/api/users/displayImage/", data).then(response => {
                 if (response.success) {
-                    console.log(response)
-                    this.setState({ answer: response.message })
+                  this.setState({ buttonMsg: 'Awesome!!!'});
+                  let updatedUser = JSON.parse(JSON.stringify(this.props.user))
+                  updatedUser.display_image = data.display_image
+                  updateUser(updatedUser)
                 }
             }).catch((e) => console.error("Error:", e))
         }
         catch (e) {
             console.error("Error:", e)
         }
-        this.handleClose()
+  }
+
+  closeModal(){
+    this.props.handleClose()
+    this.setState({
+      rand: this.getRandomNumber(),
+      buttonMsg: "Pick one!"
+    })
+  }
+
+  getRandomNumber(){
+    return Math.floor(Math.random() * 83) + 1
   }
 
   render() {
- 
     let avatarPath = "images/avatar/" + this.state.rand + ".png";
-    let css = {
-      verticalAlign: 'baseline'
-    }
     return (
-           <Modal className="avatarChange" show={this.state.show} onHide={this.handleClose}>
+           <Modal className="avatarChange" show={this.props.show} onHide={this.closeModal.bind(this)}>
            <Modal.Header closeButton>
             <Modal.Title>Change your Avatar</Modal.Title>
            </Modal.Header>
               <Image src={avatarPath} onClick={this.refreshImage} width={64} circle />
-            
               <Button onClick={this.updateAvatar}>{this.state.buttonMsg}</Button>
           </Modal>
     );

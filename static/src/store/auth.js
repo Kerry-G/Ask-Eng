@@ -8,6 +8,13 @@ export const login = (user) => {
 	window.location.reload();
 }
 
+export const updateUser = (user) => {
+    configureStore.store.dispatch({
+        type:"USER_UPDATE",
+        payload: user
+    })
+}
+
 export const logOut = () => {
     configureStore.store.dispatch({
         type:"LOG_OUT"
@@ -16,6 +23,6 @@ export const logOut = () => {
 }
 
 export const reload = () => {
-	if (this.props.location.pathname == "/users/:id")
+	if (this.props.location.pathname === "/users/:id")
 	window.location.reload();
 }

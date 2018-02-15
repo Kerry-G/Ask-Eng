@@ -6,7 +6,7 @@ import ProfileCard from './LoginBox/ProfileCard'
 import AskQuestion from './AskQuestion/AskQuestion'
 import DefaultAskQuestion from './AskQuestion/DefaultAskQuestion'
 import { connect } from 'react-redux'
-import {BrowserRouter as Router, Route} from 'react-router-dom'
+import { Route} from 'react-router-dom'
 import Profile from './Profile/Profile'
 
 class Body extends Component {
@@ -50,8 +50,15 @@ class Body extends Component {
             </Col>
             <Col md={4} sm={4} lgOffset={1} lg={3}>
               {/* sidebar */}
-              {login}
-              {profileCard}
+              <Route exact path='/' render={()=>{
+                return (
+                <div>
+                {login}
+                {profileCard}
+                </div>
+                )
+              }} />
+
             </Col>
           </Row>
           <Register

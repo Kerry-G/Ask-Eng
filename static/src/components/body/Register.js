@@ -173,7 +173,7 @@ class Register extends Component {
         ];
 
         let body
-        if (this.state.page == 1) {
+        if (this.state.page === 1) {
             body =
                 <div>
                     <Col xs={12} md={6}>

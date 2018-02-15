@@ -1,5 +1,5 @@
 import React from 'react'
-import { Jumbotron, Button, Row, Col, Grid } from 'react-bootstrap'
+import { Jumbotron, Button } from 'react-bootstrap'
 
 const DefaultAskQuestion = (props) => (
           <Jumbotron>

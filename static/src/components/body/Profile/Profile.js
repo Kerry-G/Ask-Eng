@@ -1,9 +1,7 @@
 import React, { Component } from 'react'
-import { Col, Row, Grid, Panel, Glyphicon, Image, Media } from 'react-bootstrap'
-import { connect } from 'react-redux'
-import { BrowserRouter, Route, Switch, Link } from 'react-router-dom';
+import { Panel, Glyphicon, Image, Media } from 'react-bootstrap'
 import { fetchAPI } from '../../utility'
-import ReactDOM from 'react-dom';
+import {connect} from 'react-redux'
 
 class Profile extends Component {
 	constructor(props) {
@@ -33,7 +31,6 @@ class Profile extends Component {
 			response => {
 				try {
 					if (response.success) {
-						console.log(response.user)
 						this.setState({ alert: false, display_image: response.user.display_image, register_date: response.user.register_date, email: response.user.email, fname: response.user.fname, lname: response.user.lname, engineer: response.user.engineer, ups: response.user.ups, downs: response.user.downs })
 					}
 					else {
@@ -51,14 +48,14 @@ class Profile extends Component {
 			float: "right"
 		}
 		let avatarPath;
-		if (this.state.display_image != "") {
+		if (this.state.display_image !== "") {
 			avatarPath = "\\images\\avatar\\" + this.state.display_image
 		} else {
 			avatarPath = "\\images\\avatar\\3.png"
 		}
-		let ProfileInfo, fname, lname, email, engineer, ups, downs;
+		let ProfileInfo;
 		//Own account
-		if (!this.state.alert && (this.props.match.params.id == this.state.id)) {
+		if (!this.state.alert && (this.props.match.params.id === this.state.id)) {
 			ProfileInfo = <div>
 				<Panel bsStyle="primary">
 					<Panel.Heading>
@@ -92,7 +89,7 @@ class Profile extends Component {
 				</Panel>
 			</div>
 
-		} else if (!this.state.alert && (!(this.props.match.params.id == this.state.id))) { //viewing another person's profile
+		} else if (!this.state.alert && (!(this.props.match.params.id === this.state.id))) { //viewing another person's profile
 			ProfileInfo = <div>
 				<Panel bsStyle="primary">
 					<Panel.Heading>

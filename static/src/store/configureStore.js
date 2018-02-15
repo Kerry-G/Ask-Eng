@@ -1,4 +1,4 @@
-import { createStore, applyMiddleware, compose } from 'redux'
+import { createStore } from 'redux'
 import createHistory from 'history/createBrowserHistory'
 import {persistStore, persistReducer} from 'redux-persist'
 import rootReducer from './reducers'
