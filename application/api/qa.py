@@ -86,31 +86,32 @@ def questionsRoute():
             success = True
             status = 'OK'
             message = 'Question with anwsers.'
-            response = json.dumps({'success': success, 'status': status, 'message': message, 'question': question})
         elif 'user_id' in questionArgs and 'engineer' not in questionArgs:
             questions = Questions.getQuestionsById(questionArgs['user_id'])
             success = True
             status = 'OK'
             message = 'List of several questions by user_id'
-            response = json.dumps({'success': success, 'status': status, 'message': message, 'questions': questions})
         elif 'user_id' in questionArgs and 'engineer' in questionsArgs:
             questions = Questions.getQuestionsByBoth(questionsArgs['engineer'], questionArgs['user_id'])
             success = True
             status = 'OK'
             message = 'List of several questions by user_id'
-            response = json.dumps({'success': success, 'status': status, 'message': message, 'questions': questions})
         elif 'engineer' in questionArgs:
             questions = Questions.getQuestionsByBoth(questionsArgs['engineer'], questionArgs['user_id'])
             success = True
             status = 'OK'
             message = 'List of several questions by engineer'
-            response = json.dumps({'success': success, 'status': status, 'message': message, 'questions': questions})
         else:
             questions = Questions.getQuestionsByBoth(questionsArgs['engineer'], questionArgs['user_id'])
             success = False
             status = 'FAILURE'
             message = 'Invalid arguments.'
-            response = json.dumps({'success': success, 'status': status, 'message': message})
+        
+        if 'sort' in questionArgs:
+            questions = sorted(questions, key=lamda k: k[questionArgs['sort']])
+
+
+        response = json.dumps({'success': success, 'status': status, 'message': message})
     else:
         success = False
         status = "WARNING"
