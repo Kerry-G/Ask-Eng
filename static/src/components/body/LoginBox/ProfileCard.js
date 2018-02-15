@@ -1,24 +1,49 @@
 import React, { Component } from 'react'
 import { Panel, Glyphicon, Image, Media } from 'react-bootstrap'
 import { connect } from 'react-redux'
+import ChooseAvatar from './ChooseAvatar.js'
 
 class Profile extends Component {
+
+  constructor(props) {
+    super(props);
+    this.handleShowAvatar = this.handleShowAvatar.bind(this);
+    this.handleCloseAvatar = this.handleCloseAvatar.bind(this);
+    this.state = {
+      showAvatar: false,
+    };
+  }
+
+  handleCloseAvatar() {
+    this.setState({ showAvatar: false });
+  }
+
+  handleShowAvatar() {
+    console.log('show')
+    this.setState({ showAvatar: true });
+  }
+
   render() {
     let points = {
       float: "right"
     }
     let avatarPath;
-    if (this.props.user.display_image != ""){
-      avatarPath = "images\\avatar\\" + this.props.user.display_image
+    if (this.props.user.display_image !== ""){
+      avatarPath = "images\\avatar\\" + this.props.user.display_image;
     } else {
-      avatarPath = "images\\avatar\\3.png"
+      avatarPath = "images\\avatar\\4.png";
     }
+
     return (
       <Panel bsStyle="primary">
         <Panel.Heading>
           <Media>
             <Media.Left>
-              <Image src={avatarPath} width={64} circle />
+              <Image src={avatarPath} onClick={this.handleShowAvatar} width={64} circle />
+              <ChooseAvatar 
+              props={this.props}
+              show={this.state.showAvatar}
+              handleClose={this.handleCloseAvatar}/>
             </Media.Left>
             <Media.Body>
               <Media.Heading>

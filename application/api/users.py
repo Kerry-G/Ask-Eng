@@ -240,6 +240,38 @@ def userConfirm(id):
     return response
 
 
+@users.route('/api/users/displayImage/', methods=httpMethods)
+def displayimageRoute():
+    # convert request data to dictionary
+    data = toDict(request.data)
+
+    success = False  # assume the response is unsucessful
+    message = ""  # assume an empty message
+    status = ""  # accepted statues: 'OK', 'DENIED', 'FAILURE', 'WARNING', 'INVALID'
+    response = {}  # assume the response is empty dict() for now
+
+
+    # If the request is PUT we assume your're trying to update the display_image
+    if request.method == 'PUT':
+
+        # Check if display image change wroks
+        success = Users.updateDisplayImage(data['user_id'], data['display_image'])
+
+        if success:
+            message = "display_image updated."
+            status = "OK"
+        else:
+            message = "display_image could not be updated, no user with that id."
+            status = "FAILURE"
+    else:
+        message = "HTTP method invalid."
+        status = "WARNING"
+        success = False
+
+    response = json.dumps({'success': success, 'status': status, 'message': message})
+    return response
+
+
     
 
 

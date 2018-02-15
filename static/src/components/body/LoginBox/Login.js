@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import { Form, FormGroup, ControlLabel, FormControl, Button, Alert} from 'react-bootstrap'
 import { login } from '../../../store/auth'
 import {fetchAPI} from '../../utility'
+
 class Login extends Component{
   constructor(props){
     super(props)

@@ -116,10 +116,10 @@ def modifyUser(id, fname, lname, engineer, display_image):
         user.engineer = engineer
         user.lname = lname
         user.fname = fname
-        db.session.add(user)
         db.session.commit()
         response = True
     return response
+
 
 
 # Update a user's password
@@ -128,10 +128,18 @@ def updatePassword(email, oldPassword, newPassword):
     if userVerified(email, oldPassword):
         user = User.query.filter_by(email=email).first()
         user.password_hash = sha256_crypt.hash(newPassword)
-        db.session.add(user)
         db.session.commit()
 
     return response
+
+def updateDisplayImage(user_id, display_image):
+    user = User.query.filter_by(id=user_id).first()
+    if user is not None:
+        user.display_image = display_image
+        db.session.commit()
+        return True
+    else:
+        return False
 
 
 # Get all Users returns list of users or an empty list

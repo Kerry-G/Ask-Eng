@@ -24,7 +24,7 @@ def answersResponse(question_id):
 
 def validateQuestionRequest(request):
     try:
-        return request['title'] != '' and request['text'] != '' and request['engineer'] != '' and request['user_id']
+        return request['title'] == '' and request['text'] == '' and request['engineer'] == '' 
     except KeyError:
         return False
 
@@ -45,7 +45,7 @@ def questionsRoute():
     question = {}
     answers = []
 
-    if not validateQuestionRequest(data):
+    if validateQuestionRequest(data):
         message = "Invalid data request object (title, text, engineer, user_id)."
         status = "FAILURE"
         # make the response a json object

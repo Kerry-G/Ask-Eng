@@ -138,6 +138,8 @@ label{
     background-color: #eee;
 }
 /* END REGISTER MODAL */
+
+
 /* IDK */
 @media only screen and (max-width:70em){
     .picture{
@@ -155,6 +157,7 @@ label{
     animation-duration: 1s;
     animation-iteration-count: 1;
   }
+
 /* ASK-BOX */
 .ask-box{
     width: 100%;
@@ -260,11 +263,17 @@ label{
 }
 /* END ASK-BOX */
 
+.avatarChange{
+    text-align: center;
+    color: #2e6da4;
+}
 
+.avatarChange img{
+    margin: 1rem;
+    cursor: pointer;
+}
 
-/* MOBILE RESPONSIVE */ 
-
-@media only screen and (max-width:50em) {
-  
-
+.avatarChange img:hover{
+    transition: ease 1s opacity;
+    opacity: 0.8;
 }

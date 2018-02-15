@@ -102,6 +102,7 @@ class Register extends Component {
             console.error("Error:", e)
         }
     }
+    
     handleClose() {
         this.props.handleClose();
         this.cleanState();
