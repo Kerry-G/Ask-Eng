@@ -3,7 +3,7 @@ import React from 'react'
 import ReactDOM from 'react-dom'
 import { Provider } from 'react-redux'
 import configureStore from './store/configureStore'
-import AppRoutes from './Routes'
+import App from './containers/App'
 import { PersistGate } from 'redux-persist/integration/react'
 
 // css imports
@@ -16,7 +16,7 @@ console.log(configureStore.persistor)
 ReactDOM.render(
     <Provider store={configureStore.store}>
         <PersistGate loading={null} persistor={configureStore.persistor}>
-            <AppRoutes />
+            <App />
         </PersistGate>
     </Provider>,
     target

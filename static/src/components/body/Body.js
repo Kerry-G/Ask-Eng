@@ -6,6 +6,9 @@ import ProfileCard from './LoginBox/ProfileCard'
 import AskQuestion from './AskQuestion/AskQuestion'
 import DefaultAskQuestion from './AskQuestion/DefaultAskQuestion'
 import { connect } from 'react-redux'
+import {BrowserRouter as Router, Route} from 'react-router-dom'
+import Profile from './Profile/Profile'
+
 class Body extends Component {
 
   constructor(props) {
@@ -41,8 +44,9 @@ class Body extends Component {
           <Row>
             <Col lg={8} sm={8} md={8}>
               {/* body part */}
-              {askQuestion}
-              
+                <Route exact path='/' render={()=>askQuestion} />
+                <Route exact path='/users/' component={Profile} />
+                <Route path='/users/:id' component={Profile} />
             </Col>
             <Col md={4} sm={4} lgOffset={1} lg={3}>
               {/* sidebar */}
