@@ -52,8 +52,7 @@ def usersRoute():
             mail = Mail(app)
             msg = Message("Email confirmation",
                           recipients=[data['email']])
-            msg.html = "<body>To confirm your email please click on this link: http://localhost:3000/users/"
-                       + str(user_id) + "</body>"
+            msg.html = "<body>To confirm your email please click on this link: http://localhost:3000/users/" + str(user_id) + "</body>"
             mail.send(msg)
         else:
             status = "FAILURE"

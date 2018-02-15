@@ -108,7 +108,7 @@ def questionsRoute():
             message = 'Invalid arguments.'
         
         if 'sort' in questionArgs:
-            questions = sorted(questions, key=lamda k: k[questionArgs['sort']])
+            questions = sorted(questions, key=lambda k: k[questionArgs['sort']])
 
 
         response = json.dumps({'success': success, 'status': status, 'message': message})
