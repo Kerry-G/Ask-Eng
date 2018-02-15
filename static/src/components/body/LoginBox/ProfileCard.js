@@ -1,7 +1,8 @@
 import React, { Component } from 'react'
 import { Panel, Glyphicon, Image, Media } from 'react-bootstrap'
 import { connect } from 'react-redux'
-import ChooseAvatar from './ChooseAvatar.js'
+import ChooseAvatar from './ChooseAvatar.js';
+
 
 class Profile extends Component {
 
@@ -32,6 +33,7 @@ class Profile extends Component {
     } else {
       avatarPath = "images\\avatar\\4.png";
     }
+   
 
     return (
       <Panel bsStyle="primary">
@@ -63,8 +65,9 @@ class Profile extends Component {
           <br />
           <Glyphicon glyph="comment" />&nbsp;&nbsp;&nbsp;&nbsp;my answers
           <div style={points}><Glyphicon glyph="thumbs-down" />&nbsp;&nbsp;&nbsp;&nbsp;{this.props.user.downs}</div>
-        </Panel.Body>
-      </Panel>
+         </Panel.Body>
+       
+          </Panel>
     );
   }
 }

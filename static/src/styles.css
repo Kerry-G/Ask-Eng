@@ -44,6 +44,21 @@ tall:       (min-height: 780px), */
 .para{
     margin-top: 1.5rem;
 }
+
+
+.menu .btn-toolbar{
+    display: inline-block;
+        vertical-align: middle;
+        margin: auto 1rem;
+       
+}
+
+.menu {
+    margin-top: 1.5rem;
+    float: right; 
+}
+
+
 /* END HEADER */
 h1{
     margin: 0.3em 0.5em 0.3em 0.5em;
@@ -348,3 +363,5 @@ label{
     transition: ease 1s opacity;
     opacity: 0.8;
 }
+
+
