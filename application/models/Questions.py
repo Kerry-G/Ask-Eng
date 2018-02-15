@@ -105,7 +105,7 @@ def getQuestions(limit=20):
 
     if questions is not None:
         for question in questions:
-            user = User.query.filter_by(id=question.user_id).first()
+            user = Users.query.filter_by(id=question.user_id).first()
             ques = dict(question)
             ques['user'] = dict(user)
             del ques['user_id']
@@ -120,7 +120,7 @@ def getQuestionsByUser(user_id):
 
     if questions is not None:
         for question in questions:
-            user = User.query.filter_by(id=question.user_id).first()
+            user = Users.query.filter_by(id=question.user_id).first()
             ques = dict(question)
             ques['user'] = dict(user)
             del ques['user_id']
@@ -135,7 +135,7 @@ def getQuestionByEngineer(engineer):
 
     if questions is not None:
         for question in questions:
-            user = User.query.filter_by(id=question.user_id).first()
+            user = Users.query.filter_by(id=question.user_id).first()
             ques = dict(question)
             ques['user'] = dict(user)
             del ques['user_id']
@@ -149,7 +149,7 @@ def getQuestionsByBoth(engineer, user_id):
 
     if questions is not None:
         for question in questions:
-            user = User.query.filter_by(id=question.user_id).first()
+            user = Users.query.filter_by(id=question.user_id).first()
             ques = dict(question)
             ques['user'] = dict(user)
             del ques['user_id']
