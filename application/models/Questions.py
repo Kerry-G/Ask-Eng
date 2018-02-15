@@ -109,7 +109,7 @@ def getQuestions(limit=20):
             ques = dict(question)
             ques['user'] = dict(user)
             del ques['user_id']
-            response.append()
+            response.append(ques)
     return response
 
 
@@ -124,7 +124,7 @@ def getQuestionsByUser(user_id):
             ques = dict(question)
             ques['user'] = dict(user)
             del ques['user_id']
-            response.append()
+            response.append(ques)
     return response
 
 
@@ -139,7 +139,7 @@ def getQuestionByEngineer(engineer):
             ques = dict(question)
             ques['user'] = dict(user)
             del ques['user_id']
-            response.append()
+            response.append(ques)
     return response
 
 def getQuestionsByBoth(engineer, user_id):
@@ -153,6 +153,6 @@ def getQuestionsByBoth(engineer, user_id):
             ques = dict(question)
             ques['user'] = dict(user)
             del ques['user_id']
-            response.append()
+            response.append(ques)
     return response
 

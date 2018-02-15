@@ -5,7 +5,6 @@ export const login = (user) => {
         type:"USER_CONNECTION",
         payload: user
     })
-	window.location.reload();
 }
 
 export const updateUser = (user) => {

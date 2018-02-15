@@ -32,7 +32,7 @@ class Question extends Component {
               </div>
             <Row>
               <h1><span className="question-tag">{this.props.question.engineer}</span>{this.props.question.title}</h1>
-              <div className="question-time">{time}</div>
+              <div className="question-time">{time} by {this.props.question.user.fname} {this.props.question.user.lname}</div>
               </Row>
             </Col>
 

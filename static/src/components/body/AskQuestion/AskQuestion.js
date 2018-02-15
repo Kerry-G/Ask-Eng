@@ -94,8 +94,6 @@ class AskQuestion extends Component {
         }
     }
 
-
-
     cleanState() {
         this.setState({
             engineerTypeCSS: [
