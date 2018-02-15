@@ -8,6 +8,7 @@ import DefaultAskQuestion from './AskQuestion/DefaultAskQuestion'
 import { connect } from 'react-redux'
 import { Route} from 'react-router-dom'
 import Profile from './Profile/Profile'
+import Questions from './Questions/Questions';
 
 class Body extends Component {
 
@@ -48,6 +49,7 @@ class Body extends Component {
                     <div>
                     {askQuestion}
                     {login}
+                    {<Questions/>}
                     {/* {profileCard} */}
                   </div>
                   )

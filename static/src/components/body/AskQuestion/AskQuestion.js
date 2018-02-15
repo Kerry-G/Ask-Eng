@@ -105,7 +105,7 @@ class AskQuestion extends Component {
                 title: '',
                 text: '',
                 engineer: '',
-                user_id: 0
+                user_id: this.props.user.id
             }
         })
     }

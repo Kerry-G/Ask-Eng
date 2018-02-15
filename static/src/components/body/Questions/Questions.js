@@ -6,22 +6,29 @@ class Questions extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      questions=[]
+      questions:[]
     };
   }
 
   async getQuestions(){
+    console.log('fetching...')
     try{
-      fetchAPI("PUT", "/api/questions/").then(response =>{
-        
+      fetchAPI("GET", "/api/qa/questions/?user_id=2").then(response =>{
+        console.log('fetch!')
+        console.log(response)
+        if(response.success){
+          console.log(response.questions)
+        }
       })
     } catch(e){console.error("Error:", e)}
   }
 
   render() {
+    this.getQuestions();
+    let questions = this.state.questions.map((data)=>{console.log(data)})
     return (
       <div>
-        question.map((data)=>{data})
+        {questions}
       </div>
     )
   }

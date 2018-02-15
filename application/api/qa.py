@@ -56,14 +56,14 @@ def questionsRoute():
         status = "FAILURE"
         # make the response a json object
         response = json.dumps(
-            {'success': success, 'status': status, 'message': message, 'question': question, 'answers': answers})
+            {'success': success, 'status': status, 'message': message, 'question': question})
     elif request.method == 'POST':
 
         # Create a user and find our whether it is successful or not
         question = Questions.createQuestion(data['title'], data['text'], data['engineer'], data['user_id'])
 
         app.logger.info(question)
-        if question[0] is not None:
+        if question is not None:
             success = True
             status = "OK"
             message = "Question added."
@@ -87,22 +87,22 @@ def questionsRoute():
             status = 'OK'
             message = 'Question with anwsers.'
         elif 'user_id' in questionArgs and 'engineer' not in questionArgs:
-            questions = Questions.getQuestionsById(questionArgs['user_id'])
+            questions = Questions.getQuestionsByUser(questionArgs['user_id'])
             success = True
             status = 'OK'
             message = 'List of several questions by user_id'
-        elif 'user_id' in questionArgs and 'engineer' in questionsArgs:
-            questions = Questions.getQuestionsByBoth(questionsArgs['engineer'], questionArgs['user_id'])
+        elif 'user_id' in questionArgs and 'engineer' in questionArgs:
+            questions = Questions.getQuestionsByBoth(questionArgs['engineer'], questionArgs['user_id'])
             success = True
             status = 'OK'
             message = 'List of several questions by user_id'
         elif 'engineer' in questionArgs:
-            questions = Questions.getQuestionsByBoth(questionsArgs['engineer'], questionArgs['user_id'])
+            questions = Questions.getQuestionsByBoth(questionArgs['engineer'], questionArgs['user_id'])
             success = True
             status = 'OK'
             message = 'List of several questions by engineer'
         else:
-            questions = Questions.getQuestionsByBoth(questionsArgs['engineer'], questionArgs['user_id'])
+            questions = Questions.getQuestionsByBoth(questionArgs['engineer'], questionArgs['user_id'])
             success = False
             status = 'FAILURE'
             message = 'Invalid arguments.'
@@ -110,8 +110,10 @@ def questionsRoute():
         if 'sort' in questionArgs:
             questions = sorted(questions, key=lambda k: k[questionArgs['sort']])
 
-
-        response = json.dumps({'success': success, 'status': status, 'message': message})
+        if question:
+            response = json.dumps({'success': success, 'status': status, 'message': message, 'question':question })
+        else:
+            response = json.dumps({'success': success, 'status': status, 'message': message, 'questions':questions })
     else:
         success = False
         status = "WARNING"
