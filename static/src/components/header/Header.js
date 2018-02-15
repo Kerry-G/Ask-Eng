@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import {Col, Row, Image} from 'react-bootstrap'
 import { connect } from 'react-redux'
 import {logOut, reload} from '../../store/auth'
-import { BrowserRouter, Route, Switch, Link } from 'react-router-dom';
+import {Route, Switch, Link } from 'react-router-dom';
 class Header extends Component {
 
   render() {
@@ -17,7 +17,7 @@ class Header extends Component {
     return (
         <Row className="header">
           <Col xs={6}>
-            <h1><Link to='/Home' style={{textDecoration: 'none', color: 'white'}}>
+            <h1><Link to='/' style={{textDecoration: 'none', color: 'white'}}>
                 <Image src={image} width={64} circle />&nbsp;Ask<small>ENG</small>
                 </Link>
               </h1>
