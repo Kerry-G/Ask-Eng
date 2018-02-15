@@ -128,3 +128,14 @@ def getQuestionByEngineer(engineer):
         for question in questions:
             response.append(dict(question))
     return response
+
+def getQuestionsByBoth(engineer, user_id):
+    response = []
+
+    questions = Question.query.filter_by(engineer=engineer,id=user_id).all()
+
+    if questions is not None:
+        for question in questions:
+            response.append(dict(question))
+    return response
+
