@@ -2,6 +2,8 @@ from index import db
 from datetime import datetime
 from application.models import Users
 
+
+
 class Question(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     title = db.Column(db.String(30))
@@ -86,7 +88,6 @@ def modifyQuestion(id, title, text, engineer):
         question.engineer = engineer
         question.title = title
         question.text = text
-        db.session.add(question)
         db.session.commit()
         response = True
         response = question
@@ -104,7 +105,11 @@ def getQuestions(limit=20):
 
     if questions is not None:
         for question in questions:
-            response.append(dict(question))
+            user = User.query.filter_by(id=question.user_id).first()
+            ques = dict(question)
+            ques['user'] = dict(user)
+            del ques['user_id']
+            response.append()
     return response
 
 
@@ -115,7 +120,11 @@ def getQuestionsByUser(user_id):
 
     if questions is not None:
         for question in questions:
-            response.append(dict(question))
+            user = User.query.filter_by(id=question.user_id).first()
+            ques = dict(question)
+            ques['user'] = dict(user)
+            del ques['user_id']
+            response.append()
     return response
 
 
@@ -126,7 +135,11 @@ def getQuestionByEngineer(engineer):
 
     if questions is not None:
         for question in questions:
-            response.append(dict(question))
+            user = User.query.filter_by(id=question.user_id).first()
+            ques = dict(question)
+            ques['user'] = dict(user)
+            del ques['user_id']
+            response.append()
     return response
 
 def getQuestionsByBoth(engineer, user_id):
@@ -136,6 +149,10 @@ def getQuestionsByBoth(engineer, user_id):
 
     if questions is not None:
         for question in questions:
-            response.append(dict(question))
+            user = User.query.filter_by(id=question.user_id).first()
+            ques = dict(question)
+            ques['user'] = dict(user)
+            del ques['user_id']
+            response.append()
     return response
 
