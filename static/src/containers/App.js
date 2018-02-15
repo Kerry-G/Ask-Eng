@@ -13,15 +13,15 @@ class App extends Component {
   render() {
     
     return (
-      <div>
+      <div >
         <Router>
-          <div>
+          <div id="app">
           <Header />
           <Route path='/' component={Body}/>
           <Route path='/debug' component={Debug} />
           </div>
         </Router>
-        <Footer/>
+        {/* <Footer/> */}
       </div>
     )
   }

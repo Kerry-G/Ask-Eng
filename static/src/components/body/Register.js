@@ -294,7 +294,7 @@ class Register extends Component {
             nextButton = <button className="reg-btn" onClick={this.handleNextPage}>Next</button >
         }
         else if (this.state.page === 3) {
-            saveButton = <button className="reg-btn" bsStyle="primary" disabled={this.state.button} onClick={this.handleClick}>Save</button >
+            saveButton = <button className="reg-btn" disabled={this.state.button} onClick={this.handleClick}>Save</button >
             previousButton = <button className="reg-btn" onClick={this.handlePreviousPage}>Previous</button >
             nextButton = null
         }

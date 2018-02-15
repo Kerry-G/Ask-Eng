@@ -11,6 +11,9 @@ tall:       (min-height: 780px), */
 *{
     font-family: 'Mukta Mahee', 'sans-serif';
 }
+#app{
+    padding-bottom: 6rem;
+}
 /* HEADER */
 .header{
     margin: 0px;
@@ -348,7 +351,7 @@ label{
     /* padding-right: 55px; */
 }
 /* END ASK-BOX */
-
+/* avatar */
 .avatarChange{
     text-align: center;
     color: #ecf0f1;
@@ -363,5 +366,48 @@ label{
     transition: ease 1s opacity;
     opacity: 0.8;
 }
-
-
+/* END avatar */
+/* question box */
+.question-box{
+    border-bottom: 1px #95a5a6 solid;
+}
+.question-box .square{
+    border:1px dotted #95a5a6;
+    float:left;
+    width: 40px;
+    height: 40px;
+    margin:10px;
+}
+.question-box h1{
+    margin-top:10px;
+    margin-left:0px;
+    font-size: 2rem;
+}
+.question-box p{
+    font-size:1.2rem;
+}
+.question-tag{
+    float:left;
+    background-color:#e74c3c;
+    color:white;
+    padding:2px;
+    padding-left:10px;
+    padding-right:10px;
+    margin-right:10px;
+    margin-left:10px;
+    font-size:1.4rem;
+}
+.up{
+    color:#c0392b;
+    text-align:center;
+}
+.down{
+    color:#9b59b6;
+    text-align:center;
+}
+.question-time{
+    float:left;
+    margin-left:10px;
+    font-size: 1.3rem;
+}
+/* END question box */

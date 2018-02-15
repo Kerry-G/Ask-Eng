@@ -1,47 +1,45 @@
 import React, { Component } from 'react'
-import {fetchAPI} from '../../utility'
-import { connect } from 'react-redux'
+import { fetchAPI } from '../../utility'
+import Question from './Question'
+import FontAwesome from 'react-fontawesome'
+import moment from 'moment'
 
 class Questions extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      questions:[]
+      questions: []
     };
   }
 
-  async getQuestions(){
-    console.log('fetching...')
-    try{
-      fetchAPI("GET", "/api/qa/questions/?user_id=2").then(response =>{
-        console.log('fetch!')
-        console.log(response)
-        if(response.success){
-          console.log(response.questions)
+  componentDidMount() {
+    this.getQuestions();
+  }
+
+  async getQuestions() {
+    try {
+      fetchAPI("GET", "/api/qa/questions/?user_id=3").then(response => {
+        if (response.success) {
+          this.setState({
+            questions: response.questions
+          })
         }
       })
-    } catch(e){console.error("Error:", e)}
+    } catch (e) { console.error("Error:", e) }
   }
 
   render() {
-    this.getQuestions();
-    let questions = this.state.questions.map((data)=>{console.log(data)})
-    return (
-      <div>
-        {questions}
-      </div>
-    )
+    let questions = this.state.questions.map((question) => {
+      <Question 
+        question={question}
+      />
+    })
+      return (
+        <div>
+          {questions}
+        </div>
+      )
   }
 }
-
-function mapStateToProps(state) {
-  return {
-    user: state.login.user
-  }
-}
-
-Questions = connect(
-  mapStateToProps,
-)(Questions);
 
 export default Questions;
