@@ -31,10 +31,10 @@ class Body extends Component {
   render() {
     let login, askQuestion, profileCard;
     if ((Object.keys(this.props.user).length === 0 && this.props.user.constructor === Object)) { //if no user is login 
-      login = <div className="box-login"> <Login registerModal={this.handleShowRegister} /> </div>
-      askQuestion = <DefaultAskQuestion register={this.handleShowRegister} />
+      login = <Col lg={4}>  <div className="box-login"> <Login registerModal={this.handleShowRegister} /> </div></Col>
+      askQuestion = <Col lg={8}><DefaultAskQuestion register={this.handleShowRegister} /> </Col>
     } else {
-      askQuestion = <div className="ask-question-box"> <AskQuestion /> </div>
+      askQuestion = <div className="ask-question-box"> <AskQuestion /> </div> 
       profileCard = <div className="profile-card"><ProfileCard /> </div>
     }
 
@@ -42,24 +42,18 @@ class Body extends Component {
       <div>
         <Grid>
           <Row>
-            <Col lg={8} sm={8} md={8}>
               {/* body part */}
-                <Route exact path='/' render={()=>askQuestion} />
+                <Route exact path='/' render={()=>{
+                  return(
+                    <div>
+                    {askQuestion}
+                    {login}
+                    {/* {profileCard} */}
+                  </div>
+                  )
+                }} />
                 <Route exact path='/users/' component={Profile} />
                 <Route path='/users/:id' component={Profile} />
-            </Col>
-            <Col md={4} sm={4} lgOffset={1} lg={3}>
-              {/* sidebar */}
-              <Route exact path='/' render={()=>{
-                return (
-                <div>
-                {login}
-                {profileCard}
-                </div>
-                )
-              }} />
-
-            </Col>
           </Row>
           <Register
             show={this.state.showRegister}

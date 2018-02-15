@@ -285,17 +285,17 @@ class Register extends Component {
                 alert = null
             }
 
-            nextButton = <Button onClick={this.handleNextPage}>Next</Button>
+            nextButton = <button className="reg-btn" onClick={this.handleNextPage}>Next</button >
 
         }
         else if (this.state.page === 2) {
             saveButton = null
-            previousButton = <Button onClick={this.handlePreviousPage}>Previous</Button>
-            nextButton = <Button onClick={this.handleNextPage}>Next</Button>
+            previousButton = <button className="reg-btn" onClick={this.handlePreviousPage}>Previous</button >
+            nextButton = <button className="reg-btn" onClick={this.handleNextPage}>Next</button >
         }
         else if (this.state.page === 3) {
-            saveButton = <Button bsStyle="primary" disabled={this.state.button} onClick={this.handleClick}>Save</Button>
-            previousButton = <Button onClick={this.handlePreviousPage}>Previous</Button>
+            saveButton = <button className="reg-btn" bsStyle="primary" disabled={this.state.button} onClick={this.handleClick}>Save</button >
+            previousButton = <button className="reg-btn" onClick={this.handlePreviousPage}>Previous</button >
             nextButton = null
         }
 

@@ -6,7 +6,7 @@ const DefaultAskQuestion = (props) => (
             <h2>Hello you!</h2>
             <p>You want to ask a question too? Don't be shy, register!</p>
             <p>
-              <Button bsStyle="primary" onClick={props.register}>Register</Button>
+              <button className="reg-btn-color" onClick={props.register}>Register</button>
             </p>
           </Jumbotron>
 )

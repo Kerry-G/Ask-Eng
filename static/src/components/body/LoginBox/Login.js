@@ -67,7 +67,7 @@ class Login extends Component{
           <FormControl bsSize="sm" placeholder="password" type="password" onChange={(e)=>{this.setState({password:e.target.value})}}  />
         </FormGroup>{' '}
         <p>
-          <Button bsStyle="primary" onClick={this.handleLogin}>Login</Button>
+          <button className="reg-btn-color" onClick={this.handleLogin}>Login</button>
           <span> or </span>
           <a className="link" onClick={this.props.registerModal}>Register</a>
         </p>

@@ -32,7 +32,6 @@ class ChooseAvatar extends Component {
               user_id: this.props.user.id,
               display_image: this.state.rand+'.png'
             }
-            console.log(data)
             fetchAPI("PUT", "/api/users/displayImage/", data).then(response => {
                 if (response.success) {
                   this.setState({ buttonMsg: 'Awesome!!!'});

@@ -20,14 +20,14 @@ tall:       (min-height: 780px), */
 }
 .header h1{
     font-size: 5rem;
-    color: #00647f;;
+    color: #e74c3c;
     font-weight: 600;
 }
 .header h1 small{
-    color: #00647f;;
+    color: #e74c3c;;
 }
 .header-name{
-    color: #00647f;
+    color: #e74c3c;
     font-size: 2rem;
     margin: auto 0 auto 0;
     margin: 3rem 0.5em 1em 0.5em;
@@ -55,12 +55,70 @@ h1{
     bottom: 0;
     left: 0;
     padding: 1rem;
-    background-color: #efefef;
+    background-color: #ecf0f1;
     text-align: center;
 }
 /* END FOOTER */
-
-
+/* BUTTON */
+.reg-btn{
+    border:2px solid #95a5a6;
+    height: 3rem;
+    font-size: 1.5rem;
+    color:#95a5a6;
+    margin-left: auto;
+    background-color: #ecf0f1;
+    width: 100px;
+    cursor: pointer;
+    border-radius: 100px;
+    padding-right: 10px;
+    padding-left: 10px;
+    text-decoration: none;
+    margin-left:5px;
+}
+.reg-btn:hover{
+    border:2px solid #95a5a6;
+    margin-left: auto;
+    color: #e74c3c;
+    background-color: #ecf0f1;
+    width: 100px;
+    cursor: pointer;
+    border-radius: 100px;
+    padding-right: 10px;
+    padding-left: 10px;
+    margin-left:5px;
+}
+.reg-btn:focus{
+    outline:none;
+} 
+.reg-btn-color{
+    border:2px solid #c0392b;
+    height: 3rem;
+    font-size: 1.5rem;
+    margin-left: auto;
+    color: #fff;
+    background-color: #e74c3c;
+    width: 100px;
+    cursor: pointer;
+    border-radius: 100px;
+    padding-right: 10px;
+    padding-left: 10px;
+    text-decoration: none;
+}
+.reg-btn-color:hover{
+    border:2px solid #c0392b;
+    margin-left: auto;
+    color: #fff;
+    background-color: #c0392b;
+    width: 100px;
+    cursor: pointer;
+    border-radius: 100px;
+    padding-right: 10px;
+    padding-left: 10px;
+}
+.reg-btn-color:focus{
+    outline:none;
+}
+/* END BUTTON */
 .box-login {
     border: 0.1em solid #c7d0d2;
     border-radius: 0.2em;
@@ -119,14 +177,14 @@ label{
     font-weight: 300;
 }
 .custom-modal{
-    background-color: lightgray;
+    background-color: #ecf0f1;
     width: 50%;
 }
 .modal-body{
-    background-color: rgb(223, 223, 223)
+    background-color: #ecf0f1
 }
 .modal-footer{
-    background-color: #00647f;
+    background-color: #e74c3c;
     border: 0;
 }
 .alert-warning{
@@ -161,6 +219,7 @@ label{
 .ask-box{
     width: 100%;
 }
+
 .main{
     border: 0.1em solid #c7d0d2;
     border-radius: 0.2em;
@@ -197,8 +256,7 @@ label{
         margin-left: auto;
         float: right;
         color: #fff;
-        background-color: #337ab7;
-        border-color: #2e6da4;
+        background-color: #3498db;
         width: 100px;
         color: white;
         cursor: pointer;
@@ -211,38 +269,38 @@ label{
 
 }
 .ask-box.type.selected{
-    border: 2px solid orange;
+    border: 2px solid #e74c3c;
     text-decoration: none;
     color: #fff;
-    background-color: #337ab7;
-    border-color: #2e6da4;
+    background-color: #e74c3c;
+    border-color: #c0392b;
 }
 
 .ask-box.type.selected:hover{
-    border: 2px solid orange;
+    border: 2px solid #e74c3c;
     text-decoration: none;
     color: #fff;
-    background-color: #337ab7;
-    border-color: #2e6da4;
+    background-color: #e74c3c;
+    border-color: #c0392b;
 }
 
 
 .ask-box.type{
     width: 100px;
-    color: black;
+    color: #95a5a6;
     cursor: pointer;
     margin-right: 10px;
     margin-bottom: 10px;
     text-align: center;
-    border: 2px solid #c7d0d2;
+    border: 2px solid #95a5a6;
     border-radius: 100px;
     padding: 5px;
     padding-right: 10px;
     padding-left: 10px;
 }
 .ask-box.type:hover{
-    color: #c7d0d2;
-    border: 2px solid #c7d0d2;
+    color: #e74c3c;
+    border: 2px solid #e74c3c;
     text-decoration: none;
     cursor: pointer;
 }
@@ -256,7 +314,21 @@ label{
     padding: 5px;
     padding-right: 10px;
     padding-left: 10px;
-
+    background-color: #e74c3c;
+    /* padding-left: 55px; */
+    /* padding-right: 55px; */
+}
+#ask-box-button:hover{
+    width: 100px;
+    cursor: pointer;
+    margin-right: 10px;
+    margin-bottom: 10px;
+    text-align: center;
+    border-radius: 100px;
+    padding: 5px;
+    padding-right: 10px;
+    padding-left: 10px;
+    background-color: #c0392b;
     /* padding-left: 55px; */
     /* padding-right: 55px; */
 }
@@ -264,7 +336,7 @@ label{
 
 .avatarChange{
     text-align: center;
-    color: #2e6da4;
+    color: #ecf0f1;
 }
 
 .avatarChange img{
