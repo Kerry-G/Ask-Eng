@@ -9,14 +9,14 @@ class Header extends Component {
   // <Link to={`/ideas/${this.props.testvalue}`}>{this.props.testvalue}</Link> not sure what is this
     let user;
     if (!(Object.keys(this.props.user).length === 0 && this.props.user.constructor === Object)){ //if the user is connected
-      user = <p className="header-name"> Hello, <Link to={`/users/${this.props.user.id}`} onClick={reload} style={{color: 'white'}}>{this.props.user.fname} {this.props.user.lname}</Link>&nbsp;|&nbsp;&nbsp;<a className="logoutBtn" onClick={logOut}>log out</a></p>
+      user = <p className="header-name"> Hello, <Link to={`/users/${this.props.user.id}`} onClick={reload} style={{color: '#00647f'}}>{this.props.user.fname} {this.props.user.lname}</Link>&nbsp;|&nbsp;&nbsp;<a className="logoutBtn" onClick={logOut}>log out</a></p>
     }
     let image;
       image = "\\images\\ask-eng.png"
     return (
         <Row className="header">
           <Col xs={6}>
-            <h1><Link to='/' style={{textDecoration: 'none', color: 'white'}}>
+            <h1><Link to='/' style={{textDecoration: 'none', color: '#00647f'}}>
                 <Image src={image} width={64} circle />&nbsp;Ask<small>ENG</small>
                 </Link>
               </h1>
