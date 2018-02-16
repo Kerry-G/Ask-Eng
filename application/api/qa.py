@@ -106,7 +106,9 @@ def questionsRoute():
             status = 'OK'
             message = 'List of several questions'
         
-        if 'sort' in questionArgs:
+        if 'sort' in questionArgs and 'reverse' in questionArgs:
+            questions = sorted(questions, key=lambda k: k[questionArgs['sort']],reverse=int(questionArgs['reverse']))
+        elif 'sort' in questionArgs:
             questions = sorted(questions, key=lambda k: k[questionArgs['sort']])
 
         if question:
