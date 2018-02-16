@@ -9,6 +9,7 @@ import { connect } from 'react-redux'
 import { Route} from 'react-router-dom'
 import Profile from './Profile/Profile'
 import Questions from './Questions/Questions';
+import QuestionPage from './Questions/QuestionPage/QuestionPage';
 
 class Body extends Component {
 
@@ -54,6 +55,7 @@ class Body extends Component {
                   </div>
                   )
                 }} />
+                <Route exact path='/question/' component={QuestionPage} />
                 <Route exact path='/users/' component={Profile} />
                 <Route path='/users/:id' component={Profile} />
           </Row>
