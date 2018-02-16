@@ -49,7 +49,7 @@ def createAnswer(text, user_id, question_id):
         # Commit it
         db.session.commit()
 
-        response = True
+        response = answer
     except:
         response = False
 

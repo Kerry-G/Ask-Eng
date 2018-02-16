@@ -8,21 +8,12 @@ import Headermenu from '../header/Headermenu'
 class Header extends Component {
 
   render() {
-    // <Link to={`/ideas/${this.props.testvalue}`}>{this.props.testvalue}</Link> not sure what is this
-    let user;
-    if (!(Object.keys(this.props.user).length === 0 && this.props.user.constructor === Object)) { //if the user is connected
-      // user = <p className="header-name"> Hello, <Link to={`/users/${this.props.user.id}`} onClick={reload} style={{ color: 'white' }}>{this.props.user.fname} {this.props.user.lname}</Link>&nbsp;|&nbsp;&nbsp;
-      
-    }
-    let image;
-    image = "\\images\\ask-eng.png"
-    let drop;
-
+    let image = "\\images\\ask-eng.png"
            
     return (
       <Row className="header">
         <Col lg={6}>
-          <h1><Link to='/' style={{ textDecoration: 'none', color: 'white' }}>
+          <h1><Link to='/' style={{ textDecoration: 'none', color: '#e74c3c' }}>
             <Image src={image} width={64} circle />&nbsp;Ask<small>ENG</small>
           </Link>
           

@@ -27,6 +27,8 @@ def questionResponse(question):
 
 
 
+
+
 def validateQuestionRequest(request):
     try:
         return request['title'] == '' and request['text'] == '' and request['engineer'] == '' 
@@ -101,17 +103,21 @@ def questionsRoute():
             status = 'OK'
             message = 'List of several questions by engineer'
         else:
-            success = False
-            status = 'FAILURE'
-            message = 'Invalid arguments.'
+            questions = Questions.getQuestions()
+            success = True
+            status = 'OK'
+            message = 'List of several questions'
         
-        if 'sort' in questionArgs:
+        if 'sort' in questionArgs and 'reverse' in questionArgs:
+            questions = sorted(questions, key=lambda k: k[questionArgs['sort']],reverse=int(questionArgs['reverse']))
+        elif 'sort' in questionArgs:
             questions = sorted(questions, key=lambda k: k[questionArgs['sort']])
 
         if question:
             response = json.dumps({'success': success, 'status': status, 'message': message, 'question':question })
         else:
             response = json.dumps({'success': success, 'status': status, 'message': message, 'questions':questions })
+
     else:
         success = False
         status = "WARNING"
@@ -119,4 +125,54 @@ def questionsRoute():
         response = json.dumps({'success': success, 'status': status, 'message': message})
 
     return response
+
+@qa.route('/api/qa/questions/<string:id>', methods=httpMethods)
+def questionsIDRoute(id):
+    data = toDict(request.data)  # toDict takes the request data and converts it to a dictionary
+
+    success = False  # assume the response is unsucessful
+    message = ""  # assume an empty message
+    status = ""  # accepted statues: 'OK', 'DENIED', 'FAILURE', 'WARNING', 'INVALID'
+    response = {}  # assume the response is empty dict() for now
+
+
+    if request.method == 'PUT':
+        if data['actions'] == 'ups':
+            success = Questions.incrementUps(id)
+        if data['actions'] == 'downs':
+            success = Questions.incrementDowns(id)
+
+    response = json.dumps({'success': success, 'status': status, 'message': message})
+    print(response)
+    return response
+
+@qa.route('/api/qa/answer/', methods=httpMethods)
+def answerQuestion():
+    data = toDict(request.data)  # toDict takes the request data and converts it to a dictionary
+
+    success = False  # assume the response is unsucessful
+    message = ""  # assume an empty message
+    status = ""  # accepted statues: 'OK', 'DENIED', 'FAILURE', 'WARNING', 'INVALID'
+    response = {}  # assume the response is empty dict() for now
+    answer = {}
+
+    if request.method == 'POST':
+
+        # Create a user and find our whether it is successful or not
+        answer = Answers.createAnswer(data['text'], data['user_id'], data['question_id'])
+
+
+        if answer is not None:
+            answer['user'] = Users.getUser(answer['user_id'])
+            success = True
+            status = "OK"
+            message = "Answer added."
+        else:
+            success = False
+            status = "FAILURE"
+            message = "Error."
+
+        # make the response a json object
+        response = json.dumps({'success': success, 'status': status, 'message': message, 'question': question})
+
 

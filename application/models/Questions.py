@@ -68,7 +68,6 @@ def getQuestion(id):
     else:
         return dict(question)
 
-
 # Returns True if question is deleted
 def deleteQuestion(id):
     response = False
@@ -93,6 +92,24 @@ def modifyQuestion(id, title, text, engineer):
         response = question
     return response
 
+# NOT SURE IF WORKS, SHOULD BE TESTED
+def incrementUps(id):
+    response = False
+    question = Question.query.filter_by(id=id).first()
+    if question is not None:
+        question.ups = question.ups+ 1
+        db.session.commit()
+        response = True
+    return response
+
+def incrementDowns(id):
+    response = False
+    question = Question.query.filter_by(id=id).first()
+    if question is not None:
+        question.downs = question.downs + 1
+        db.session.commit()
+        response = True
+    return response
 
 # Get all Question returns list of users or an empty list
 def getQuestions(limit=20):
