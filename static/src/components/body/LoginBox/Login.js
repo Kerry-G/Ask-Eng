@@ -52,8 +52,7 @@ class Login extends Component{
       <Form
         onKeyDown={(e) => {
             if (e.key === 'Enter') {
-              e.preventDefault();
-              this.handleLogin();
+              this.handleLogin(e);
             }
           }
         }
