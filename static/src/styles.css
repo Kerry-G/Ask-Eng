@@ -414,7 +414,7 @@ label{
 /* END question box */
 
 /* answer-page */
-
+s
 .question-box-text{
     margin: auto auto 2rem auto;
 }
@@ -424,3 +424,21 @@ label{
 .answer-page p{
     font-size: 1.7rem;
 }
+
+.modal-title{
+    color: #e74c3c  ;
+}
+.panel-primary{
+    border-color: #c0392b;
+    width: 50%;
+}
+.panel-primary>.panel-heading{ 
+    background-color: #e74c3c;
+    border-color: #c0392b;
+}
+   
+#dropdown-no-caret{
+    background-color:#ecf0f1;
+    border-color: #ecf0f1;
+}
+
