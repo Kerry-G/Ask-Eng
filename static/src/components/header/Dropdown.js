@@ -14,7 +14,7 @@ class Dropdown extends Component {
      <ButtonToolbar >
           <DropdownButton
             bsStyle="default"
-            title = {<FontAwesome name='fas fa-cog' />}
+            title = {<FontAwesome name='fas fa-cog fa-2x' />}
             noCaret
             id="dropdown-no-caret"
           >
