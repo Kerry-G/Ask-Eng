@@ -324,7 +324,7 @@ label{
     cursor: pointer;
 }
 #ask-box-button{
-    width: 100px;
+    width: 15rem;
     cursor: pointer;
     margin-right: 10px;
     margin-bottom: 10px;
@@ -338,7 +338,6 @@ label{
     /* padding-right: 55px; */
 }
 #ask-box-button:hover{
-    width: 100px;
     cursor: pointer;
     margin-right: 10px;
     margin-bottom: 10px;
@@ -413,3 +412,15 @@ label{
     font-size: 1.3rem;
 }
 /* END question box */
+
+/* answer-page */
+
+.question-box-text{
+    margin: auto auto 2rem auto;
+}
+.answer-page h1{
+    font-size: 2.5rem;
+}
+.answer-page p{
+    font-size: 1.7rem;
+}

@@ -55,7 +55,7 @@ class Body extends Component {
                   </div>
                   )
                 }} />
-                <Route exact path='/question/' component={QuestionPage} />
+                <Route exact path='/question/:id' component={QuestionPage} />
                 <Route exact path='/users/' component={Profile} />
                 <Route path='/users/:id' component={Profile} />
           </Row>
