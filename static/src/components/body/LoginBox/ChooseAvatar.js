@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import { Image, Modal, Button } from 'react-bootstrap'
 import { fetchAPI } from '../../utility'
 import { updateUser } from '../../../store/auth'
+import { Profile } from '../Profile/Profile'
 
 class ChooseAvatar extends Component {
 
@@ -38,6 +39,7 @@ class ChooseAvatar extends Component {
                   let updatedUser = JSON.parse(JSON.stringify(this.props.user))
                   updatedUser.display_image = data.display_image
                   updateUser(updatedUser)
+				  this.updateProfileCard()
                 }
             }).catch((e) => console.error("Error:", e))
         }
@@ -59,7 +61,7 @@ class ChooseAvatar extends Component {
   }
 
   render() {
-    let avatarPath = "images/avatar/" + this.state.rand + ".png";
+    let avatarPath = "\\images/avatar/" + this.state.rand + ".png";
     return (
            <Modal className="avatarChange" show={this.props.show} onHide={this.closeModal.bind(this)}>
            <Modal.Header closeButton>

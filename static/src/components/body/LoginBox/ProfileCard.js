@@ -29,9 +29,9 @@ class Profile extends Component {
     }
     let avatarPath;
     if (this.props.user.display_image !== ""){
-      avatarPath = "images\\avatar\\" + this.props.user.display_image;
+      avatarPath = "\\images\\avatar\\" + this.props.user.display_image;
     } else {
-      avatarPath = "images\\avatar\\4.png";
+      avatarPath = "\\images\\avatar\\4.png";
     }
    
 
