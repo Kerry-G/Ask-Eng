@@ -14,7 +14,8 @@ class Login extends Component{
     }
   }
 
-  handleLogin(){
+  handleLogin(e){
+    e.preventDefault();
     this.setState({
       alert: false
     }
@@ -67,7 +68,7 @@ class Login extends Component{
           <FormControl bsSize="sm" placeholder="password" type="password" onChange={(e)=>{this.setState({password:e.target.value})}}  />
         </FormGroup>{' '}
         <p>
-          <button className="reg-btn-color" onClick={this.handleLogin}>Login</button>
+          <button className="reg-btn-color" onClick={(e)=>this.handleLogin(e)}>Login</button>
           <span> or </span>
           <a className="link" onClick={this.props.registerModal}>Register</a>
         </p>

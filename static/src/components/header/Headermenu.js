@@ -8,25 +8,30 @@ import fontawesome from 'react-fontawesome'
 class Headermenu extends Component {
 
 
-  render() {
 
-    let menu = <Dropdown/>
+  render() {
+    let comp;
     let points = {
       float: "right"
     }
     let avatarPath;
+
     if (this.props.user.display_image !== ""){
       avatarPath = "images\\avatar\\" + this.props.user.display_image;
     } else {
       avatarPath = "images\\avatar\\4.png";
     }
 
+    if (!(Object.keys(this.props.user).length === 0 && this.props.user.constructor === Object)) { //if the user is connected
+      comp = comp = <div>
+        <Dropdown/>
+         <Image src={avatarPath} onClick={this.handleShowAvatar} width={64} circle />
+      </div>;
+    }
+
 
     return (
-      <div>
-        {menu}
-         <Image src={avatarPath} onClick={this.handleShowAvatar} width={64} circle />
-      </div>
+      <div>{comp}</div>
     )
   }
 }
