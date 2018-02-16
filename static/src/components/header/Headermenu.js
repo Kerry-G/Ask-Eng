@@ -24,7 +24,9 @@ class Headermenu extends Component {
 
     if (!(Object.keys(this.props.user).length === 0 && this.props.user.constructor === Object)) { //if the user is connected
       comp = comp = <div>
-        <Dropdown/>
+        <Dropdown
+          user={this.props.user}
+        />
          <Image src={avatarPath} onClick={this.handleShowAvatar} width={64} circle />
       </div>;
     }

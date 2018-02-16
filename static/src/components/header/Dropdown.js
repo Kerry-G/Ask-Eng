@@ -8,9 +8,9 @@ class Dropdown extends Component {
 
 
   render() {
-
+    let profile_path = '/users/' + this.props.user.id
     return (
-      
+    
      <ButtonToolbar >
           <DropdownButton
             bsStyle="default"
@@ -18,9 +18,9 @@ class Dropdown extends Component {
             noCaret
             id="dropdown-no-caret"
           >
-            <MenuItem eventKey="1">My profile  </MenuItem>
+            <MenuItem eventKey="1" href={profile_path} >My profile</MenuItem>
             <MenuItem eventKey="2">Another action</MenuItem>
-            <MenuItem eventKey="3">settings</MenuItem>
+            <MenuItem eventKey="3">Settings</MenuItem>
             
             <MenuItem divider />
             <MenuItem eventKey="4" onClick={logOut}> Logout  </MenuItem>
