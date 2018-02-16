@@ -62,11 +62,10 @@ def createQuestion(title, text, engineer, user_id):
 
 # Returns the question if question is found
 def getQuestion(id):
-    
+    question = Question.query.filter_by(id=id).first()
     if question is None:
         return None
     else:
-        print(question)
         return dict(question)
 
 # Returns True if question is deleted
