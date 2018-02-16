@@ -101,9 +101,10 @@ def questionsRoute():
             status = 'OK'
             message = 'List of several questions by engineer'
         else:
-            success = False
-            status = 'FAILURE'
-            message = 'Invalid arguments.'
+            questions = Questions.getQuestions()
+            success = True
+            status = 'OK'
+            message = 'List of several questions'
         
         if 'sort' in questionArgs:
             questions = sorted(questions, key=lambda k: k[questionArgs['sort']])

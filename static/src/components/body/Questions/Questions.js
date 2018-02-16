@@ -21,8 +21,8 @@ class Questions extends Component {
   async getQuestions() {
     try {
       let engineerArray = ["","&engineer=Software","&engineer=Mechanical","&engineer=Computer","&engineer=Electrical","&engineer=Civil"]
-      fetchAPI("GET", "/api/qa/questions/?" + engineerArray[this.state.activeKey]).then(response => {
-        console.log(response)
+      console.log(engineerArray[(this.state.activeKey)])
+      fetchAPI("GET", "/api/qa/questions/?" + engineerArray[(this.state.activeKey)]).then(response => {
         if (response.success) {
           this.setState({
             questions: response.questions
@@ -35,7 +35,8 @@ class Questions extends Component {
   handleSelect(eventKey) {
     this.setState({
       activeKey:eventKey
-    })
+    },()=>{this.getQuestions()} )
+    
   }
 
   render() {
