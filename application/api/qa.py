@@ -79,7 +79,6 @@ def questionsRoute():
 
         # url get request 
         questionArgs = request.args.to_dict()
-
         if 'question_id' in questionArgs:
             q = Questions.getQuestion(questionArgs['question_id'])
             question = questionResponse(q)
@@ -97,12 +96,11 @@ def questionsRoute():
             status = 'OK'
             message = 'List of several questions by user_id'
         elif 'engineer' in questionArgs:
-            questions = Questions.getQuestionsByBoth(questionArgs['engineer'], questionArgs['user_id'])
+            questions = Questions.getQuestionByEngineer(questionArgs['engineer'])
             success = True
             status = 'OK'
             message = 'List of several questions by engineer'
         else:
-            questions = Questions.getQuestionsByBoth(questionArgs['engineer'], questionArgs['user_id'])
             success = False
             status = 'FAILURE'
             message = 'Invalid arguments.'

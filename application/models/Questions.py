@@ -144,9 +144,7 @@ def getQuestionByEngineer(engineer):
 
 def getQuestionsByBoth(engineer, user_id):
     response = []
-
-    questions = Question.query.filter_by(engineer=engineer,id=user_id).all()
-
+    questions = Question.query.filter_by(user_id=user_id,engineer=engineer).all()
     if questions is not None:
         for question in questions:
             user = User.query.filter_by(id=question.user_id).first()

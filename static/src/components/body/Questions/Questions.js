@@ -10,7 +10,7 @@ class Questions extends Component {
     super(props);
     this.state = {
       questions: [],
-      activeKey:"1"
+      activeKey:"0",
     };
   }
 
@@ -20,7 +20,8 @@ class Questions extends Component {
 
   async getQuestions() {
     try {
-      fetchAPI("GET", "/api/qa/questions/?user_id=3").then(response => {
+      let engineerArray = ["","&engineer=Software","&engineer=Mechanical","&engineer=Computer","&engineer=Electrical","&engineer=Civil"]
+      fetchAPI("GET", "/api/qa/questions/?" + engineerArray[this.state.activeKey]).then(response => {
         console.log(response)
         if (response.success) {
           this.setState({
@@ -49,22 +50,22 @@ class Questions extends Component {
     return (
       <div>
         <Nav bsStyle="tabs" activeKey={this.state.activeKey} onSelect={k => this.handleSelect(k)}>
-          <NavItem eventKey="1">
+          <NavItem eventKey="0">
             All
         </NavItem>
-          <NavItem eventKey="2" >
+          <NavItem eventKey="1" >
             Software
         </NavItem>
-          <NavItem eventKey="3">
+          <NavItem eventKey="2">
             Mechanical
         </NavItem>
-        <NavItem eventKey="4">
+        <NavItem eventKey="3">
             Computer
         </NavItem>
-        <NavItem eventKey="5">
+        <NavItem eventKey="4">
             Electrical
         </NavItem>
-        <NavItem eventKey="6">
+        <NavItem eventKey="5">
             Civil
         </NavItem>
         </Nav>
