@@ -115,6 +115,7 @@ def questionsRoute():
             response = json.dumps({'success': success, 'status': status, 'message': message, 'question':question })
         else:
             response = json.dumps({'success': success, 'status': status, 'message': message, 'questions':questions })
+
     else:
         success = False
         status = "WARNING"
@@ -123,3 +124,22 @@ def questionsRoute():
 
     return response
 
+@qa.route('/api/qa/questions/<string:id>', methods=httpMethods)
+def questionsIDRoute(id):
+    data = toDict(request.data)  # toDict takes the request data and converts it to a dictionary
+
+    success = False  # assume the response is unsucessful
+    message = ""  # assume an empty message
+    status = ""  # accepted statues: 'OK', 'DENIED', 'FAILURE', 'WARNING', 'INVALID'
+    response = {}  # assume the response is empty dict() for now
+
+
+    if request.method == 'PUT':
+        if data['actions'] == 'ups':
+            success = Questions.incrementUps(id)
+        if data['actions'] == 'downs':
+            success = Questions.incrementDowns(id)
+
+    response = json.dumps({'success': success, 'status': status, 'message': message})
+    print(response)
+    return response
