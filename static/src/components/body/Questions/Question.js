@@ -9,7 +9,7 @@ class Question extends Component {
   }
 
   render() {
-      let time = moment(this.props.question.register_date).fromNow()
+      let time = moment(this.props.question.register_date).subtract(5,"hours").fromNow()
       return (
         <div key={this.props.question.id} className="question-box">
         <Row>
