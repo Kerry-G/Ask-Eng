@@ -430,8 +430,6 @@ s
 }
 .panel-primary{
     border-color: #c0392b;
-    width: 30%;
-    float: right;
 }
 .panel-primary>.panel-heading{ 
     background-color: #e74c3c;
@@ -442,4 +440,7 @@ s
     background-color:#ecf0f1;
     border-color: #ecf0f1;
 }
+
+
+
 
