@@ -6,7 +6,7 @@ import ProfileCard from './LoginBox/ProfileCard'
 import AskQuestion from './AskQuestion/AskQuestion'
 import DefaultAskQuestion from './AskQuestion/DefaultAskQuestion'
 import { connect } from 'react-redux'
-import { Route} from 'react-router-dom'
+import { Route } from 'react-router-dom'
 import Profile from './Profile/Profile'
 import Questions from './Questions/Questions';
 import QuestionPage from './Questions/QuestionPage/QuestionPage';

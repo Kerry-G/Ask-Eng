@@ -47,21 +47,16 @@ tall:       (min-height: 780px), */
 .para{
     margin-top: 1.5rem;
 }
-
-
 .menu .btn-toolbar{
     display: inline-block;
         vertical-align: middle;
         margin: auto 1rem;
        
 }
-
 .menu {
     margin-top: 1.5rem;
     float: right; 
 }
-
-
 /* END HEADER */
 h1{
     margin: 0.3em 0.5em 0.3em 0.5em;
@@ -162,14 +157,6 @@ h1{
     background-color: #efefef;
     text-align: center;
 }
-
-
-
-
-
-
-
-
 /* REGISTER MODAL */
 .picture{  
     float: left;
@@ -200,7 +187,8 @@ label{
     width: 50%;
 }
 .modal-body{
-    background-color: #ecf0f1
+    background-color: #ecf0f1;
+    color: black;
 }
 .modal-footer{
     background-color: #e74c3c;
@@ -214,8 +202,6 @@ label{
     background-color: #eee;
 }
 /* END REGISTER MODAL */
-
-
 /* IDK */
 @media only screen and (max-width:70em){
     .picture{
@@ -238,7 +224,6 @@ label{
 .ask-box{
     width: 100%;
 }
-
 .main{
     border: 0.1em solid #c7d0d2;
     border-radius: 0.2em;
@@ -361,7 +346,6 @@ label{
     margin: 1rem;
     cursor: pointer;
 }
-
 .avatarChange img:hover{
     transition: ease 1s opacity;
     opacity: 0.8;
@@ -412,7 +396,6 @@ label{
     font-size: 1.3rem;
 }
 /* END question box */
-
 /* answer-page */
 s
 .question-box-text{
@@ -424,7 +407,6 @@ s
 .answer-page p{
     font-size: 1.7rem;
 }
-
 .modal-title{
     color: #e74c3c  ;
 }
@@ -441,4 +423,3 @@ s
     background-color:#ecf0f1;
     border-color: #ecf0f1;
 }
-

@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import { Panel, Glyphicon, Image, Media } from 'react-bootstrap'
+import FontAwesome from 'react-fontawesome'
 import { fetchAPI } from '../../utility'
 import {connect} from 'react-redux'
 
@@ -79,12 +80,12 @@ class Profile extends Component {
 						<Glyphicon glyph="calendar" />&nbsp;&nbsp;&nbsp;&nbsp;date registered: {this.state.register_date}
 						<br />
 						<Glyphicon glyph="cog" />&nbsp;&nbsp;&nbsp;&nbsp;my settings
-							  <br /><br />
+						<br /><br />
 						<Glyphicon glyph="comment" />&nbsp;&nbsp;&nbsp;&nbsp;my questions
-							  <div style={points}><Glyphicon glyph="thumbs-up" />&nbsp;&nbsp;&nbsp;&nbsp;{this.state.ups}</div>
+						<div style={points}><FontAwesome name='chevron-down' />&nbsp;&nbsp;&nbsp;&nbsp;{this.state.ups}</div>
 						<br />
 						<Glyphicon glyph="comment" />&nbsp;&nbsp;&nbsp;&nbsp;my answers
-							  <div style={points}><Glyphicon glyph="thumbs-down" />&nbsp;&nbsp;&nbsp;&nbsp;{this.state.downs}</div>
+						<div style={points}><FontAwesome name='chevron-up' />&nbsp;&nbsp;&nbsp;&nbsp;{this.state.downs}</div>
 					</Panel.Body>
 				</Panel>
 			</div>
@@ -113,10 +114,10 @@ class Profile extends Component {
 						<Glyphicon glyph="calendar" />&nbsp;&nbsp;&nbsp;&nbsp;date registered: {this.state.register_date}
 						<br /><br />
 						<Glyphicon glyph="comment" />&nbsp;&nbsp;&nbsp;&nbsp;my questions
-							  <div style={points}><Glyphicon glyph="thumbs-up" />&nbsp;&nbsp;&nbsp;&nbsp;{this.state.ups}</div>
+						<div style={points}><FontAwesome name='chevron-up' />&nbsp;&nbsp;&nbsp;&nbsp;{this.state.ups}</div>
 						<br />
 						<Glyphicon glyph="comment" />&nbsp;&nbsp;&nbsp;&nbsp;my answers
-							  <div style={points}><Glyphicon glyph="thumbs-down" />&nbsp;&nbsp;&nbsp;&nbsp;{this.state.downs}</div>
+						<div style={points}><FontAwesome name='chevron-down' />&nbsp;&nbsp;&nbsp;&nbsp;{this.state.ups}</div>
 					</Panel.Body>
 				</Panel>
 			</div>
@@ -126,9 +127,9 @@ class Profile extends Component {
 		}
 		
 		return (
-				<div>
-					{ProfileInfo}
-				</div>
+			<div>
+				{ProfileInfo}
+			</div>
 		);
 	}
 }

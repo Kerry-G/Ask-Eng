@@ -12,21 +12,20 @@ class Header extends Component {
            
     return (
       <Row className="header">
-        <Col lg={6}>
-          <h1><Link to='/' style={{ textDecoration: 'none', color: '#e74c3c' }}>
-            <Image src={image} width={30} circle />&nbsp;Ask<small>ENG</small>
-          </Link>
-          
+        <Col xs={7} lg={6}>
+          <h1>
+            <Link to='/' style={{ textDecoration: 'none', color: '#e74c3c' }}>
+              <Image src={image} width={30} circle />&nbsp;Ask<small>ENG</small>
+            </Link>    
           </h1>
         </Col>
-        <Col  lg={6}>
-         <div className ="menu">
-        <Col lgOffset ={8}>
-        <Headermenu
-        user = {this.props.user}/>
-         </Col>
-         </div>
-         
+        <Col  xs={5} lg={6}>
+          <div className ="menu">
+            <Col lgOffset ={8}>
+              <Headermenu
+              user = {this.props.user}/>
+            </Col>
+          </div>  
         </Col>
       </Row>
     );

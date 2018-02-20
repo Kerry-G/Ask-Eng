@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import { Panel, Glyphicon, Image, Media } from 'react-bootstrap'
+import FontAwesome from 'react-fontawesome'
 import { connect } from 'react-redux'
 import ChooseAvatar from './ChooseAvatar.js';
 
@@ -33,8 +34,6 @@ class Profile extends Component {
     } else {
       avatarPath = "\\images\\avatar\\4.png";
     }
-   
-
     return (
       <Panel bsStyle="primary">
         <Panel.Heading>
@@ -61,13 +60,12 @@ class Profile extends Component {
           <Glyphicon glyph="cog" />&nbsp;&nbsp;&nbsp;&nbsp;my settings
           <br />
           <Glyphicon glyph="comment" />&nbsp;&nbsp;&nbsp;&nbsp;my questions
-          <div style={points}><Glyphicon glyph="thumbs-up" />&nbsp;&nbsp;&nbsp;&nbsp;{this.props.user.ups}</div>
+          <div style={points}><FontAwesome name='chevron-up' />&nbsp;&nbsp;&nbsp;&nbsp;{this.state.ups}</div>
           <br />
           <Glyphicon glyph="comment" />&nbsp;&nbsp;&nbsp;&nbsp;my answers
-          <div style={points}><Glyphicon glyph="thumbs-down" />&nbsp;&nbsp;&nbsp;&nbsp;{this.props.user.downs}</div>
+          <div style={points}><FontAwesome name='chevron-down' />&nbsp;&nbsp;&nbsp;&nbsp;{this.state.ups}</div>
          </Panel.Body>
-       
-          </Panel>
+      </Panel>
     );
   }
 }

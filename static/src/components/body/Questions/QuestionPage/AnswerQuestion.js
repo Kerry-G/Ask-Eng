@@ -66,11 +66,12 @@ class AnswerQuestion extends Component {
     render() {
         return (
             <div className="ask-box main">
+                <br />
                 <div>
                 <textarea
                     className="ask-box text"
                     rows="5"
-                    placeholder="Know the anwser?"
+                    placeholder="Know the answer?"
                     onChange={(e) => this.handleAnswerChange(e)} />
                 </div>
 
