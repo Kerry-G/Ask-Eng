@@ -34,7 +34,7 @@ class Register extends Component {
     componentDidUpdate() {
         this.validateButton()
     }
-    
+
     /*
      * validateEmail check if the string in the email field is 
      * in the form *@*.*
@@ -53,6 +53,20 @@ class Register extends Component {
             })
         }
     }
+
+    validatePassword(pw) {
+        if (/(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%]).{6,20}/.test(pw)) {
+            this.setState({
+                validPassword: "success"
+            })
+        } else {
+            this.setState({
+                validPassword: "error"
+            })
+        }
+    }
+
+
     /*
      * validateButton check if all the field are ok 
      * Output: change the state of button to either T/F
@@ -75,7 +89,7 @@ class Register extends Component {
             })
         }
     }
-    
+
     handleClick() {
         this.props.handleClose();
         this.saveUser();
@@ -102,7 +116,7 @@ class Register extends Component {
             console.error("Error:", e)
         }
     }
-    
+
     handleClose() {
         this.props.handleClose();
         this.cleanState();
@@ -134,18 +148,18 @@ class Register extends Component {
         let data = {
             email: this.state.email
         }
-        if (this.state.page === 1){
+        if (this.state.page === 1) {
             fetchAPI("POST", "/api/users/email/", data).then((response) => {
-            console.log(response);
-            if (response.success) {
-                this.setState({
-                    error: true
-                })
-            }
-            else {
+                console.log(response);
+                if (response.success) {
+                    this.setState({
+                        error: true
+                    })
+                }
+                else {
                     currentPage++;
                     this.setState({ page: currentPage })
-               }
+                }
             }).catch((e) => console.error("Error:", e))
 
         } else {
@@ -153,7 +167,7 @@ class Register extends Component {
             this.setState({ page: currentPage })
         }
 
-   }
+    }
 
     handlePreviousPage() {
         let currentPage = this.state.page;
@@ -194,11 +208,18 @@ class Register extends Component {
                                 type="password"
                                 placeholder="password"
                                 value={this.state.pw}
-                                onChange={(e) => this.setState({ pw: e.target.value })}
+                                valid={this.state.validPassword}
+                                onChange={(e) => {
+                                    this.validatePassword(e.target.value)
+                                    this.setState({ pw: e.target.value })
+                                }
+                                }
                             />
-                        </div>
+                            must contains one lowercase characters, uppercase character, one special characyer "@#$%" and at least 6 character.
+                                </div>
                     </Col>
                     <Col xs={12} md={6}>
+
                         <div className="picture">
                             <Image className="animated fadeIn" src="https://i.imgur.com/cmPoLVn.jpg" responsive rounded />
                         </div>
@@ -232,7 +253,7 @@ class Register extends Component {
                 <Col xs={12} md={6}>
                     <div className="picture">
                         <div className="animated fadeIn">
-                        <Image src="https://i.imgur.com/H8wshWs.jpg" responsive rounded />
+                            <Image src="https://i.imgur.com/H8wshWs.jpg" responsive rounded />
                         </div>
                     </div>
                 </Col>
