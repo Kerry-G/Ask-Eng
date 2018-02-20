@@ -100,7 +100,7 @@ class Profile extends Component {
 					<NavItem onClick={() => { this.setState({ activeQuery: "0" }) }} eventKey="0">
 						Question
 			</NavItem>
-					<NavItem onClick={() => { this.setState({ activeQuery: "1" }) }} eventKey="1" >
+					<NavItem onClick={() => { this.setState({ activeQuery: "2" }) }} eventKey="1" >
 						Answer
 			</NavItem>
 					<NavDropdown eventKey="6" title="Sort" id="nav-dropdown">
