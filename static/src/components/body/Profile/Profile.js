@@ -1,27 +1,24 @@
 import React, { Component } from 'react'
 import { Panel, Glyphicon, Image, Media } from 'react-bootstrap'
 import { fetchAPI } from '../../utility'
-import {connect} from 'react-redux'
+import { connect } from 'react-redux'
+import ProfileCard from './ProfileCard'
+import Question from '..//Questions//Question'
+
 
 class Profile extends Component {
 	constructor(props) {
 		super(props);
 		this.state = {
 			alert: false,
-			id: this.props.user.id,
-			email: "",
-			fname: "",
-			lname: "",
-			engineer: "",
-			ups: "",
-			downs: "",
-			register_date: "",
-			display_image: "",
+			user:{},
+			questions: [],
 		}
 	}
 
 	componentDidMount() {
 		this.fetchUserInfo()
+		this.getQuestions()
 	}
 
 	//fetches info on the user. Uses the id in the URL to find the user in the database and sets the corresponding state values to be
@@ -31,7 +28,7 @@ class Profile extends Component {
 			response => {
 				try {
 					if (response.success) {
-						this.setState({ alert: false, display_image: response.user.display_image, register_date: response.user.register_date, email: response.user.email, fname: response.user.fname, lname: response.user.lname, engineer: response.user.engineer, ups: response.user.ups, downs: response.user.downs })
+						this.setState({ alert: false, user:response.user })
 					}
 					else {
 						this.setState({ alert: true })
@@ -42,8 +39,27 @@ class Profile extends Component {
 		).catch((e) => console.error("Error:", e))
 	}
 
+	async getQuestions() {
+		try {
+			fetchAPI("GET", "/api/qa/questions/?").then(response => {
+				console.log(response)
+				if (response.success) {
+					this.setState({
+						questions: response.questions
+					})
+				}
+			})
+		} catch (e) { console.error("Error:", e) }
+	}
+
 	render() {
-		console.log('profile');
+		let questions = this.state.questions.map((question) => {
+			return (
+				<div key={question.id}>
+					<Question question={question} />
+				</div>
+			)
+		})
 		let points = {
 			float: "right"
 		}
@@ -56,79 +72,23 @@ class Profile extends Component {
 		let ProfileInfo;
 		//Own account
 		if (!this.state.alert && (this.props.match.params.id === this.state.id)) {
-			ProfileInfo = <div>
-				<Panel bsStyle="primary">
-					<Panel.Heading>
-						<Media>
-							<Media.Left>
-								<Image src={avatarPath} width={64} circle />
-							</Media.Left>
-							<Media.Body>
-								<Media.Heading>
-									<Panel.Title>{this.state.fname}&nbsp;{this.state.lname}'s Profile</Panel.Title>
-								</Media.Heading>
-								{this.state.engineer} engineering
-								</Media.Body>
-						</Media>
-					</Panel.Heading>
-					<Panel.Body>
-						<Glyphicon glyph="user" />&nbsp;&nbsp;&nbsp;&nbsp;user id: {this.props.match.params.id}
-						<br />
-						<Glyphicon glyph="envelope" />&nbsp;&nbsp;&nbsp;&nbsp;{this.state.email}
-						<br />
-						<Glyphicon glyph="calendar" />&nbsp;&nbsp;&nbsp;&nbsp;date registered: {this.state.register_date}
-						<br />
-						<Glyphicon glyph="cog" />&nbsp;&nbsp;&nbsp;&nbsp;my settings
-							  <br /><br />
-						<Glyphicon glyph="comment" />&nbsp;&nbsp;&nbsp;&nbsp;my questions
-							  <div style={points}><Glyphicon glyph="thumbs-up" />&nbsp;&nbsp;&nbsp;&nbsp;{this.state.ups}</div>
-						<br />
-						<Glyphicon glyph="comment" />&nbsp;&nbsp;&nbsp;&nbsp;my answers
-							  <div style={points}><Glyphicon glyph="thumbs-down" />&nbsp;&nbsp;&nbsp;&nbsp;{this.state.downs}</div>
-					</Panel.Body>
-				</Panel>
-			</div>
-
+			console.log(this.props.user)
+			ProfileInfo = <ProfileCard user={this.props.user} />
+			
+			
 		} else if (!this.state.alert && (!(this.props.match.params.id === this.state.id))) { //viewing another person's profile
-			ProfileInfo = <div>
-				<Panel bsStyle="primary">
-					<Panel.Heading>
-						<Media>
-							<Media.Left>
-								<Image src={avatarPath} width={64} circle />
-							</Media.Left>
-							<Media.Body>
-								<Media.Heading>
-									<Panel.Title>{this.state.fname}&nbsp;{this.state.lname}'s Profile</Panel.Title>
-								</Media.Heading>
-								{this.state.engineer} engineering
-								</Media.Body>
-						</Media>
-					</Panel.Heading>
-					<Panel.Body>
-						<Glyphicon glyph="user" />&nbsp;&nbsp;&nbsp;&nbsp;user id: {this.props.match.params.id}
-						<br />
-						<Glyphicon glyph="envelope" />&nbsp;&nbsp;&nbsp;&nbsp;{this.state.email}
-						<br />
-						<Glyphicon glyph="calendar" />&nbsp;&nbsp;&nbsp;&nbsp;date registered: {this.state.register_date}
-						<br /><br />
-						<Glyphicon glyph="comment" />&nbsp;&nbsp;&nbsp;&nbsp;my questions
-							  <div style={points}><Glyphicon glyph="thumbs-up" />&nbsp;&nbsp;&nbsp;&nbsp;{this.state.ups}</div>
-						<br />
-						<Glyphicon glyph="comment" />&nbsp;&nbsp;&nbsp;&nbsp;my answers
-							  <div style={points}><Glyphicon glyph="thumbs-down" />&nbsp;&nbsp;&nbsp;&nbsp;{this.state.downs}</div>
-					</Panel.Body>
-				</Panel>
-			</div>
-
+		console.log(this.props.user)
+			ProfileInfo = <ProfileCard user={this.state.user}/>
 		} else { //Profile inexistent
 			ProfileInfo = <div> <h1> User was not found. </h1> </div>
 		}
-		
+
 		return (
-				<div>
-					{ProfileInfo}
-				</div>
+			<div>
+				{ProfileInfo}
+				{questions}
+				
+			</div>
 		);
 	}
 }
