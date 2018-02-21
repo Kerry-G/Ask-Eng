@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import {fetchAPI} from '../../../utility'
 import moment from 'moment'
 import FontAwesome from 'react-fontawesome' 
-import { Col, Row, Image, ButtonToolbar, DropdownButton,MenuItem } from 'react-bootstrap'
+import { Col, Row, Image, ButtonToolbar, DropdownButton, MenuItem, Well } from 'react-bootstrap'
 import Answer from './Answer.js'
 import AnswerQuestion from './AnswerQuestion.js'
 
@@ -45,56 +45,55 @@ class QuestionPage extends Component {
       )
     })
 
-
       return (
         <div className="question-box answer-page">
           <Row>
-          <Col md={12}>
-                  <span className="question-tag">{this.state.question.engineer}</span>
-          </Col>
+            <Col md={12}>
+              <span className="question-tag">{this.state.question.engineer}</span>
+            </Col>
           </Row>
           <Row className="question-box-text">
-
-            <Col md={1}>
-
-                    <div className="square">
-                      <div className="fontawesomearrow down">
-                        <FontAwesome name='chevron-up' />
-                      </div>
-                      <div className="points down">
-                        {this.state.question.ups}
-                      </div>
-                    </div>
-
-                    <div className="square">
-                      <div className="fontawesomearrow up">
-                        <FontAwesome name='chevron-down' />
-                      </div>
-                      <div className="points up">
-                        {this.state.question.downs}
-                      </div>
-                    </div>
+            <Col md={1} xs={2}>
+              <div className="square">
+                <div className="fontawesomearrow down">
+                  <FontAwesome name='chevron-up' />
+                </div>
+                <div className="points down">
+                  {this.state.question.ups}
+                </div>
+              </div>
+              <div className="square">
+                <div className="fontawesomearrow up">
+                  <FontAwesome name='chevron-down' />
+                </div>
+                <div className="points up">
+                  {this.state.question.downs}
+                </div>
+              </div>
             </Col>
-            <Col md={11} right>
-                    <h1>{this.state.question.title}</h1>
-                    <p>{this.state.question.text}</p>
+            <Col md={11} xs={9} right>
+              <Well bsSize="large">
+                <h1>{this.state.question.title}</h1>
+                <p>{this.state.question.text}</p>
+              </Well>
             </Col>
-
           </Row>
           <Row>
             <Col md={12}>
+            <Well bsSize="large">
+              <h1> Know the Answer? </h1>
               <AnswerQuestion
               id={this.props.match.params.id}
-               />
+                />
+            </Well>
             </Col>
           </Row>
 
-              {answers}
-
+          {answers}
+          
         </div>
       )
     }
 }
-
 
 export default QuestionPage;

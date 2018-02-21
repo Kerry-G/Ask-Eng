@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import { Panel, Glyphicon, Image, Media } from 'react-bootstrap'
+import FontAwesome from 'react-fontawesome'
 
 class ProfileCard extends Component {
 
@@ -38,7 +39,6 @@ class ProfileCard extends Component {
           <Media>
             <Media.Left>
               <Image src={avatarPath} onClick={this.handleShowAvatar} width={64} circle />
-
             </Media.Left>
             <Media.Body>
               <Media.Heading>
@@ -50,14 +50,11 @@ class ProfileCard extends Component {
         </Panel.Heading>
         <Panel.Body>
           <Glyphicon glyph="envelope" />&nbsp;&nbsp;&nbsp;&nbsp;{this.props.user.email}
-          <br />
-          <Glyphicon glyph="cog" />&nbsp;&nbsp;&nbsp;&nbsp;my settings
-          <br />
-          <Glyphicon glyph="comment" />&nbsp;&nbsp;&nbsp;&nbsp;my questions
-          <div style={points}><Glyphicon glyph="thumbs-up" />&nbsp;&nbsp;&nbsp;&nbsp;{this.props.user.ups}</div>
-          <br />
-          <Glyphicon glyph="comment" />&nbsp;&nbsp;&nbsp;&nbsp;my answers
-          <div style={points}><Glyphicon glyph="thumbs-down" />&nbsp;&nbsp;&nbsp;&nbsp;{this.props.user.downs}</div>
+          <br/>
+          <Glyphicon glyph="calendar" />&nbsp;&nbsp;&nbsp;&nbsp;member since: {this.props.user.register_date}
+          <div style={points}><FontAwesome name='chevron-up' />&nbsp;&nbsp;&nbsp;&nbsp;{this.props.user.ups}</div>
+          <br/>
+          <div style={points}><FontAwesome name='chevron-down' />&nbsp;&nbsp;&nbsp;&nbsp;{this.props.user.downs}</div>
         </Panel.Body>
 
       </Panel>
