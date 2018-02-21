@@ -1,6 +1,6 @@
 from flask import Flask, Blueprint, redirect, render_template, url_for, session, request, logging
 from index import app
-from application.models import Users, Questions, Answers
+from application.models import Users, Questions, Answers, Votes
 from application.util import convertRequestDataToDict as toDict
 from passlib.hash import sha256_crypt
 import json
@@ -137,13 +137,12 @@ def questionsIDRoute(id):
 
 
     if request.method == 'PUT':
-        if data['actions'] == 'ups':
-            success = Questions.incrementUps(id)
-        if data['actions'] == 'downs':
-            success = Questions.incrementDowns(id)
-
-    response = json.dumps({'success': success, 'status': status, 'message': message})
-    print(response)
+        try:
+            Votes.setVote(user_id=data['loggedin_id'], comment_id=id, comment_status=data['comment_status'], vote_status=data['vote_status'])
+        except KeyError:
+            response = json.dumps({'success': False, 'status': 'FAILURE', 'message': 'Not proper keys.'})
+        finally:
+            response = json.dumps({'success': True, 'status': 'OK', 'message': 'Vote is set.'})
     return response
 
 @qa.route('/api/qa/answer/', methods=httpMethods)

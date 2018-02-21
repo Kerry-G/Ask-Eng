@@ -1,7 +1,5 @@
 from index import db
 from datetime import datetime
-from application.models.Users import User
-
 
 
 class Question(db.Model):
@@ -112,7 +110,9 @@ def incrementDowns(id):
     return response
 
 # Get all Question returns list of users or an empty list
-def getQuestions(limit=20):
+def getQuestions(limit=20, user_id=1):
+    from application.models import Users
+    from application.models import Votes
     response = []
 
     if limit is None:
@@ -122,52 +122,63 @@ def getQuestions(limit=20):
 
     if questions is not None:
         for question in questions:
-            user = User.query.filter_by(id=question.user_id).first()
+            user = Users.User.query.filter_by(id=question.user_id).first()
             ques = dict(question)
             ques['user'] = dict(user)
             del ques['user_id']
+            ques['vote_status'] = Votes.getVote(user_id, ques['id'], 'question')
             response.append(ques)
     return response
 
 
 def getQuestionsByUser(user_id):
+    from application.models import Users
     response = []
 
     questions = Question.query.filter_by(user_id=user_id).all()
 
     if questions is not None:
         for question in questions:
-            user = User.query.filter_by(id=question.user_id).first()
+            user = Users.User.query.filter_by(id=question.user_id).first()
             ques = dict(question)
             ques['user'] = dict(user)
             del ques['user_id']
+            ques['vote_status'] = Votes.getVote(user_id, ques['id'], 'question')
             response.append(ques)
     return response
 
 
 def getQuestionByEngineer(engineer):
+    from application.models import Users
     response = []
 
     questions = Question.query.filter_by(engineer=engineer).all()
 
     if questions is not None:
         for question in questions:
-            user = User.query.filter_by(id=question.user_id).first()
+            user = Users.User.query.filter_by(id=question.user_id).first()
             ques = dict(question)
             ques['user'] = dict(user)
             del ques['user_id']
+            ques['vote_status'] = Votes.getVote(user_id, ques['id'], 'question')
             response.append(ques)
     return response
 
 def getQuestionsByBoth(engineer, user_id):
+    from application.models import Users
+    from application.models import Votes
+
     response = []
     questions = Question.query.filter_by(user_id=user_id,engineer=engineer).all()
     if questions is not None:
         for question in questions:
-            user = User.query.filter_by(id=question.user_id).first()
+            user = Users.User.query.filter_by(id=question.user_id).first()
             ques = dict(question)
             ques['user'] = dict(user)
             del ques['user_id']
+            ques['vote_status'] = Votes.getVote(user_id, ques['id'], 'question')
             response.append(ques)
     return response
+
+
 
