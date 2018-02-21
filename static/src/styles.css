@@ -415,7 +415,6 @@ textarea{
 }
 .panel-primary{
     border-color: #c0392b;
-    width: 50%;
 }
 .panel-primary>.panel-heading{ 
     background-color: #e74c3c;
