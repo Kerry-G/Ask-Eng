@@ -12,7 +12,6 @@ import './styles.css';
 import './animated.css';
 
 const target = document.querySelector('#root');
-console.log(configureStore.persistor) 
 ReactDOM.render(
     <Provider store={configureStore.store}>
         <PersistGate loading={null} persistor={configureStore.persistor}>
