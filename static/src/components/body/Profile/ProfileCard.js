@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import { Panel, Glyphicon, Image, Media } from 'react-bootstrap'
 import FontAwesome from 'react-fontawesome'
+import moment from 'moment';
 
 class ProfileCard extends Component {
 
@@ -24,10 +25,12 @@ class ProfileCard extends Component {
   render() {
     let points = {
       float: "right"
-    }
+    };
     let avatarPath;
+    let registerDate = moment(this.props.user.register_date);
+
     if (this.props.user.display_image !== "") {
-      avatarPath = "\\images\\avatar\\" + this.props.user.display_image;
+      avatarPath = `\\images\\avatar\\${this.props.user.display_image}`;
     } else {
       avatarPath = "\\images\\avatar\\4.png";
     }
@@ -51,7 +54,7 @@ class ProfileCard extends Component {
         <Panel.Body>
           <Glyphicon glyph="envelope" />&nbsp;&nbsp;&nbsp;&nbsp;{this.props.user.email}
           <br/>
-          <Glyphicon glyph="calendar" />&nbsp;&nbsp;&nbsp;&nbsp;member since: {this.props.user.register_date}
+          <Glyphicon glyph="calendar" />&nbsp;&nbsp;&nbsp;&nbsp;member since: {registerDate.format("LL")}
           <div style={points}><FontAwesome name='chevron-up' />&nbsp;&nbsp;&nbsp;&nbsp;{this.props.user.ups}</div>
           <br/>
           <div style={points}><FontAwesome name='chevron-down' />&nbsp;&nbsp;&nbsp;&nbsp;{this.props.user.downs}</div>

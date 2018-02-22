@@ -16,10 +16,9 @@ tall:       (min-height: 780px), */
 }
 /* HEADER */
 .header{
-    margin: 0px;
-    margin-bottom: 25px;
+    margin: 0 0 25px;
     background: #ecf0f1;
-    box-shadow: 0px 2px 12px 1px rgba(127,140,141,0.6);
+    box-shadow: 0 2px 12px 1px rgba(127,140,141,0.6);
 }
 .header h1{
     font-size: 5rem;
@@ -29,13 +28,7 @@ tall:       (min-height: 780px), */
 .header h1 small{
     color: #e74c3c;;
 }
-.header-name{
-    color: #e74c3c;
-    font-size: 2rem;
-    margin: auto 0 auto 0;
-    margin: 3rem 0.5em 1em 0.5em;
-    text-align: right;
-}
+
 .logoutBtn{
     color: #ffffff;
     cursor: pointer;
@@ -78,7 +71,6 @@ h1{
     height: 3rem;
     font-size: 1.5rem;
     color:#95a5a6;
-    margin-left: auto;
     background-color: #ecf0f1;
     width: 100px;
     cursor: pointer;
@@ -90,7 +82,6 @@ h1{
 }
 .reg-btn:hover{
     border:2px solid #95a5a6;
-    margin-left: auto;
     color: #e74c3c;
     background-color: #ecf0f1;
     width: 100px;
@@ -135,7 +126,7 @@ h1{
 .box-login {
     border: 0.1em solid #c7d0d2;
     border-radius: 0.2em;
-    box-shadow: inset 0 1.5px 3px rgba(190, 190, 190, .4), 0 0 0 5px #f5f7f8;
+    box-shadow: inset 0 1px 3px rgba(190, 190, 190, .4), 0 0 0 5px #f5f7f8;
     padding: 1em;
     margin-bottom: 7rem;
 }
@@ -192,11 +183,9 @@ label{
     border: 0;
 }
 .alert-warning{
-    background-image: none;
     border-color: rgb(192, 61, 61);
-    background-color: none;
     color: black;
-    background-color: #eee;
+    background: #eee none;
 }
 /* END REGISTER MODAL */
 /* IDK */
@@ -355,9 +344,10 @@ textarea{
 /* END avatar */
 /* question box */
 
-/*.question-box{
-    border-bottom: 1px #95a5a6 solid;
-}*/
+.question-box{
+    border-bottom: 1px rgba(149, 165, 166, 0.65) solid;
+    padding: 3px;
+}
 
 .question-box .square{
     border:1px dotted #95a5a6;
