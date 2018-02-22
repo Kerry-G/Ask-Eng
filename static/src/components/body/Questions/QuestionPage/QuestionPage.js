@@ -4,7 +4,7 @@ import moment from 'moment'
 import FontAwesome from 'react-fontawesome' 
 import { Col, Row, Image, ButtonToolbar, DropdownButton, MenuItem, Well } from 'react-bootstrap'
 import Answer from './Answer.js'
-import AnswerQuestion from './AnswerQuestion.js'
+import AnswerQuestion from './AnswerQuestion'
 
 class QuestionPage extends Component {
   constructor(props) {
@@ -12,9 +12,16 @@ class QuestionPage extends Component {
     this.state={
         question:{
           answers: []
-        }
+        },
+		check : false
     }
+	this.answerhandler = this.answerhandler.bind(this);
   }
+
+  	answerhandler() {
+		console.log("question answered")
+        this.getQuestion()
+    }
 
   componentDidMount(){
     this.getQuestion()
@@ -46,6 +53,7 @@ class QuestionPage extends Component {
     })
 
       return (
+		
         <div className="question-box answer-page">
           <Row>
             <Col md={12}>
@@ -83,17 +91,15 @@ class QuestionPage extends Component {
             <Well bsSize="large">
               <h1> Know the Answer? </h1>
               <AnswerQuestion
-              id={this.props.match.params.id}
-                />
+				id={this.props.match.params.id}
+				updateanswers={this.answerhandler}
+              />
             </Well>
             </Col>
           </Row>
-
           {answers}
-          
         </div>
       )
     }
 }
-
 export default QuestionPage;
