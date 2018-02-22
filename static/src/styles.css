@@ -398,23 +398,16 @@ label{
     margin-left:10px;
     font-size:1.4rem;
 }
-.up{
-    color:#c0392b;
-    text-align:center;
-}
-.down{
-    color:#9b59b6;
-    text-align:center;
-}
 .question-time{
     float:left;
     margin-left:10px;
     font-size: 1.3rem;
+    padding-top:10px;
+    padding-bottom:10px;
 }
 /* END question box */
 
 /* answer-page */
-s
 .question-box-text{
     margin: auto auto 2rem auto;
 }
@@ -441,4 +434,4 @@ s
     background-color:#ecf0f1;
     border-color: #ecf0f1;
 }
-
+
