@@ -1,27 +1,27 @@
 import React, { Component } from 'react'
-import { Panel, Glyphicon, Image, Media } from 'react-bootstrap'
+import { Panel, Glyphicon, Image, Media, Col, Nav, NavItem, NavDropdown, MenuItem } from 'react-bootstrap'
 import { fetchAPI } from '../../utility'
-import {connect} from 'react-redux'
+import { connect } from 'react-redux'
+import ProfileCard from './ProfileCard'
+import Question from '..//Questions//Question'
+
 
 class Profile extends Component {
 	constructor(props) {
 		super(props);
 		this.state = {
 			alert: false,
-			id: this.props.user.id,
-			email: "",
-			fname: "",
-			lname: "",
-			engineer: "",
-			ups: "",
-			downs: "",
-			register_date: "",
-			display_image: "",
+			user: {},
+			questions: [],
+			activeKey:"0",
+			activeQuery:"0",
+			extraQuery:""
 		}
 	}
 
 	componentDidMount() {
 		this.fetchUserInfo()
+		this.getQuestions()
 	}
 
 	//fetches info on the user. Uses the id in the URL to find the user in the database and sets the corresponding state values to be
@@ -31,7 +31,7 @@ class Profile extends Component {
 			response => {
 				try {
 					if (response.success) {
-						this.setState({ alert: false, display_image: response.user.display_image, register_date: response.user.register_date, email: response.user.email, fname: response.user.fname, lname: response.user.lname, engineer: response.user.engineer, ups: response.user.ups, downs: response.user.downs })
+						this.setState({ alert: false, user: response.user })
 					}
 					else {
 						this.setState({ alert: true })
@@ -42,8 +42,34 @@ class Profile extends Component {
 		).catch((e) => console.error("Error:", e))
 	}
 
+	async getQuestions() {
+		try {
+			let engineerArray = ["","&engineer=Software","&engineer=Mechanical","&engineer=Computer","&engineer=Electrical","&engineer=Civil"]
+      fetchAPI("GET", "/api/qa/questions/?" + engineerArray[(this.state.activeQuery)] + this.state.extraQuery).then(response => {
+				console.log(response)
+				if (response.success) {
+					this.setState({
+						questions: response.questions
+					})
+				}
+			})
+		} catch (e) { console.error("Error:", e) }
+	}
+
+	handleSelect(eventKey) {
+		this.setState({
+		  activeKey:eventKey
+		},()=>{this.getQuestions()} )
+		
+	  }
 	render() {
-		console.log('profile');
+		let questions = this.state.questions.map((question) => {
+			return (
+				<div key={question.id}>
+					<Question question={question} />
+				</div>
+			)
+		})
 		let points = {
 			float: "right"
 		}
@@ -56,79 +82,41 @@ class Profile extends Component {
 		let ProfileInfo;
 		//Own account
 		if (!this.state.alert && (this.props.match.params.id === this.state.id)) {
-			ProfileInfo = <div>
-				<Panel bsStyle="primary">
-					<Panel.Heading>
-						<Media>
-							<Media.Left>
-								<Image src={avatarPath} width={64} circle />
-							</Media.Left>
-							<Media.Body>
-								<Media.Heading>
-									<Panel.Title>{this.state.fname}&nbsp;{this.state.lname}'s Profile</Panel.Title>
-								</Media.Heading>
-								{this.state.engineer} engineering
-								</Media.Body>
-						</Media>
-					</Panel.Heading>
-					<Panel.Body>
-						<Glyphicon glyph="user" />&nbsp;&nbsp;&nbsp;&nbsp;user id: {this.props.match.params.id}
-						<br />
-						<Glyphicon glyph="envelope" />&nbsp;&nbsp;&nbsp;&nbsp;{this.state.email}
-						<br />
-						<Glyphicon glyph="calendar" />&nbsp;&nbsp;&nbsp;&nbsp;date registered: {this.state.register_date}
-						<br />
-						<Glyphicon glyph="cog" />&nbsp;&nbsp;&nbsp;&nbsp;my settings
-							  <br /><br />
-						<Glyphicon glyph="comment" />&nbsp;&nbsp;&nbsp;&nbsp;my questions
-							  <div style={points}><Glyphicon glyph="thumbs-up" />&nbsp;&nbsp;&nbsp;&nbsp;{this.state.ups}</div>
-						<br />
-						<Glyphicon glyph="comment" />&nbsp;&nbsp;&nbsp;&nbsp;my answers
-							  <div style={points}><Glyphicon glyph="thumbs-down" />&nbsp;&nbsp;&nbsp;&nbsp;{this.state.downs}</div>
-					</Panel.Body>
-				</Panel>
-			</div>
+			console.log(this.props.user)
+			ProfileInfo = <ProfileCard user={this.props.user} />
+
 
 		} else if (!this.state.alert && (!(this.props.match.params.id === this.state.id))) { //viewing another person's profile
-			ProfileInfo = <div>
-				<Panel bsStyle="primary">
-					<Panel.Heading>
-						<Media>
-							<Media.Left>
-								<Image src={avatarPath} width={64} circle />
-							</Media.Left>
-							<Media.Body>
-								<Media.Heading>
-									<Panel.Title>{this.state.fname}&nbsp;{this.state.lname}'s Profile</Panel.Title>
-								</Media.Heading>
-								{this.state.engineer} engineering
-								</Media.Body>
-						</Media>
-					</Panel.Heading>
-					<Panel.Body>
-						<Glyphicon glyph="user" />&nbsp;&nbsp;&nbsp;&nbsp;user id: {this.props.match.params.id}
-						<br />
-						<Glyphicon glyph="envelope" />&nbsp;&nbsp;&nbsp;&nbsp;{this.state.email}
-						<br />
-						<Glyphicon glyph="calendar" />&nbsp;&nbsp;&nbsp;&nbsp;date registered: {this.state.register_date}
-						<br /><br />
-						<Glyphicon glyph="comment" />&nbsp;&nbsp;&nbsp;&nbsp;my questions
-							  <div style={points}><Glyphicon glyph="thumbs-up" />&nbsp;&nbsp;&nbsp;&nbsp;{this.state.ups}</div>
-						<br />
-						<Glyphicon glyph="comment" />&nbsp;&nbsp;&nbsp;&nbsp;my answers
-							  <div style={points}><Glyphicon glyph="thumbs-down" />&nbsp;&nbsp;&nbsp;&nbsp;{this.state.downs}</div>
-					</Panel.Body>
-				</Panel>
-			</div>
-
+			console.log(this.props.user)
+			ProfileInfo = <ProfileCard user={this.state.user} />
 		} else { //Profile inexistent
 			ProfileInfo = <div> <h1> User was not found. </h1> </div>
 		}
-		
+
 		return (
-				<div>
+			<div>
+				<Col lg={8}>
+				<Nav bsStyle="tabs" activeKey={this.state.activeKey} onSelect={k => this.handleSelect(k)}>
+					<NavItem onClick={() => { this.setState({ activeQuery: "0" }) }} eventKey="0">
+						Question
+			</NavItem>
+					<NavItem onClick={() => { this.setState({ activeQuery: "2" }) }} eventKey="1" >
+						Answer
+			</NavItem>
+					<NavDropdown eventKey="6" title="Sort" id="nav-dropdown">
+						<MenuItem onClick={() => this.setState({ extraQuery: "&sort=title" })} eventKey="6.1">Title</MenuItem>
+						<MenuItem onClick={() => this.setState({ extraQuery: "&sort=register_date&reverse=1" })} eventKey="6.2">Newest</MenuItem>
+						<MenuItem onClick={() => this.setState({ extraQuery: "&sort=register_date&reverse=0" })} eventKey="6.3">Oldest</MenuItem>
+						<MenuItem eventKey="6.4">Ups</MenuItem>
+						<MenuItem eventKey="6.5">Downs</MenuItem>
+					</NavDropdown>
+				</Nav>
+					{questions}
+				</Col>
+				<Col lg={4} >
 					{ProfileInfo}
-				</div>
+				</Col>
+			</div>
 		);
 	}
 }

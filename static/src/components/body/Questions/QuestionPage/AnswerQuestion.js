@@ -65,15 +65,15 @@ class AnswerQuestion extends Component {
 
     render() {
         return (
-            <div className="ask-box main">
+            <div className="ask-box">
+                <br />
                 <div>
-                <textarea
-                    className="ask-box text"
-                    rows="5"
-                    placeholder="Know the anwser?"
-                    onChange={(e) => this.handleAnswerChange(e)} />
+                    <textarea
+                        className="ask-box text"
+                        rows="5"
+                        placeholder="Answer away!"
+                        onChange={(e) => this.handleAnswerChange(e)} />
                 </div>
-
                 <div className="ask-box-footer">
                     <Button id="ask-box-button" onClick={() => this.handleAsk()}>Answer Question</Button>
                 </div>

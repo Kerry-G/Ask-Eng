@@ -1,6 +1,8 @@
 import React, {Component} from 'react'
 import {fetchAPI} from '../../../utility'
 import moment from 'moment'
+import FontAwesome from 'react-fontawesome' 
+import { Col, Row, Image, ButtonToolbar, DropdownButton, MenuItem, Well } from 'react-bootstrap'
 import FontAwesome from 'react-fontawesome'
 import {Col, Row, Image, ButtonToolbar, DropdownButton, MenuItem} from 'react-bootstrap'
 import Answer from './Answer.js'
@@ -40,7 +42,6 @@ class QuestionPage extends Component {
 
     render() {
         if (!this.state.loading) {
-            console.log("test: " + JSON.stringify(this.state.question));
             let answers = this.state.question.answers.map((answer) => {
                 return (
                     <div key={answer.id}>
@@ -69,9 +70,12 @@ class QuestionPage extends Component {
                     </Row>
                     <Row>
                         <Col md={12}>
+                          <Well bsSize="large">
+                          <h1> Know the Answer? </h1>
                             <AnswerQuestion
                                 id={this.props.match.params.id}
                             />
+                          </Well>
                         </Col>
                     </Row>
                     {answers}
@@ -82,6 +86,5 @@ class QuestionPage extends Component {
         }
     }
 }
-
 
 export default QuestionPage;

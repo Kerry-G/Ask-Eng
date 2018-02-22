@@ -6,7 +6,6 @@ import { Profile } from '../Profile/Profile'
 
 class ChooseAvatar extends Component {
 
-
   constructor(props){
     super(props);
     this.state = {
@@ -19,7 +18,6 @@ class ChooseAvatar extends Component {
     this.updateAvatar = this.updateAvatar.bind(this);
   }
 
-
   refreshImage() {
     this.setState({
       rand: this.getRandomNumber(),
@@ -28,24 +26,24 @@ class ChooseAvatar extends Component {
   }
 
   async updateAvatar() {
-        try {
-            let data = {
-              user_id: this.props.user.id,
-              display_image: this.state.rand+'.png'
-            }
-            fetchAPI("PUT", "/api/users/displayImage/", data).then(response => {
-                if (response.success) {
-                  this.setState({ buttonMsg: 'Awesome!!!'});
-                  let updatedUser = JSON.parse(JSON.stringify(this.props.user))
-                  updatedUser.display_image = data.display_image
-                  updateUser(updatedUser)
-				  this.updateProfileCard()
-                }
-            }).catch((e) => console.error("Error:", e))
+    try {
+      let data = {
+        user_id: this.props.user.id,
+        display_image: this.state.rand+'.png'
+    }
+      fetchAPI("PUT", "/api/users/displayImage/", data).then(response => {
+        if (response.success) {
+          this.setState({ buttonMsg: 'Awesome!!!'});
+          let updatedUser = JSON.parse(JSON.stringify(this.props.user))
+          updatedUser.display_image = data.display_image
+          updateUser(updatedUser)
+          this.updateProfileCard()
         }
-        catch (e) {
-            console.error("Error:", e)
-        }
+      }).catch((e) => console.error("Error:", e))
+    }
+    catch (e) {
+      console.error("Error:", e)
+    }
   }
 
   closeModal(){
@@ -63,18 +61,18 @@ class ChooseAvatar extends Component {
   render() {
     let avatarPath = "\\images/avatar/" + this.state.rand + ".png";
     return (
-           <Modal className="avatarChange" show={this.props.show} onHide={this.closeModal.bind(this)}>
-           <Modal.Header closeButton>
-            <Modal.Title>Change your Avatar</Modal.Title>
-           </Modal.Header>
-              <Image src={avatarPath} onClick={this.refreshImage} width={64} circle />
-              <Button onClick={this.updateAvatar}>{this.state.buttonMsg}</Button>
-          </Modal>
+      <Modal className="avatarChange" show={this.props.show} onHide={this.closeModal.bind(this)}>
+        <Modal.Header closeButton>
+        <Modal.Title>Change your avatar</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>Click on the icon to select!</Modal.Body>
+        <Image src={avatarPath} onClick={this.refreshImage} width={64} circle />
+        <Modal.Footer> 
+          <Button onClick={this.updateAvatar}>{this.state.buttonMsg}</Button>
+        </Modal.Footer>
+      </Modal>
     );
-
   }
-
 }
-
 
 export default ChooseAvatar;
