@@ -13,3 +13,5 @@ cache:
     - static/node_modules
 script:
   - cd static && npm install && npm test
+notifications:
+    slack: ask-eng:K2sBuzmuU1XHLA9JroSjpsh8
