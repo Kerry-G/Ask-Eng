@@ -75,6 +75,7 @@ class AskQuestion extends Component {
     handleAsk() {
         this.saveQuestion()
         this.cleanState();
+		this.props.updateQuestions();
     }
     // validateAsk(){
 
@@ -106,6 +107,8 @@ class AskQuestion extends Component {
                 user_id: this.props.user.id
             }
         })
+		this.refs.title.value="";
+		this.refs.question.value="";
     }
 
     render() {
@@ -115,6 +118,7 @@ class AskQuestion extends Component {
                 <div>
                     <textarea
                         className="ask-box text"
+						ref = "title"
                         rows="1"
                         placeholder="Title"
                         onChange={(e) => this.handleTitleChange(e)} />
@@ -122,6 +126,7 @@ class AskQuestion extends Component {
                 <div>
                 <textarea
                     className="ask-box text"
+					ref= "question"
                     rows="5"
                     placeholder="What is your question?"
                     onChange={(e) => this.handleQuestionChange(e)} />
