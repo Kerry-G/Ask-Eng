@@ -12,4 +12,4 @@ cache:
   directories:
     - static/node_modules
 script:
-  - cd static && npm run build && npm test
+  - cd static && npm install && npm test
