@@ -1,10 +1,8 @@
 import React, {Component} from 'react'
 import {fetchAPI} from '../../../utility'
 import moment from 'moment'
-import FontAwesome from 'react-fontawesome' 
-import { Col, Row, Image, ButtonToolbar, DropdownButton, MenuItem, Well } from 'react-bootstrap'
 import FontAwesome from 'react-fontawesome'
-import {Col, Row, Image, ButtonToolbar, DropdownButton, MenuItem} from 'react-bootstrap'
+import {Col, Row, Image, ButtonToolbar, DropdownButton, MenuItem, Well} from 'react-bootstrap'
 import Answer from './Answer.js'
 import AnswerQuestion from './AnswerQuestion.js'
 import Votes from "../../../votes/Votes";
