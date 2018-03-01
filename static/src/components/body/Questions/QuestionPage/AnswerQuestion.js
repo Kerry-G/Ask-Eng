@@ -38,12 +38,8 @@ class AnswerQuestion extends Component {
     handleAsk() {
 		this.saveAnswer();
 		this.cleanState();
-		this.update();
-    }
-
-	update(){
 		this.props.updateanswers();
-	}
+    }
 
     async saveAnswer() {
         try {
@@ -63,7 +59,8 @@ class AnswerQuestion extends Component {
         this.setState({
             answer :{
 				text: '',
-				user_id: this.props.user.id
+				user_id: this.props.user.id,
+				question_id: this.props.id
 			}
         })
 		this.refs.answering.value = "";

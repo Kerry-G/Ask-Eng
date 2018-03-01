@@ -19,8 +19,8 @@ class QuestionPage extends Component {
   }
 
   	answerhandler() {
-		console.log("question answered")
-        this.getQuestion()
+		console.log("question answered");
+        this.getQuestion();
     }
 
   componentDidMount(){
