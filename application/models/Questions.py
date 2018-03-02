@@ -167,7 +167,6 @@ def getQuestionByEngineer(engineer,loggedin_id):
         for question in questions:
             if loggedin_id == -1:
                 user = Users.User.query.filter_by(id=question.user_id).first()
-                app.logger.info(user)
                 ques = dict(question)
                 if user is None:
                     ques['user'] = {}
