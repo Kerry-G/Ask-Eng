@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Grid, Col, Row, Modal, FormGroup, FormControl, HelpBlock, ControlLabel, Image, Alert } from 'react-bootstrap'
+import { Grid, Col, Row, Modal, FormGroup, FormControl, HelpBlock, ControlLabel, Image, Alert, Popover, OverlayTrigger } from 'react-bootstrap'
 import Select from 'react-select'
 import { fetchAPI } from './../utility'
 class Register extends Component {
@@ -186,7 +186,12 @@ class Register extends Component {
             { value: 'electrical', label: 'Electrical Engineering' },
             { value: 'civil', label: 'Civil Engineering' }
         ];
-
+        const popoverFocus = <Popover 
+        title="Your password should be safe!" 
+        id="popover-basic">
+        Your password must contain atleast one lowercase character,
+        one uppercase character, one special character "@#$%",
+        and atleast 6 characters.</Popover>
         let body
         if (this.state.page === 1) {
             body =
@@ -204,6 +209,7 @@ class Register extends Component {
                                     this.setState({ email: e.target.value })
                                 }}
                             />
+                            <OverlayTrigger trigger="focus" placement="bottom" overlay={popoverFocus}>
                             <FieldGroup
                                 label="Password"
                                 type="password"
@@ -216,8 +222,8 @@ class Register extends Component {
                                 }
                                 }
                             />
-                            must contains one lowercase characters, uppercase character, one special characyer "@#$%" and at least 6 character.
-                                </div>
+                            </OverlayTrigger>
+                        </div>
                     </Col>
                     <Col xs={12} md={6}>
 
