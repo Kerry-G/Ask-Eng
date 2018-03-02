@@ -78,7 +78,8 @@ class Register extends Component {
             && this.state.pw !== ''
             && this.state.role !== ''
             && this.state.fname !== ''
-            && this.state.validEmail === 'success') {
+            && this.state.validEmail === 'success'
+            && this.state.validPassword === 'success') {
             result = false;
         } else {
             result = true;

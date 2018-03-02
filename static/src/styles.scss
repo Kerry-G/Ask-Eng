@@ -258,7 +258,6 @@ textarea{
         background-color: #3498db;
         width: 100px;
         color: white;
-        cursor: pointer;
         text-align: center;
         border-radius: 100px;
         padding: 5px;
@@ -302,7 +301,6 @@ textarea{
 }
 #ask-box-button{
     width: 15rem;
-    cursor: pointer;
     margin-right: 10px;
     margin-bottom: 10px;
     text-align: center;
@@ -311,22 +309,13 @@ textarea{
     padding-right: 10px;
     padding-left: 10px;
     background-color: #e74c3c;
+    &:hover{
+        background-color: #c0392b;
+    }
     /* padding-left: 55px; */
     /* padding-right: 55px; */
 }
-#ask-box-button:hover{
-    cursor: pointer;
-    margin-right: 10px;
-    margin-bottom: 10px;
-    text-align: center;
-    border-radius: 100px;
-    padding: 5px;
-    padding-right: 10px;
-    padding-left: 10px;
-    background-color: #c0392b;
-    /* padding-left: 55px; */
-    /* padding-right: 55px; */
-}
+
 /* END ASK-BOX */
 /* avatar */
 .avatarChange{
