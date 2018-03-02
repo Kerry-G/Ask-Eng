@@ -84,5 +84,4 @@ class QuestionPage extends Component {
         }
     }
 }
-
 export default QuestionPage;
