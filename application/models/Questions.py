@@ -110,10 +110,13 @@ def incrementDowns(id):
     return response
 
 # Get all Question returns list of users or an empty list
-def getQuestions(limit=20, user_id=1):
+def getQuestions(loggedin_id, limit=20):
     from application.models import Users
     from application.models import Votes
     response = []
+
+    if loggedin_id < 0: # means user is not logged in
+        pass
 
     if limit is None:
         questions = Question.query.all()
@@ -122,16 +125,23 @@ def getQuestions(limit=20, user_id=1):
 
     if questions is not None:
         for question in questions:
-            user = Users.User.query.filter_by(id=question.user_id).first()
-            ques = dict(question)
-            ques['user'] = dict(user)
-            del ques['user_id']
-            ques['vote_status'] = Votes.getVote(user_id, ques['id'], 'question')
+            if loggedin_id == -1:
+                user = Users.User.query.filter_by(id=question.user_id).first()
+                ques = dict(question)
+                ques['user'] = dict(user)
+                del ques['user_id']
+                ques['vote_status'] = Votes.getVote(loggedin_id, ques['id'], 'question')
+            else:
+                user = {}
+                ques = dict(question)
+                ques['user'] = dict(user)
+                del ques['user_id']
+
             response.append(ques)
     return response
 
 
-def getQuestionsByUser(user_id):
+def getQuestionsByUser(user_id, loggedin_id):
     from application.models import Users
     response = []
 
@@ -139,16 +149,21 @@ def getQuestionsByUser(user_id):
 
     if questions is not None:
         for question in questions:
-            user = Users.User.query.filter_by(id=question.user_id).first()
-            ques = dict(question)
-            ques['user'] = dict(user)
-            del ques['user_id']
-            ques['vote_status'] = Votes.getVote(user_id, ques['id'], 'question')
-            response.append(ques)
+            if loggedin_id == -1:
+                user = Users.User.query.filter_by(id=question.user_id).first()
+                ques = dict(question)
+                ques['user'] = dict(user)
+                del ques['user_id']
+                ques['vote_status'] = Votes.getVote(loggedin_id, ques['id'], 'question')
+            else:
+                user = {}
+                ques = dict(question)
+                ques['user'] = dict(user)
+                del ques['user_id']
     return response
 
 
-def getQuestionByEngineer(engineer):
+def getQuestionByEngineer(engineer,loggedin_id):
     from application.models import Users
     response = []
 
@@ -156,15 +171,20 @@ def getQuestionByEngineer(engineer):
 
     if questions is not None:
         for question in questions:
-            user = Users.User.query.filter_by(id=question.user_id).first()
-            ques = dict(question)
-            ques['user'] = dict(user)
-            del ques['user_id']
-            ques['vote_status'] = Votes.getVote(user_id, ques['id'], 'question')
-            response.append(ques)
+            if loggedin_id == -1:
+                user = Users.User.query.filter_by(id=question.user_id).first()
+                ques = dict(question)
+                ques['user'] = dict(user)
+                del ques['user_id']
+                ques['vote_status'] = Votes.getVote(loggedin_id, ques['id'], 'question')
+            else:
+                user = {}
+                ques = dict(question)
+                ques['user'] = dict(user)
+                del ques['user_id']
     return response
 
-def getQuestionsByBoth(engineer, user_id):
+def getQuestionsByBoth(engineer, user_id,loggedin_id):
     from application.models import Users
     from application.models import Votes
 
@@ -172,12 +192,17 @@ def getQuestionsByBoth(engineer, user_id):
     questions = Question.query.filter_by(user_id=user_id,engineer=engineer).all()
     if questions is not None:
         for question in questions:
-            user = Users.User.query.filter_by(id=question.user_id).first()
-            ques = dict(question)
-            ques['user'] = dict(user)
-            del ques['user_id']
-            ques['vote_status'] = Votes.getVote(user_id, ques['id'], 'question')
-            response.append(ques)
+            if loggedin_id == -1:
+                user = Users.User.query.filter_by(id=question.user_id).first()
+                ques = dict(question)
+                ques['user'] = dict(user)
+                del ques['user_id']
+                ques['vote_status'] = Votes.getVote(loggedin_id, ques['id'], 'question')
+            else:
+                user = {}
+                ques = dict(question)
+                ques['user'] = dict(user)
+                del ques['user_id']
     return response
 
 

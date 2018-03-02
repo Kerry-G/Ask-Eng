@@ -79,31 +79,40 @@ def questionsRoute():
         response = json.dumps({'success': success, 'status': status, 'message': message, 'question': question})
     elif request.method == 'GET':
 
+
+
         # url get request 
         questionArgs = request.args.to_dict()
+
+        # get logged in user id
+        try:
+            id = questionArgs['loggedin_id']
+        except KeyError:
+            id = -1
+
         if 'question_id' in questionArgs:
-            q = Questions.getQuestion(questionArgs['question_id'])
+            q = Questions.getQuestion(questionArgs['question_id'],id)
             question = questionResponse(q)
             success = True
             status = 'OK'
             message = 'Question with anwsers.'
         elif 'user_id' in questionArgs and 'engineer' not in questionArgs:
-            questions = Questions.getQuestionsByUser(questionArgs['user_id'])
+            questions = Questions.getQuestionsByUser(questionArgs['user_id'],id)
             success = True
             status = 'OK'
             message = 'List of several questions by user_id'
         elif 'user_id' in questionArgs and 'engineer' in questionArgs:
-            questions = Questions.getQuestionsByBoth(questionArgs['engineer'], questionArgs['user_id'])
+            questions = Questions.getQuestionsByBoth(questionArgs['engineer'], questionArgs['user_id'], id)
             success = True
             status = 'OK'
             message = 'List of several questions by user_id'
         elif 'engineer' in questionArgs:
-            questions = Questions.getQuestionByEngineer(questionArgs['engineer'])
+            questions = Questions.getQuestionByEngineer(questionArgs['engineer'], id)
             success = True
             status = 'OK'
             message = 'List of several questions by engineer'
         else:
-            questions = Questions.getQuestions()
+            questions = Questions.getQuestions(id)
             success = True
             status = 'OK'
             message = 'List of several questions'
@@ -143,6 +152,7 @@ def questionsIDRoute(id):
             response = json.dumps({'success': False, 'status': 'FAILURE', 'message': 'Not proper keys.'})
         finally:
             response = json.dumps({'success': True, 'status': 'OK', 'message': 'Vote is set.'})
+    print(response)
     return response
 
 @qa.route('/api/qa/answer/', methods=httpMethods)
