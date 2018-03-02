@@ -5,10 +5,6 @@ import {Link} from 'react-router-dom'
 import Votes from "../../votes/Votes";
 
 class Question extends Component {
-    constructor(props) {
-        super(props);
-    }
-
     render() {
         let time = moment(this.props.question.register_date).subtract(5, "hours").fromNow()
         let path = "/question/" + this.props.question.id;

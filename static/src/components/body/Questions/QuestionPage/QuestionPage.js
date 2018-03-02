@@ -1,8 +1,6 @@
 import React, {Component} from 'react'
 import {fetchAPI} from '../../../utility'
-import moment from 'moment'
-import FontAwesome from 'react-fontawesome'
-import {Col, Row, Image, ButtonToolbar, DropdownButton, MenuItem, Well} from 'react-bootstrap'
+import {Col, Row, Well} from 'react-bootstrap'
 import Answer from './Answer.js'
 import AnswerQuestion from './AnswerQuestion.js'
 import Votes from "../../../votes/Votes";
@@ -16,8 +14,18 @@ class QuestionPage extends Component {
             },
             loading: true
         }
+		this.answerhandler = this.answerhandler.bind(this);
+    }
+	
+	answerhandler() {
+		console.log("question answered");
+        this.getQuestion();
     }
 
+	componentDidMount(){
+		this.getQuestion()
+	}
+	
     componentWillMount() {
         this.setState({loading: true});
         this.getQuestion()
@@ -72,8 +80,9 @@ class QuestionPage extends Component {
                                 <h2> Know the Answer? </h2>
                                 <AnswerQuestion
                                 id={this.props.match.params.id}
-                                />
-                            </Well>
+								updateanswers={this.answerhandler}
+                            />
+                          </Well>
                         </Col>
                     </Row>
                     {answers}
@@ -84,5 +93,4 @@ class QuestionPage extends Component {
         }
     }
 }
-
 export default QuestionPage;

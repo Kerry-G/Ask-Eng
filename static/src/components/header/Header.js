@@ -1,7 +1,6 @@
 import React, { Component } from 'react'
 import { Col, Row, Image} from 'react-bootstrap'
 import { connect } from 'react-redux'
-import { logOut, reload } from '../../store/auth'
 import { Link } from 'react-router-dom'
 import Headermenu from '../header/Headermenu'
 
