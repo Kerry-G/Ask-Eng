@@ -16,8 +16,18 @@ class QuestionPage extends Component {
             },
             loading: true
         }
+		this.answerhandler = this.answerhandler.bind(this);
+    }
+	
+	answerhandler() {
+		console.log("question answered");
+        this.getQuestion();
     }
 
+	componentDidMount(){
+		this.getQuestion()
+	}
+	
     componentWillMount() {
         this.setState({loading: true});
         this.getQuestion()
@@ -72,6 +82,7 @@ class QuestionPage extends Component {
                           <h1> Know the Answer? </h1>
                             <AnswerQuestion
                                 id={this.props.match.params.id}
+								updateanswers={this.answerhandler}
                             />
                           </Well>
                         </Col>
