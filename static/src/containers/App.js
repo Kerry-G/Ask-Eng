@@ -6,7 +6,7 @@ import Footer from '../components/footer/Footer';
 import { BrowserRouter as Router, Route } from 'react-router-dom';
 import Debug from '../components/Debug/Debug.js';
 
-class App extends Component {
+export class App extends Component {
 
 
 

@@ -16,10 +16,9 @@ tall:       (min-height: 780px), */
 }
 /* HEADER */
 .header{
-    margin: 0px;
-    margin-bottom: 25px;
+    margin: 0 0 25px;
     background: #ecf0f1;
-    box-shadow: 0px 2px 12px 1px rgba(127,140,141,0.6);
+    box-shadow: 0 2px 12px 1px rgba(127,140,141,0.6);
 }
 .header h1{
     font-size: 5rem;
@@ -29,13 +28,7 @@ tall:       (min-height: 780px), */
 .header h1 small{
     color: #e74c3c;;
 }
-.header-name{
-    color: #e74c3c;
-    font-size: 2rem;
-    margin: auto 0 auto 0;
-    margin: 3rem 0.5em 1em 0.5em;
-    text-align: right;
-}
+
 .logoutBtn{
     color: #ffffff;
     cursor: pointer;
@@ -47,21 +40,16 @@ tall:       (min-height: 780px), */
 .para{
     margin-top: 1.5rem;
 }
-
-
 .menu .btn-toolbar{
     display: inline-block;
         vertical-align: middle;
         margin: auto 1rem;
        
 }
-
 .menu {
     margin-top: 1.5rem;
     float: right; 
 }
-
-
 /* END HEADER */
 h1{
     margin: 0.3em 0.5em 0.3em 0.5em;
@@ -83,7 +71,6 @@ h1{
     height: 3rem;
     font-size: 1.5rem;
     color:#95a5a6;
-    margin-left: auto;
     background-color: #ecf0f1;
     width: 100px;
     cursor: pointer;
@@ -95,7 +82,6 @@ h1{
 }
 .reg-btn:hover{
     border:2px solid #95a5a6;
-    margin-left: auto;
     color: #e74c3c;
     background-color: #ecf0f1;
     width: 100px;
@@ -140,19 +126,16 @@ h1{
 .box-login {
     border: 0.1em solid #c7d0d2;
     border-radius: 0.2em;
-    box-shadow: inset 0 1.5px 3px rgba(190, 190, 190, .4), 0 0 0 5px #f5f7f8;
+    box-shadow: inset 0 1px 3px rgba(190, 190, 190, .4), 0 0 0 5px #f5f7f8;
     padding: 1em;
     margin-bottom: 7rem;
 }
-
 .box-login label{
     font-size: 1.5rem;
 }
-
 .box-login input{
     font-size: 1.5rem !important; /* yes I added important, sorry */
 }
-
 .footer {
     position: absolute;
     right: 0;
@@ -162,14 +145,6 @@ h1{
     background-color: #efefef;
     text-align: center;
 }
-
-
-
-
-
-
-
-
 /* REGISTER MODAL */
 .picture{  
     float: left;
@@ -200,22 +175,19 @@ label{
     width: 50%;
 }
 .modal-body{
-    background-color: #ecf0f1
+    background-color: #ecf0f1;
+    color: black;
 }
 .modal-footer{
     background-color: #e74c3c;
     border: 0;
 }
 .alert-warning{
-    background-image: none;
     border-color: rgb(192, 61, 61);
-    background-color: none;
     color: black;
-    background-color: #eee;
+    background: #eee none;
 }
 /* END REGISTER MODAL */
-
-
 /* IDK */
 @media only screen and (max-width:70em){
     .picture{
@@ -238,13 +210,21 @@ label{
 .ask-box{
     width: 100%;
 }
-
 .main{
     border: 0.1em solid #c7d0d2;
     border-radius: 0.2em;
     box-shadow: inset 0 1.5px 3px rgba(190, 190, 190, .4), 0 0 0 5px #f5f7f8;
     padding: 1em;
     margin-bottom: 2rem;
+}
+.main2{
+    border: 0.1em solid #c7d0d2;
+    border-radius: 0.2em;
+    padding: 1em;
+    margin-bottom: 2rem;
+}
+textarea{
+    border-radius: 0.2em;
 }
 .ask-box .title{
     border:none;
@@ -294,7 +274,6 @@ label{
     background-color: #e74c3c;
     border-color: #c0392b;
 }
-
 .ask-box.type.selected:hover{
     border: 2px solid #e74c3c;
     text-decoration: none;
@@ -302,8 +281,6 @@ label{
     background-color: #e74c3c;
     border-color: #c0392b;
 }
-
-
 .ask-box.type{
     width: 100px;
     color: #95a5a6;
@@ -356,21 +333,22 @@ label{
     text-align: center;
     color: #ecf0f1;
 }
-
 .avatarChange img{
     margin: 1rem;
     cursor: pointer;
 }
-
 .avatarChange img:hover{
     transition: ease 1s opacity;
     opacity: 0.8;
 }
 /* END avatar */
 /* question box */
+
 .question-box{
-    border-bottom: 1px #95a5a6 solid;
+    border-bottom: 1px rgba(149, 165, 166, 0.65) solid;
+    padding: 3px;
 }
+
 .question-box .square{
     border:1px dotted #95a5a6;
     float:left;
@@ -398,23 +376,15 @@ label{
     margin-left:10px;
     font-size:1.4rem;
 }
-.up{
-    color:#c0392b;
-    text-align:center;
-}
-.down{
-    color:#9b59b6;
-    text-align:center;
-}
 .question-time{
     float:left;
     margin-left:10px;
     font-size: 1.3rem;
+    padding-top:10px;
+    padding-bottom:10px;
 }
 /* END question box */
-
 /* answer-page */
-s
 .question-box-text{
     margin: auto auto 2rem auto;
 }
@@ -424,21 +394,18 @@ s
 .answer-page p{
     font-size: 1.7rem;
 }
-
 .modal-title{
     color: #e74c3c  ;
 }
 .panel-primary{
     border-color: #c0392b;
-    width: 50%;
 }
 .panel-primary>.panel-heading{ 
     background-color: #e74c3c;
     border-color: #c0392b;
 }
-   
 #dropdown-no-caret{
     background-color:#ecf0f1;
     border-color: #ecf0f1;
 }
-
+

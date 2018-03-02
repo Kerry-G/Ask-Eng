@@ -2,11 +2,11 @@ import React, { Component } from 'react'
 import { Row, Col, Grid } from 'react-bootstrap'
 import Register from './Register'
 import Login from './LoginBox/Login'
-import ProfileCard from './LoginBox/ProfileCard'
+import ProfileCard from '..//body/Profile//ProfileCard'
 import AskQuestion from './AskQuestion/AskQuestion'
 import DefaultAskQuestion from './AskQuestion/DefaultAskQuestion'
 import { connect } from 'react-redux'
-import { Route} from 'react-router-dom'
+import { Route } from 'react-router-dom'
 import Profile from './Profile/Profile'
 import Questions from './Questions/Questions';
 import QuestionPage from './Questions/QuestionPage/QuestionPage';

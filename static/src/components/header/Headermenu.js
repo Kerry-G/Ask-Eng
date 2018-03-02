@@ -22,7 +22,7 @@ class Headermenu extends Component {
     }
 
     if (!(Object.keys(this.props.user).length === 0 && this.props.user.constructor === Object)) { //if the user is connected
-      comp = comp = <div>
+      comp = <div>
         <Dropdown
           user={this.props.user}
         />

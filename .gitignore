@@ -27,3 +27,5 @@ yarn-error.log*
 /static/package-lock.json
 soen341.db
 *.db
+
+\.idea/
