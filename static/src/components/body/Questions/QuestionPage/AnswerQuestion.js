@@ -58,19 +58,11 @@ class AnswerQuestion extends Component {
 
     cleanState() {
         this.setState({
-<<<<<<< HEAD
-            question: {
-                text: '',
-                user_id: this.props.user.id,
-                avatar: this.props.user.display_image
-            }
-=======
             answer :{
 				text: '',
 				user_id: this.props.user.id,
 				question_id: this.props.id
 			}
->>>>>>> c848b1914b7decf2a88625b4c9acba96218e0649
         })
 		this.refs.answering.value = "";
     }
