@@ -2,8 +2,6 @@ import React, { Component } from 'react'
 import { fetchAPI } from '../../utility'
 import { Nav, NavItem, NavDropdown, MenuItem } from 'react-bootstrap'
 import Question from './Question'
-import FontAwesome from 'react-fontawesome'
-import moment from 'moment'
 
 class Questions extends Component {
   constructor(props) {

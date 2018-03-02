@@ -1,18 +1,13 @@
 import React, { Component } from 'react'
-import { Col, Row, Image} from 'react-bootstrap'
-import { connect } from 'react-redux'
+import { Image } from 'react-bootstrap'
 import Dropdown from '../header/Dropdown'
-import ChooseAvatar from '../body/LoginBox/ChooseAvatar'
-import fontawesome from 'react-fontawesome' 
 
 class Headermenu extends Component {
 
 
   render() {
     let comp;
-    let points = {
-      float: "right"
-    }
+  
     let avatarPath;
 
     if (this.props.user.display_image !== ""){

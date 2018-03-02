@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Grid, Col, Row, Modal, Button, FormGroup, FormControl, HelpBlock, ControlLabel, Image, Alert } from 'react-bootstrap'
+import { Grid, Col, Row, Modal, FormGroup, FormControl, HelpBlock, ControlLabel, Image, Alert } from 'react-bootstrap'
 import Select from 'react-select'
 import { fetchAPI } from './../utility'
 class Register extends Component {

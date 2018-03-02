@@ -1,7 +1,6 @@
 import React, { Component } from 'react'
-import { Col, Row, Image, ButtonToolbar, DropdownButton,MenuItem } from 'react-bootstrap'
+import { ButtonToolbar, DropdownButton,MenuItem } from 'react-bootstrap'
 import { logOut } from '..//..//store//auth'
-import { connect } from 'react-redux'
 import FontAwesome from 'react-fontawesome' 
 import ChooseAvatar from '..//body//LoginBox//ChooseAvatar'
 
