@@ -10,7 +10,8 @@ class AnswerQuestion extends Component {
             answer: {
                 text: '',
                 user_id: this.props.user.id,
-                question_id: this.props.id
+                question_id: this.props.id,
+                avatar: this.props.user.display_image
             }
         };
         this.handleClick = this.handleClick.bind(this);
@@ -58,7 +59,8 @@ class AnswerQuestion extends Component {
         this.setState({
             question: {
                 text: '',
-                user_id: this.props.user.id
+                user_id: this.props.user.id,
+                avatar: this.props.user.display_image
             }
         })
     }

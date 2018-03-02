@@ -53,13 +53,11 @@ class ProfileCard extends Component {
         </Panel.Heading>
         <Panel.Body>
           <Glyphicon glyph="envelope" />&nbsp;&nbsp;&nbsp;&nbsp;{this.props.user.email}
-          <br/>
-          <Glyphicon glyph="calendar" />&nbsp;&nbsp;&nbsp;&nbsp;member since: {registerDate.format("LL")}
           <div style={points}><FontAwesome name='chevron-up' />&nbsp;&nbsp;&nbsp;&nbsp;{this.props.user.ups}</div>
           <br/>
+          <Glyphicon glyph="calendar" />&nbsp;&nbsp;&nbsp;&nbsp;member since: {registerDate.format("LL")}
           <div style={points}><FontAwesome name='chevron-down' />&nbsp;&nbsp;&nbsp;&nbsp;{this.props.user.downs}</div>
         </Panel.Body>
-
       </Panel>
     );
   }

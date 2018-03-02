@@ -50,7 +50,7 @@ class QuestionPage extends Component {
                 )
             });
             return (
-                <div className="question-box answer-page">
+                <div className="answer-page">
                     <Row>
                         <Col md={12}>
                             <span className="question-tag">{this.state.question.engineer}</span>
@@ -68,12 +68,12 @@ class QuestionPage extends Component {
                     </Row>
                     <Row>
                         <Col md={12}>
-                          <Well bsSize="large">
-                          <h1> Know the Answer? </h1>
-                            <AnswerQuestion
+                            <Well bsSize="large">
+                                <h2> Know the Answer? </h2>
+                                <AnswerQuestion
                                 id={this.props.match.params.id}
-                            />
-                          </Well>
+                                />
+                            </Well>
                         </Col>
                     </Row>
                     {answers}

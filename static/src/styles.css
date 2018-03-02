@@ -28,7 +28,6 @@ tall:       (min-height: 780px), */
 .header h1 small{
     color: #e74c3c;;
 }
-
 .logoutBtn{
     color: #ffffff;
     cursor: pointer;
@@ -42,17 +41,19 @@ tall:       (min-height: 780px), */
 }
 .menu .btn-toolbar{
     display: inline-block;
-        vertical-align: middle;
-        margin: auto 1rem;
-       
+    vertical-align: middle;
+    margin: auto 1rem;
 }
-.menu {
+.menu{
     margin-top: 1.5rem;
     float: right; 
 }
 /* END HEADER */
 h1{
     margin: 0.3em 0.5em 0.3em 0.5em;
+}
+h2{
+    margin: auto;
 }
 /* FOOTER */
 .footer{
@@ -204,8 +205,7 @@ label{
 #welcome{
     animation-duration: 1s;
     animation-iteration-count: 1;
-  }
-
+}
 /* ASK-BOX */
 .ask-box{
     width: 100%;
@@ -224,7 +224,7 @@ label{
     margin-bottom: 2rem;
 }
 textarea{
-    border-radius: 0.2em;
+    border-radius: 1em;
 }
 .ask-box .title{
     border:none;
@@ -237,6 +237,7 @@ textarea{
 }
 .ask-box-footer{
     width: 100%;
+    padding-top: 1rem;
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
@@ -265,7 +266,6 @@ textarea{
         padding-right: 10px;
         padding-left: 10px;
     }
-
 }
 .ask-box.type.selected{
     border: 2px solid #e74c3c;
@@ -343,12 +343,10 @@ textarea{
 }
 /* END avatar */
 /* question box */
-
 .question-box{
     border-bottom: 1px rgba(149, 165, 166, 0.65) solid;
     padding: 3px;
 }
-
 .question-box .square{
     border:1px dotted #95a5a6;
     float:left;
@@ -387,6 +385,7 @@ textarea{
 /* answer-page */
 .question-box-text{
     margin: auto auto 2rem auto;
+    padding: 2rem;
 }
 .answer-page h1{
     font-size: 2.5rem;
