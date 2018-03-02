@@ -16,6 +16,8 @@ class Register extends Component {
 
             //validators
             validEmail: null,
+            validPassword: null,
+
             button: false,
 
             //alert state
@@ -313,7 +315,7 @@ class Register extends Component {
                 alert = null
             }
 
-            nextButton = <button className="reg-btn" onClick={this.handleNextPage}>Next</button >
+            nextButton = <button className="reg-btn" onClick={this.handleNextPage} disabled={this.state.validPassword !== 'success'}>Next</button >
 
         }
         else if (this.state.page === 2) {
