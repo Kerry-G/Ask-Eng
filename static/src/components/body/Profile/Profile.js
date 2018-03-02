@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Panel, Glyphicon, Image, Media, Col, Nav, NavItem, NavDropdown, MenuItem } from 'react-bootstrap'
+import { Col, Nav, NavItem, NavDropdown, MenuItem } from 'react-bootstrap'
 import { fetchAPI } from '../../utility'
 import { connect } from 'react-redux'
 import ProfileCard from './ProfileCard'
@@ -70,15 +70,6 @@ class Profile extends Component {
 				</div>
 			)
 		})
-		let points = {
-			float: "right"
-		}
-		let avatarPath;
-		if (this.state.display_image !== "") {
-			avatarPath = "\\images\\avatar\\" + this.state.display_image
-		} else {
-			avatarPath = "\\images\\avatar\\3.png"
-		}
 		let ProfileInfo;
 		//Own account
 		if (!this.state.alert && (this.props.match.params.id === this.state.id)) {
