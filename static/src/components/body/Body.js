@@ -50,7 +50,9 @@ class Body extends Component {
                     <div>
                     {askQuestion}
                     {login}
-                    {<Questions/>}
+                    {<Questions
+                      user={this.props.user}
+                      />}
                     {/* {profileCard} */}
                   </div>
                   )

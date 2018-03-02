@@ -57,8 +57,7 @@ def questionsRoute():
         message = "Invalid data request object (title, text, engineer, user_id)."
         status = "FAILURE"
         # make the response a json object
-        response = json.dumps(
-            {'success': success, 'status': status, 'message': message, 'question': question})
+        response = json.dumps({'success': success, 'status': status, 'message': message, 'question': question})
     elif request.method == 'POST':
 
         # Create a user and find our whether it is successful or not
@@ -78,26 +77,27 @@ def questionsRoute():
         # make the response a json object
         response = json.dumps({'success': success, 'status': status, 'message': message, 'question': question})
     elif request.method == 'GET':
-
-
-
         # url get request 
         questionArgs = request.args.to_dict()
 
-        # get logged in user id
+        # get logged in user id, if it's set then continue, else set it to -1
         try:
             id = questionArgs['loggedin_id']
+            if id == 'undefined':
+                id = -1
+            else:
+                id = int(id)
         except KeyError:
             id = -1
 
         if 'question_id' in questionArgs:
-            q = Questions.getQuestion(questionArgs['question_id'],id)
+            q = Questions.getQuestion(questionArgs['question_id'])
             question = questionResponse(q)
             success = True
             status = 'OK'
             message = 'Question with anwsers.'
         elif 'user_id' in questionArgs and 'engineer' not in questionArgs:
-            questions = Questions.getQuestionsByUser(questionArgs['user_id'],id)
+            questions = Questions.getQuestionsByUser(questionArgs['user_id'], id)
             success = True
             status = 'OK'
             message = 'List of several questions by user_id'
@@ -135,6 +135,8 @@ def questionsRoute():
 
     return response
 
+
+# VOTING ROUTE
 @qa.route('/api/qa/questions/<string:id>', methods=httpMethods)
 def questionsIDRoute(id):
     data = toDict(request.data)  # toDict takes the request data and converts it to a dictionary
@@ -147,12 +149,13 @@ def questionsIDRoute(id):
 
     if request.method == 'PUT':
         try:
-            Votes.setVote(user_id=data['loggedin_id'], comment_id=id, comment_status=data['comment_status'], vote_status=data['vote_status'])
+            vote_status = data['vote_status']       
+            Votes.setVote(user_id=data['loggedin_id'], comment_id=id, comment_status=data['comment_status'], vote_status=vote_status)
+            vote = Votes.getVote(user_id=data['loggedin_id'], comment_id=id, comment_status=data['comment_status'])
+            response = json.dumps({'success': True, 'status': 'OK', 'message': 'Vote is set.'})
         except KeyError:
             response = json.dumps({'success': False, 'status': 'FAILURE', 'message': 'Not proper keys.'})
-        finally:
-            response = json.dumps({'success': True, 'status': 'OK', 'message': 'Vote is set.'})
-    print(response)
+
     return response
 
 @qa.route('/api/qa/answer/', methods=httpMethods)

@@ -1,4 +1,4 @@
-from index import db
+from index import db, app
 from datetime import datetime
 
 class Vote(db.Model):
@@ -21,6 +21,10 @@ class Vote(db.Model):
         yield 'comment_status', self.comment_status
         yield 'vote_status', self.vote_status
 
+# Initializes the database
+db.create_all()
+
+
 
 def voteExist(user_id, comment_id, comment_status):
 	return Vote.query.filter_by(user_id=user_id, comment_id=comment_id, comment_status=comment_status).first() is not None
@@ -33,54 +37,84 @@ def isDown(user_id, comment_id, comment_status):
 
 def getVote(user_id, comment_id, comment_status):
 	if voteExist(user_id, comment_id, comment_status):
-		return Vote.query.filter_by(user_id=user_id,comment_id=comment_id,comment_status=comment_status).vote_status
-	return None
+		return dict(Vote.query.filter_by(user_id=user_id,comment_id=comment_id,comment_status=comment_status).first())
+	return {}
 
+
+
+'''
+the vote goes `from` a value `to` a value and updates the user's `up` and `down`
+FROM	TO	user.ups	user.downs	question.ups	question.downs
+0	0	FALSE	FALSE	FALSE	FALSE
+0	1	1	0	1	0
+0	-1	0	1	0	1
+1	0	-1	0	-1	0
+1	1	FALSE	FALSE	FALSE	FALSE
+1	-1	-1	1	-1	1
+-1	0	0	-1	0	-1
+-1	1	1	-1	1	-1
+-1	-1	FALSE	FALSE	FALSE	FALSE
+'''
 def setVote(user_id, comment_id, comment_status, vote_status):
 	from application.models import Questions
 	from application.models import Answers
 	from application.models import Users
 
 	if voteExist(user_id,comment_id,comment_status):
-		vote = Vote.query.filter_by(user_id, comment_id, comment_status).first() # get the vote
+		vote = Vote.query.filter_by(user_id=user_id, comment_id=comment_id, comment_status=comment_status).first() # get the vote
 	else:
 		vote = Vote(user_id=user_id, comment_id=comment_id, comment_status=comment_status, vote_status=vote_status)
 		db.session.add(vote)
-		db.commit()
-	
-	if vote.vote_status != vote_status: # if the vote status changes (ie not going for up to up, down to down)
-			'''
-			the vote goes `from` a value `to` a value and updates the user's `up` and `down`
-				from  to  ups  downs
-				1     0   -1   0
-				1     -1  -1   +1
-				0     1   +1   0
-				0     -1  0    +1
-				-1    0   0    -1
-				-1    1   +1   -1
-			'''
-			user = Users.User.query.filter_by(user_id=user_id) # get user
-			model = Questions.Question if comment_status=='question' else Answers.Answer # select the correct model
-			comment = model.query.filter_by(id=comment_id) # get the question or answer
-			if vote.vote_status is 1:
-				user.ups -= 1 # decrement the ups no matter what (1 to 0, 1 to -1)
-				user.downs += abs(vote_status) # increase the downs by either 0 or 1. 0 if (1 to 0), 1 if (1 to -1). You abs(0)=0, abs(-1)=1
-				comment.ups -= 1
-				comment.downs += abs(vote_status)
-			if vote.vote_status is -1:
-				user.ups += vote_status # increase ups by 0 or 1. 0 if (-1 to 0), 1 if (-1 to 1)
-				user.downs -= 1 # decrement the downs no matter what (-1 to 0, -1 to 1)
-				comment.ups += vote_status
-				comment.downs -= 1
-			if vote.vote_status is 0 and vote_status is -1:
-				user.downs += 1 # increment downs if (0 to -1)
-				comment.downs += 1
-			else:
-				user.ups += 1 # increment ups if (0 to 1)
-				comments.ups += 1
+		db.session.commit()
 
-			vote.vote_status = vote_status # set the vote status
-			db.session.commit()
+	user = Users.User.query.filter_by(id=user_id).first() # get user
+	if user is None:
+		return	
+
+
+	# if the vote status changes (ie not going for up to up, down to down)
+	# vote.vote_status is the model's current vote status (1, 0, -1)
+	# vote_status is the updated vote status
+	if vote.vote_status != vote_status:
+		model = Questions.Question if comment_status=='question' else Answers.Answer # select the correct model
+		comment = model.query.filter_by(id=comment_id).first() # get the question or answer
+		
+
+		# WHEN vote is unset and it is set up => add to ups
+		# WHEN vote is unset and it is set down => add to downs
+		# WHEN vote is set up and it is set down => remove up, add down
+		# WHEN vote is set up and it is unset => remove up
+		# WHEN vote is set down and it is set up => remove down, add up
+		# WHEN vote is set down and it is unset => remove down
+		if vote.vote_status == 0: 
+			if vote_status == 1:
+				user.ups += 1
+				comment.ups += 1
+			elif vote_status == -1:
+				user.downs += 1
+				comment.downs += 1
+		elif vote.vote_status == 1:
+			if vote_status == 0:
+				user.ups -= 1
+				comment.ups -= 1
+			elif vote_status == -1:
+				user.ups -= 1
+				comment.ups -= 1
+				user.downs += 1
+				comment.downs += 1
+		elif vote.vote_status == -1:
+			if vote_status == 0:
+				user.downs -= 1
+				comment.downs -= 1
+			elif vote_status == 1:
+				user.ups += 1
+				comment.ups += 1
+				user.downs -= 1
+				comment.downs -= 1
+
+		vote.vote_status = vote_status # set the vote status
+		db.session.commit()
+
 
 
 
