@@ -3,7 +3,7 @@ import { Col, Row, Image} from 'react-bootstrap'
 import { connect } from 'react-redux'
 import Dropdown from '../header/Dropdown'
 import ChooseAvatar from '../body/LoginBox/ChooseAvatar'
-import fontawesome from 'react-fontawesome' 
+
 
 class Headermenu extends Component {
 
