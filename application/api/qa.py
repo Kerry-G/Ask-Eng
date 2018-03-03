@@ -82,13 +82,14 @@ def questionsRoute():
 
         # get logged in user id, if it's set then continue, else set it to -1
         try:
-            id = questionArgs['loggedin_id']
-            if id == 'undefined':
-                id = -1
-            else:
-                id = int(id)
-        except KeyError:
+            id = int(questionArgs['loggedin_id'])
+        except:
             id = -1
+        app.logger.info(id)
+
+
+
+
 
         if 'question_id' in questionArgs:
             q = Questions.getQuestion(questionArgs['question_id'])
