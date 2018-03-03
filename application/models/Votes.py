@@ -1,6 +1,6 @@
 from index import db, app
 from datetime import datetime
-
+from application.util import dump
 class Vote(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     vote_date = db.Column(db.DateTime, nullable=False, default=datetime.utcnow)
@@ -59,7 +59,7 @@ def setVote(user_id, comment_id, comment_status, vote_status):
 	from application.models import Questions
 	from application.models import Answers
 	from application.models import Users
-
+	app.logger.info("ONLY REACHES AFTER SECOND TIME")
 	if voteExist(user_id,comment_id,comment_status):
 		vote = Vote.query.filter_by(user_id=user_id, comment_id=comment_id, comment_status=comment_status).first() # get the vote
 	else:
@@ -75,6 +75,7 @@ def setVote(user_id, comment_id, comment_status, vote_status):
 	# if the vote status changes (ie not going for up to up, down to down)
 	# vote.vote_status is the model's current vote status (1, 0, -1)
 	# vote_status is the updated vote status
+	app.logger.info("FROM:" + dump(vote.vote_status) + ", TO: " + dump(vote_status))
 	if vote.vote_status != vote_status:
 		model = Questions.Question if comment_status=='question' else Answers.Answer # select the correct model
 		comment = model.query.filter_by(id=comment_id).first() # get the question or answer
@@ -111,7 +112,8 @@ def setVote(user_id, comment_id, comment_status, vote_status):
 				comment.ups += 1
 				user.downs -= 1
 				comment.downs -= 1
-
+		app.logger.info("USER.ups = " + str(user.ups)+ ", USER.downs = " + str(user.downs))
+		app.logger.info("COMMNT.ups = " + str(comment.ups)+ ", COMMNT.downs = " + str(comment.downs))
 		vote.vote_status = vote_status # set the vote status
 		db.session.commit()
 
