@@ -16,7 +16,7 @@ class AskQuestion extends Component {
                 engineer: '',
                 user_id: this.props.user.id
             },
-            button:'false'
+            button:false
         };
         this.handleClick = this.handleClick.bind(this);
         this.handleAsk = this.handleAsk.bind(this);
@@ -48,12 +48,12 @@ class AskQuestion extends Component {
                 typeEngineer="Electrical";
                 break;
             case 4:
-                typeEngineer="Civil"
+                typeEngineer="Civil";
                 break;
             default:
                 typeEngineer=""
         }
-        question.engineer = typeEngineer
+        question.engineer = typeEngineer;
         this.setState({
             engineerTypeCSS: currentStateType,
             question: question
@@ -102,10 +102,6 @@ class AskQuestion extends Component {
         try {
             console.log(this.state.question)
             fetchAPI("POST", "/api/qa/questions/", this.state.question).then(response => {
-                console.log(response)
-                if (response.success) {
-                    console.log(response)
-                }
             }).catch((e) => console.error("Error:" + e))
         } catch (e) {
             console.log("Error: ", e);

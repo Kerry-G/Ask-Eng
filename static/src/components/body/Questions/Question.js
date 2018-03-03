@@ -12,11 +12,7 @@ class Question extends Component {
         };
     }
 
-
-    
-
     render() {
-        console.log(this.props)
         let time = moment(this.props.question.register_date).subtract(5, "hours").fromNow()
         let path = "/question/" + this.props.question.id;
         return (

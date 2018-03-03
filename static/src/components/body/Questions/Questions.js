@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import { fetchAPI } from '../../utility'
 import { Nav, NavItem, NavDropdown, MenuItem } from 'react-bootstrap'
 import Question from './Question'
-import { connect } from 'react-redux'
+
 
 class Questions extends Component {
   constructor(props) {
@@ -21,11 +21,9 @@ class Questions extends Component {
 
   async getQuestions() {
     try {
-      console.log(this.props.user)
       let loggedin_id = this.props.user===undefined ? -1 : this.props.user.id;
       let engineerArray = ["","&engineer=Software","&engineer=Mechanical","&engineer=Computer","&engineer=Electrical","&engineer=Civil"]
       fetchAPI("GET", "/api/qa/questions/?" + engineerArray[(this.state.activeQuery)] + this.state.extraQuery + "&loggedin_id=" + loggedin_id).then(response => {
-       console.log(response)
         if (response.success) {
           this.setState({
             questions: response.questions
@@ -84,15 +82,5 @@ class Questions extends Component {
     )
   }
 }
-
-function mapStateToProps(state) {
-  return {
-    user: state.login.user
-  }
-}
-
-Questions = connect(
-  mapStateToProps,
-)(Questions);
 
 export default Questions;
