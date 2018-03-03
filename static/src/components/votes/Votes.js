@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import FontAwesome from 'react-fontawesome';
 import {fetchAPI} from "../utility";
 import {Grid} from 'react-bootstrap';
-import { connect } from 'react-redux'
 
 class Votes extends Component {
     constructor(props) {
@@ -144,13 +143,4 @@ class Votes extends Component {
     }
 }
 
-function mapStateToProps(state) {
-  return {
-    user: state.login.user
-  }
-}
-
-Votes = connect(
-  mapStateToProps,
-)(Votes);
 export default Votes;

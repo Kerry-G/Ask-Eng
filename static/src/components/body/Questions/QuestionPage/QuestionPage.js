@@ -67,7 +67,9 @@ class QuestionPage extends Component {
                     <Row className="question-box-text">
                         <Col md={1}>
                             <Votes
-                                question={this.state.question}/>
+                                question={this.state.question}
+                                user={this.props.user}
+                            />
                         </Col>
                         <Col md={11}>
                             <h1>{this.state.question.title}</h1>

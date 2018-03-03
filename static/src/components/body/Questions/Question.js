@@ -22,6 +22,7 @@ class Question extends Component {
                         <Votes
                         question = {this.props.question}
                         status = {this.props.question.vote_status}
+                        user={this.props.user}
                         />
                         <Row>
                             <h1><span className="question-tag">{this.props.question.engineer}</span>

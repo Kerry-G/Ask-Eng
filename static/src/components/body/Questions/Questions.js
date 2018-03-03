@@ -44,7 +44,7 @@ class Questions extends Component {
     let questions = this.state.questions.map((question) => {
       return (
         <div key={question.id}>
-          <Question question={question} />
+          <Question question={question} user={this.props.user} />
         </div>
       )
     })
