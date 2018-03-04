@@ -3,19 +3,28 @@ from flask_sqlalchemy import SQLAlchemy
 from flask_cors import CORS
 import os
 
+
 def test_questions():
     Questions.createQuestion("Question", "Please Answer", "software", 1)
-    Questions.getQuestionsByUser(1)
+    questions = Questions.getQuestionsByUser(1)
+    if questions:
+        return 0
+    else:
+        return 1
 
 
 def test_answers():
     Answers.createAnswer("My Answer", 3, 10)
-    assert Answers.getAnswersByQuestion(10)
+    Answers.getAnswersByQuestion(10)
 
 
 def test_users():
     Users.createUser("Marc", "Hamill", "starwarsfan", "wookie", "Space", "chewbaca", True)
-    assert Users.getUser("starwarsfan")
+    user = Users.getUser("starwarsfan")
+    if user:
+        return 0
+    else:
+        return 1
 
 
 # Create instance of flask application
@@ -37,8 +46,14 @@ CORS(app)
 if __name__ == '__main__':
     from application.models import Answers, Questions, Users
 
-    test_users()
-    test_questions()
-    print("done")
+    return_code = test_users()
+    if return_code != 0:
+        print("backend Test failed at User")
+        exit(return_code)
+    return_code = test_questions()
+    if return_code != 0:
+        print("backend Test failed at Question")
+        exit(return_code)
+    print("Backend Test completed")
     exit(0)
 
