@@ -28,6 +28,8 @@ class Edit extends Component {
 
 			verified : false,
 
+
+
         };
 		//These handlers are used to determine which modal to show.
 		this.handleChange_fname = this.handleChange_fname.bind(this);
@@ -44,7 +46,6 @@ class Edit extends Component {
 		this.handleFnameChange = this.handleFnameChange.bind(this);
 		this.handleLnameChange = this.handleLnameChange.bind(this);
 		this.handleEmailChange = this.handleEmailChange.bind(this);
-		this.handleEngineerChange = this.handleEngineerChange.bind(this);
 
 		this.handleCurrentPwChange = this.handleCurrentPwChange.bind(this);
 		this.handleEmailPwChange = this.handleEmailPwChange.bind(this);
@@ -69,8 +70,9 @@ class Edit extends Component {
 	}
 
 	handleChange_eng(){
-		this.setState({ showEngineerModal: true })
+		this.setState({ showEngineerModal: true})
 	}
+
 
 	//When closing a modal, set all the modal values to false, as well as input values.
 	handleClose(){
@@ -155,11 +157,6 @@ class Edit extends Component {
         })
     }
 
-	handleEngineerChange(e) {
-        this.setState({
-            engineer: e.target.value
-        })
-    }
 
 	handleCurrentPwChange(e){
 		this.setState({
@@ -196,8 +193,15 @@ class Edit extends Component {
 	}
 
     render() {
-		//edit is assigned the correct modal to be displayed.
-		let edit;
+		//edit is assigned the correct modal to be displayed. options is for the engineering choices.
+		let edit,options;
+		options = [
+            { value: 'software', label: 'Software Engineering' },
+            { value: 'mechanical', label: 'Mechanical Engineering' },
+            { value: 'computer', label: 'Computer Engineering' },
+            { value: 'electrical', label: 'Electrical Engineering' },
+            { value: 'civil', label: 'Civil Engineering' }
+        ];
 
 		if (this.state.showFnameModal == true){
 			edit = <Modal dialogClassName="fname_modal" show={true} onHide={this.handleClose}>
@@ -213,7 +217,7 @@ class Edit extends Component {
 							<Grid fluid>
 								<Row>
 									<Button onClick={()=> this.handleClose()}> Cancel </Button>
-									<Button disabled={this.state.fname==""} onClick={() => this.handleSubmit()}> Submit </Button>
+									<Button disabled={this.state.fname == this.props.user.fname || this.state.fname==""} onClick={() => this.handleSubmit()}> Submit </Button>
 								</Row>
 							</Grid>
 						</Modal.Footer>
@@ -236,7 +240,7 @@ class Edit extends Component {
 						<Grid fluid>
 								<Row>
 									<Button onClick={()=> this.handleClose()}> Cancel </Button>
-									<Button disabled={this.state.lname==""} onClick={() => this.handleSubmit()}> Submit </Button>
+									<Button disabled={this.state.lname ==this.props.user.lname || this.state.lname=="" } onClick={() => this.handleSubmit()}> Submit </Button>
 								</Row>
 						</Grid>
 						</Modal.Footer>
@@ -292,7 +296,7 @@ class Edit extends Component {
 						<Grid fluid>
 								<Row>
 									<Button onClick={()=> this.handleClose()}> Cancel </Button>
-									<Button disabled={this.state.email==""} onClick={() => this.handleSubmit()}> Submit </Button>
+									<Button disabled={this.state.email==this.props.user.email || this.state.email==""} onClick={() => this.handleSubmit()}> Submit </Button>
 								</Row>
 						</Grid>
 						</Modal.Footer>
@@ -303,19 +307,26 @@ class Edit extends Component {
 			edit = <Modal dialogClassName="engineer_modal" show={true} onHide={this.handleClose}>
 						 <Modal.Body>
 							<Grid fluid>
-								<textarea
-								className="change_engineer_textbox"
-								rows = "1"
-								cols = "45"
-								placeholder="Enter your engineering discipline here"
-								onChange={(e) => this.handleEngineerChange(e)} />
+								 <ControlLabel>Engineering Field</ControlLabel>
+									<Select
+										name="form-field-name"
+										value={this.state.eng}
+										options={options}
+										onChange={(e) => {
+											if (e !== null) {
+												this.setState({ eng: e.value })
+											} else {
+												this.setState({ eng: '' })
+											}
+										}}
+									/>
 							</Grid>
 						 </Modal.Body>
 						<Modal.Footer>
 						<Grid fluid>
 								<Row>
 									<Button onClick={()=> this.handleClose()}> Cancel </Button>
-									<Button disabled={this.state.eng==""} onClick={() => this.handleSubmit()}> Submit </Button>
+									<Button disabled={this.state.eng=="" || this.state.eng==this.props.user.engineer} onClick={() => this.handleSubmit()}> Submit </Button>
 								</Row>
 						</Grid>
 						</Modal.Footer>
