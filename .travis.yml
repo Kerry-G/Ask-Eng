@@ -9,8 +9,6 @@ matrix:
       - pip
     install:
       - pip install --user -r requirements.txt
-    script:
-      - python test.py 0 test
 
     language: node_js
     node_js:
@@ -18,8 +16,10 @@ matrix:
     cache:
       directories:
         - static/node_modules
-    script:
-      - cd static && npm install && npm test
+    
+script:
+  - python test.py 0 test
+  - cd static && npm install && npm test
 
 notifications:
     slack: ask-eng:K2sBuzmuU1XHLA9JroSjpsh8
