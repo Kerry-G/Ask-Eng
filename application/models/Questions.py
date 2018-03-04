@@ -1,7 +1,14 @@
-from index import db
 from datetime import datetime
 from application.models.Users import User
-
+import sys
+if len(sys.argv) >= 2:
+    arg = sys.argv[2]
+else:
+    arg = "run"
+if arg == "test":
+    from test import db
+else:
+    from index import db
 
 
 class Question(db.Model):
@@ -134,7 +141,6 @@ def getQuestionsByUser(user_id):
     response = []
 
     questions = Question.query.filter_by(user_id=user_id).all()
-
     if questions is not None:
         for question in questions:
             user = User.query.filter_by(id=question.user_id).first()

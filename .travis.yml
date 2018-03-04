@@ -1,17 +1,21 @@
-#language: python
-#python:
-#  - "3.6"
-#install:
-#  - pip install -r requirements.txt
-#script: pytest
+matrix:
+  include:
+    language: python
+    python:
+      - "3.6"
+    install:
+      - pip install -r requirements.txt
+    script:
+      - python test.py 0 test
 
-language: node_js
-node_js:
-  - 9
-cache:
-  directories:
-    - static/node_modules
-script:
-  - cd static && npm install && npm test
+    language: node_js
+    node_js:
+      - 9
+    cache:
+      directories:
+        - static/node_modules
+    script:
+      - cd static && npm install && npm test
+
 notifications:
     slack: ask-eng:K2sBuzmuU1XHLA9JroSjpsh8

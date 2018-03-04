@@ -1,6 +1,14 @@
-from index import db, app
 from datetime import datetime
 from passlib.hash import sha256_crypt
+import sys
+if len(sys.argv) >= 2:
+    arg = sys.argv[2]
+else:
+    arg = "run"
+if arg == "test":
+    from test import db
+else:
+    from index import db
 
 
 def engineerTypes():
