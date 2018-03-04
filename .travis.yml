@@ -8,7 +8,7 @@ matrix:
     cache:
       - pip
     install:
-      - pip3 install --user -r requirements.txt
+      - pip install --user -r requirements.txt
     script:
       - python test.py 0 test
 
