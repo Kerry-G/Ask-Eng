@@ -91,7 +91,9 @@ class QuestionPage extends Component {
                           </Well>
                         </Col>
                     </Row>
+                    <div>
                     {answers}
+                    </div>
                 </div>
             )
         } else {

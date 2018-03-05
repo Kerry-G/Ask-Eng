@@ -14,17 +14,17 @@ qa = Blueprint('qa', __name__)
 httpMethods = ['PUT', 'GET', 'POST', 'DELETE']
 
 
-def questionResponse(question):
+def questionResponse(question, loggedin_id=-1):
     if question is None:
         return None
     else:
         answers = []
-        for answer in Answers.getAnswersByQuestion(question['id']):
+        print(loggedin_id)
+        for answer in Answers.getAnswersByQuestion(question['id'],loggedin_id):
             answer['user'] = Users.getUser(answer['user_id'])
             answers.append(answer)
         question['answers'] = answers
         return question
-
 
 
 
@@ -85,7 +85,7 @@ def questionsRoute():
             id = int(questionArgs['loggedin_id'])
         except:
             id = -1
-        app.logger.info(id)
+        app.logger.info("USER LOG IN STATE: " + str(id))
 
 
 
@@ -93,7 +93,7 @@ def questionsRoute():
 
         if 'question_id' in questionArgs:
             q = Questions.getQuestion(questionArgs['question_id'])
-            question = questionResponse(q)
+            question = questionResponse(q,id)
             success = True
             status = 'OK'
             message = 'Question with anwsers.'
@@ -188,4 +188,4 @@ def answerQuestion():
         # make the response a json object
         response = json.dumps({'success': success, 'status': status, 'message': message, 'question': answer})
 
-
+    return response

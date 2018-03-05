@@ -117,12 +117,12 @@ def getQuestions(loggedin_id, limit=20):
                 ques['user'] = dict(user)
 
             if loggedin_id == -1:
-                ques['vote_status'] = '0'
+                ques['vote_status'] = {'vote_status':0}
             else:
                 try:
                     ques['vote_status'] = Votes.getVote(loggedin_id, ques['id'], 'question')['vote_status']
                 except KeyError:
-                    ques['vote_status'] = '0'
+                    ques['vote_status'] = {'vote_status':0}
             response.append(ques)
     return response
 
@@ -149,12 +149,12 @@ def getQuestionsByUser(user_id, loggedin_id):
                 ques['user'] = dict(user)
 
             if loggedin_id == -1:
-                ques['vote_status'] = '0'
+                ques['vote_status'] = {'vote_status':0}
             else:
                 try:
                     ques['vote_status'] = Votes.getVote(loggedin_id, ques['id'], 'question')['vote_status']
                 except KeyError:
-                    ques['vote_status'] = {}
+                    ques['vote_status'] = {'vote_status':0}
             response.append(ques)
     return response
 
@@ -182,12 +182,12 @@ def getQuestionByEngineer(engineer, loggedin_id):
                 ques['user'] = dict(user)
 
             if loggedin_id == -1:
-                ques['vote_status'] = '0'
+                ques['vote_status'] = {'vote_status':0}
             else:
                 try:
                     ques['vote_status'] = Votes.getVote(loggedin_id, ques['id'], 'question')['vote_status']
                 except KeyError:
-                    ques['vote_status'] = {}
+                    ques['vote_status'] = {'vote_status':0}
             response.append(ques)
     return response
 
@@ -213,12 +213,12 @@ def getQuestionsByBoth(engineer, user_id, loggedin_id):
                 ques['user'] = dict(user)
 
             if loggedin_id == -1:
-                ques['vote_status'] = '0'
+                ques['vote_status'] = {'vote_status':0}
             else:
                 try:
                     ques['vote_status'] = Votes.getVote(loggedin_id, ques['id'], 'question')['vote_status']
                 except KeyError:
-                    ques['vote_status'] = {}
+                    ques['vote_status'] = {'vote_status':0}
             response.append(ques)
     return response
 
