@@ -38,7 +38,7 @@ def isDown(user_id, comment_id, comment_status):
 def getVote(user_id, comment_id, comment_status):
 	if voteExist(user_id, comment_id, comment_status):
 		return dict(Vote.query.filter_by(user_id=user_id,comment_id=comment_id,comment_status=comment_status).first())
-	return {}
+	return {"vote_status": 0}
 
 
 
