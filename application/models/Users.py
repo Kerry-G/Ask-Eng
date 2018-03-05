@@ -108,11 +108,10 @@ def deleteUser(email):
 
 
 # NOT SURE IF WORKS, SHOULD BE TESTED
-def modifyUser(id, fname, lname, engineer, display_image):
+def modifyUser(id, fname, lname, engineer):
     response = False
     user = getUserById(id)
     if user is not None:
-        user.display_image = display_image
         user.engineer = engineer
         user.lname = lname
         user.fname = fname

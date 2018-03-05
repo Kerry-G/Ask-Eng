@@ -106,7 +106,7 @@ class Edit extends Component {
 				user_id: this.props.user.id,
 				fname : this.state.fname,
 				lname : this.state.lname,
-				engineer : this.state.engineer,
+				engineer : this.state.eng,
 				email : this.state.email
 			}
             fetchAPI("PUT", '/api/users/' + this.props.user.id, data).then(response => {
