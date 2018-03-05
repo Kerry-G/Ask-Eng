@@ -186,6 +186,6 @@ def answerQuestion():
             message = "Error."
 
         # make the response a json object
-        response = json.dumps({'success': success, 'status': status, 'message': message, 'question': question})
+        response = json.dumps({'success': success, 'status': status, 'message': message, 'question': answer})
 
 

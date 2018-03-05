@@ -53,7 +53,7 @@ def createAnswer(text, user_id, question_id):
     except:
         response = False
 
-    return response
+    return dict(response)
 
 
 # Returns True if answer is found

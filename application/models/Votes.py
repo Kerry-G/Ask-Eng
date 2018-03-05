@@ -59,11 +59,11 @@ def setVote(user_id, comment_id, comment_status, vote_status):
 	from application.models import Questions
 	from application.models import Answers
 	from application.models import Users
-	app.logger.info("ONLY REACHES AFTER SECOND TIME")
+	
 	if voteExist(user_id,comment_id,comment_status):
 		vote = Vote.query.filter_by(user_id=user_id, comment_id=comment_id, comment_status=comment_status).first() # get the vote
 	else:
-		vote = Vote(user_id=user_id, comment_id=comment_id, comment_status=comment_status, vote_status=vote_status)
+		vote = Vote(user_id=user_id, comment_id=comment_id, comment_status=comment_status, vote_status=0) # new unset vote
 		db.session.add(vote)
 		db.session.commit()
 
