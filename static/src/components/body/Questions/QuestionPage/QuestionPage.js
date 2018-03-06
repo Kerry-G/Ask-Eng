@@ -19,24 +19,23 @@ class QuestionPage extends Component {
             user_id: "",
             loading: true
         }
-		this.answerhandler = this.answerhandler.bind(this);
+		this.answerHandler = this.answerHandler.bind(this);
     }
-	
-	answerhandler() {
-		console.log("question answered");
+
+	  answerHandler() {
+  		console.log("question answered");
         this.getQuestion();
         this.getUser();
     }
 
-	componentDidMount(){
-        this.getQuestion()
-        this.getUser()
-	}
-	
+    componentDidMount(){
+      this.getQuestion().then(
+        () => this.getUser()
+      )
+    }
+
     componentWillMount() {
-        this.setState({loading: true});
-        this.getQuestion()
-        this.getUser()
+      this.setState({loading: true});
     }
 
     async getQuestion() {
@@ -58,12 +57,12 @@ class QuestionPage extends Component {
 
     async getUser() {
         try {
-            fetchAPI("GET", "/api/users/1").then(response => { // find how to route to user_id
+            fetchAPI("GET", "/api/users/" + this.state.user_id).then(response => {
                 if (response.success) {
                     this.setState({
-                        fname: response.user.fname,
-                        lname: response.user.lname,
-                        display_image: response.user.display_image
+                        fname: response.users[0].fname,
+                        lname: response.users[0].lname,
+                        display_image: response.users[0].display_image
                     })
                 }
                 console.log(response)
@@ -110,9 +109,9 @@ class QuestionPage extends Component {
                             <Well bsSize="large">
                                 <h2> Know the Answer? </h2>
                                 <AnswerQuestion
-                                id={this.props.match.params.id}
-								updateanswers={this.answerhandler}
-                            />
+                                  id={this.props.match.params.id}
+  								                updateanswers={this.answerhandler}
+                                />
                           </Well>
                         </Col>
                     </Row>
