@@ -1,8 +1,9 @@
 import React, {Component} from 'react'
 import {fetchAPI} from '../../../utility'
-import {Col, Row, Well} from 'react-bootstrap'
+import {Col, Row, Well, Image} from 'react-bootstrap'
 import Answer from './Answer.js'
 import AnswerQuestion from './AnswerQuestion.js'
+import moment from 'moment'
 import Votes from "../../../votes/Votes";
 
 class QuestionPage extends Component {
@@ -12,6 +13,10 @@ class QuestionPage extends Component {
             question: {
                 answers: []
             },
+            fname: "",
+            lname: "",
+            display_image: "",
+            user_id: "",
             loading: true
         }
 		this.answerhandler = this.answerhandler.bind(this);
@@ -20,15 +25,18 @@ class QuestionPage extends Component {
 	answerhandler() {
 		console.log("question answered");
         this.getQuestion();
+        this.getUser();
     }
 
 	componentDidMount(){
-		this.getQuestion()
+        this.getQuestion()
+        this.getUser()
 	}
 	
     componentWillMount() {
         this.setState({loading: true});
         this.getQuestion()
+        this.getUser()
     }
 
     async getQuestion() {
@@ -37,9 +45,28 @@ class QuestionPage extends Component {
                 if (response.success) {
                     this.setState({
                         question: response.question,
-                        loading: false
+                        loading: false,
+                        user_id: response.question.user_id
                     })
                 }
+                console.log(response)
+            })
+        } catch (e) {
+            console.error("Error:", e)
+        }
+    }
+
+    async getUser() {
+        try {
+            fetchAPI("GET", "/api/users/1").then(response => { // find how to route to user_id
+                if (response.success) {
+                    this.setState({
+                        fname: response.user.fname,
+                        lname: response.user.lname,
+                        display_image: response.user.display_image
+                    })
+                }
+                console.log(response)
             })
         } catch (e) {
             console.error("Error:", e)
@@ -47,6 +74,7 @@ class QuestionPage extends Component {
     }
 
     render() {
+        let avatarPath = `\\images\\avatar\\`;
         if (!this.state.loading) {
             let answers = this.state.question.answers.map((answer) => {
                 return (
@@ -55,23 +83,24 @@ class QuestionPage extends Component {
                             answer={answer}
                         />
                     </div>
-                )
-            });
+                )            });
             return (
                 <div className="answer-page">
                     <Row>
                         <Col md={12}>
                             <span className="question-tag">{this.state.question.engineer}</span>
+                            posted on {moment(this.state.question.register_date).format("LL")} <br/>
+                            by {this.state.fname} {this.state.lname}
                         </Col>
                     </Row>
                     <Row className="question-box-text">
-                        <Col md={1}>
+                        <Col xs={1} md={1}>
                             <Votes
                                 question={this.state.question}
                                 user={this.props.user}
                             />
                         </Col>
-                        <Col md={11}>
+                        <Col xs={11} md={11}>
                             <h1>{this.state.question.title}</h1>
                             <p>{this.state.question.text}</p>
                         </Col>
