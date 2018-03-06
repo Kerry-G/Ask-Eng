@@ -1,0 +1,4 @@
+DEBUG = True
+SQLALCHEMY_DATABASE_URI = 'sqlite:///./test.db'
+CORS_HEADERS = 'Content-Type'
+SQLALCHEMY_TRACK_MODIFICATIONS = False

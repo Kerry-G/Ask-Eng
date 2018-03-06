@@ -16,7 +16,7 @@ matrix:
     cache:
       directories:
         - static/node_modules
-    
+
 script:
   - python test.py 0 test
   - cd static && npm install && npm test

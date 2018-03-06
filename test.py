@@ -29,9 +29,8 @@ def test_users():
 
 # Create instance of flask application
 app = Flask(__name__, template_folder='static/build', static_folder='static/build')
-app.config.from_pyfile('config.py')
+app.config.from_pyfile('test_config.py')
 
-app.config.update(SQLALCHEMY_DATABASE_URI='sqlite:///./test.db')
 # Delete db
 if os.path.exists(os.path.dirname(os.path.abspath(__file__)) + "\\test.db"):
     os.remove(os.path.dirname(os.path.abspath(__file__)) + "\\test.db")
