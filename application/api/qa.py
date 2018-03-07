@@ -1,6 +1,6 @@
 from flask import Flask, Blueprint, redirect, render_template, url_for, session, request, logging
 from index import app
-from application.models import Users, Questions, Answers
+from application.models import Users, Questions, Answers, Votes
 from application.util import convertRequestDataToDict as toDict
 from passlib.hash import sha256_crypt
 import json
@@ -57,8 +57,7 @@ def questionsRoute():
         message = "Invalid data request object (title, text, engineer, user_id)."
         status = "FAILURE"
         # make the response a json object
-        response = json.dumps(
-            {'success': success, 'status': status, 'message': message, 'question': question})
+        response = json.dumps({'success': success, 'status': status, 'message': message, 'question': question})
     elif request.method == 'POST':
 
         # Create a user and find our whether it is successful or not
@@ -78,9 +77,17 @@ def questionsRoute():
         # make the response a json object
         response = json.dumps({'success': success, 'status': status, 'message': message, 'question': question})
     elif request.method == 'GET':
-
         # url get request 
         questionArgs = request.args.to_dict()
+
+        # get logged in user id, if it's set then continue, else set it to -1
+        try:
+            id = int(questionArgs['loggedin_id'])
+        except:
+            id = -1
+        app.logger.info(id)
+
+
         if 'question_id' in questionArgs:
             q = Questions.getQuestion(questionArgs['question_id'])
             question = questionResponse(q)
@@ -88,22 +95,22 @@ def questionsRoute():
             status = 'OK'
             message = 'Question with anwsers.'
         elif 'user_id' in questionArgs and 'engineer' not in questionArgs:
-            questions = Questions.getQuestionsByUser(questionArgs['user_id'])
+            questions = Questions.getQuestionsByUser(questionArgs['user_id'], id)
             success = True
             status = 'OK'
             message = 'List of several questions by user_id'
         elif 'user_id' in questionArgs and 'engineer' in questionArgs:
-            questions = Questions.getQuestionsByBoth(questionArgs['engineer'], questionArgs['user_id'])
+            questions = Questions.getQuestionsByBoth(questionArgs['engineer'], questionArgs['user_id'], id)
             success = True
             status = 'OK'
             message = 'List of several questions by user_id'
         elif 'engineer' in questionArgs:
-            questions = Questions.getQuestionByEngineer(questionArgs['engineer'])
+            questions = Questions.getQuestionByEngineer(questionArgs['engineer'], id)
             success = True
             status = 'OK'
             message = 'List of several questions by engineer'
         else:
-            questions = Questions.getQuestions()
+            questions = Questions.getQuestions(id)
             success = True
             status = 'OK'
             message = 'List of several questions'
@@ -126,6 +133,8 @@ def questionsRoute():
 
     return response
 
+
+# VOTING ROUTE
 @qa.route('/api/qa/questions/<string:id>', methods=httpMethods)
 def questionsIDRoute(id):
     data = toDict(request.data)  # toDict takes the request data and converts it to a dictionary
@@ -137,13 +146,14 @@ def questionsIDRoute(id):
 
 
     if request.method == 'PUT':
-        if data['actions'] == 'ups':
-            success = Questions.incrementUps(id)
-        if data['actions'] == 'downs':
-            success = Questions.incrementDowns(id)
+        try:
+            vote_status = data['vote_status']       
+            Votes.setVote(user_id=data['loggedin_id'], comment_id=id, comment_status=data['comment_status'], vote_status=vote_status)
+            vote = Votes.getVote(user_id=data['loggedin_id'], comment_id=id, comment_status=data['comment_status'])
+            response = json.dumps({'success': True, 'status': 'OK', 'message': 'Vote is set.'})
+        except KeyError:
+            response = json.dumps({'success': False, 'status': 'FAILURE', 'message': 'Not proper keys.'})
 
-    response = json.dumps({'success': success, 'status': status, 'message': message})
-    print(response)
     return response
 
 @qa.route('/api/qa/answer/', methods=httpMethods)

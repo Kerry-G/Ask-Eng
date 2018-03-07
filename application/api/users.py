@@ -103,8 +103,8 @@ def userRoute(id):
 
     if request.method == 'PUT':
         # Modify a user and find our whether it is successful or not
-        success = Users.modifyUser(id, fname=data['fname'], lname=data['lname'], engineer=data['engineer'],
-                                   display_image=data['display_image'])
+        app.logger.info(data)
+        success = Users.modifyUser(id, fname=data['fname'], lname=data['lname'], engineer=data['engineer'])
 
         if success:
             status = "OK"

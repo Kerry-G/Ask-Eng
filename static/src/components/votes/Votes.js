@@ -22,53 +22,74 @@ class Votes extends Component {
         }
     }
 
+    componentDidMount(){
+        this.setState({status: parseInt(this.props.status)})
+    }
+
     async vote(version) {
         try {
             let currentVote = this.state.vote;
+            let status = 0;
             if (this.state.status === 0) {
                 if (version === "ups") {
                     this.setState({
-                        vote: ++this.state.vote,
+                        vote: ++currentVote,
                         status: 1
-                    })
+                    });
+                    status = 1
                 }
                 if (version === "downs") {
                     this.setState({
-                        vote: --this.state.vote,
+                        vote: --currentVote,
                         status: -1
-                    })
+                    });
+                    status = -1
                 }
+
             } else if (this.state.status === 1){
                 if (version === "ups") {
                     this.setState({
-                        vote: --this.state.vote,
+                        vote: --currentVote,
                         status: 0
-                    })
+                    });
+                    status = 0
                 }
                 if (version === "downs") {
                     this.setState({
-                        vote: this.state.vote-2,
+                        vote: currentVote-2,
                         status: -1
-                    })
+                    });
+                    status = -1
                 }
             } else if (this.state.status === -1) {
                 if (version === "ups") {
                     this.setState({
-                        vote: this.state.vote+2,
+                        vote: currentVote+2,
                         status: 1
-                    })
+                    });
+                    status = 1
                 }
                 if (version === "downs") {
                     this.setState({
-                        vote: ++this.state.vote,
+                        vote: ++currentVote,
                         status: 0
-                    })
+                    });
+                    status = 0
                 }
+
             }
-            let body = {actions:version};
+
+
+            let loggedin_id = this.props.user===undefined ? -1 : this.props.user.id;
+            console.log(status)
+            let body = {
+                vote_status: status,
+                loggedin_id: loggedin_id,
+                comment_status: 'question'
+            };
+            console.log(body);
             fetchAPI("PUT", "/api/qa/questions/" + this.props.question.id, body).then(response => {
-                if (response.success) {
-                }
+                console.log(response)
             })
         } catch (e) { console.error("Error", e) }
     }

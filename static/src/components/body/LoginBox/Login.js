@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Form, FormGroup, ControlLabel, FormControl, Button, Alert} from 'react-bootstrap'
+import { Form, FormGroup, ControlLabel, FormControl, Alert} from 'react-bootstrap'
 import { login } from '../../../store/auth'
 import {fetchAPI} from '../../utility'
 

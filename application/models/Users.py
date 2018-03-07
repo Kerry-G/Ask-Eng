@@ -18,8 +18,6 @@ def engineerTypes():
 '''
 This is a SQLAlchemy model for reference.
 '''
-
-
 class User(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     fname = db.Column(db.String(30))
@@ -116,12 +114,11 @@ def deleteUser(email):
 
 
 # NOT SURE IF WORKS, SHOULD BE TESTED
-def modifyUser(id, fname, lname, engineer, display_image):
+def modifyUser(id, fname, lname, engineer):
     response = False
-    user = getUserById(id)
+    user = User.query.filter_by(id=id).first()
     if user is not None:
-        User.query.filter_by(id=id).update({"lname": lname, "fname": fname, "engineer": engineer,
-                                            "display_image": display_image})
+        User.query.filter_by(id=id).update({"lname": lname, "fname": fname, "engineer": engineer})
         db.session.commit()
         response = True
     return response
@@ -215,4 +212,6 @@ def confirmUser(id):
     else:
         response = False
     return response
+
+
 

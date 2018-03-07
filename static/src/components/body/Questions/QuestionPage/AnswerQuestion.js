@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import { Button } from 'react-bootstrap'
 import { fetchAPI } from '../../../utility'
 import { connect } from 'react-redux'
+import { withRouter } from 'react-router'
 
 class AnswerQuestion extends Component {
     constructor(props) {
@@ -10,7 +11,8 @@ class AnswerQuestion extends Component {
             answer: {
                 text: '',
                 user_id: this.props.user.id,
-                question_id: this.props.id
+                question_id: this.props.id,
+                avatar: this.props.user.display_image
             }
         };
         this.handleClick = this.handleClick.bind(this);
@@ -35,10 +37,10 @@ class AnswerQuestion extends Component {
     }
 
     handleAsk() {
-        this.saveAnswer()
-        this.cleanState();
+		this.saveAnswer();
+		this.cleanState();
+		this.props.updateanswers();
     }
-
 
     async saveAnswer() {
         try {
@@ -56,11 +58,13 @@ class AnswerQuestion extends Component {
 
     cleanState() {
         this.setState({
-            question: {
-                text: '',
-                user_id: this.props.user.id
-            }
+            answer :{
+				text: '',
+				user_id: this.props.user.id,
+				question_id: this.props.id
+			}
         })
+		this.refs.answering.value = "";
     }
 
     render() {
@@ -70,6 +74,7 @@ class AnswerQuestion extends Component {
                 <div>
                     <textarea
                         className="ask-box text"
+						ref="answering"
                         rows="5"
                         placeholder="Answer away!"
                         onChange={(e) => this.handleAnswerChange(e)} />

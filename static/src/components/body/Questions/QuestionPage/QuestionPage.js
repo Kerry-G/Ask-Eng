@@ -1,8 +1,6 @@
 import React, {Component} from 'react'
 import {fetchAPI} from '../../../utility'
-import moment from 'moment'
-import FontAwesome from 'react-fontawesome'
-import {Col, Row, Image, ButtonToolbar, DropdownButton, MenuItem, Well} from 'react-bootstrap'
+import {Col, Row, Well} from 'react-bootstrap'
 import Answer from './Answer.js'
 import AnswerQuestion from './AnswerQuestion.js'
 import Votes from "../../../votes/Votes";
@@ -16,8 +14,18 @@ class QuestionPage extends Component {
             },
             loading: true
         }
+		this.answerhandler = this.answerhandler.bind(this);
+    }
+	
+	answerhandler() {
+		console.log("question answered");
+        this.getQuestion();
     }
 
+	componentDidMount(){
+		this.getQuestion()
+	}
+	
     componentWillMount() {
         this.setState({loading: true});
         this.getQuestion()
@@ -50,7 +58,7 @@ class QuestionPage extends Component {
                 )
             });
             return (
-                <div className="question-box answer-page">
+                <div className="answer-page">
                     <Row>
                         <Col md={12}>
                             <span className="question-tag">{this.state.question.engineer}</span>
@@ -59,7 +67,9 @@ class QuestionPage extends Component {
                     <Row className="question-box-text">
                         <Col md={1}>
                             <Votes
-                                question={this.state.question}/>
+                                question={this.state.question}
+                                user={this.props.user}
+                            />
                         </Col>
                         <Col md={11}>
                             <h1>{this.state.question.title}</h1>
@@ -68,10 +78,11 @@ class QuestionPage extends Component {
                     </Row>
                     <Row>
                         <Col md={12}>
-                          <Well bsSize="large">
-                          <h1> Know the Answer? </h1>
-                            <AnswerQuestion
+                            <Well bsSize="large">
+                                <h2> Know the Answer? </h2>
+                                <AnswerQuestion
                                 id={this.props.match.params.id}
+								updateanswers={this.answerhandler}
                             />
                           </Well>
                         </Col>
@@ -84,5 +95,4 @@ class QuestionPage extends Component {
         }
     }
 }
-
 export default QuestionPage;

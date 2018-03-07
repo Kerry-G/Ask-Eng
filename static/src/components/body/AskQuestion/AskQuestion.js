@@ -15,7 +15,8 @@ class AskQuestion extends Component {
                 text: '',
                 engineer: '',
                 user_id: this.props.user.id
-            }
+            },
+            button:false
         };
         this.handleClick = this.handleClick.bind(this);
         this.handleAsk = this.handleAsk.bind(this);
@@ -23,6 +24,9 @@ class AskQuestion extends Component {
         this.handleQuestionChange = this.handleQuestionChange.bind(this);
     }
 
+    componentDidUpdate(){
+        this.validateAsk();
+    }
     // handle functions
     handleClick(type) {
         let currentStateType = this.state.engineerTypeCSS;
@@ -44,12 +48,12 @@ class AskQuestion extends Component {
                 typeEngineer="Electrical";
                 break;
             case 4:
-                typeEngineer="Civil"
+                typeEngineer="Civil";
                 break;
             default:
                 typeEngineer=""
         }
-        question.engineer = typeEngineer
+        question.engineer = typeEngineer;
         this.setState({
             engineerTypeCSS: currentStateType,
             question: question
@@ -75,19 +79,29 @@ class AskQuestion extends Component {
     handleAsk() {
         this.saveQuestion()
         this.cleanState();
+		this.props.updateQuestions();
     }
-    // validateAsk(){
 
-    // }
+    validateAsk(){
+        let result;
+        if (this.state.question.title !== ''
+            && this.state.question.text !== ''
+            && this.state.question.engineer !=='') {
+            result = false;
+        } else {
+            result = true;
+        }
+        if (this.state.button === result) { } else {
+            this.setState({
+                button: result
+            })
+        }
+    }
 
     async saveQuestion() {
         try {
             console.log(this.state.question)
             fetchAPI("POST", "/api/qa/questions/", this.state.question).then(response => {
-                console.log(response)
-                if (response.success) {
-                    console.log(response)
-                }
             }).catch((e) => console.error("Error:" + e))
         } catch (e) {
             console.log("Error: ", e);
@@ -106,6 +120,8 @@ class AskQuestion extends Component {
                 user_id: this.props.user.id
             }
         })
+		this.refs.title.value="";
+		this.refs.question.value="";
     }
 
     render() {
@@ -115,6 +131,7 @@ class AskQuestion extends Component {
                 <div>
                     <textarea
                         className="ask-box text"
+						ref = "title"
                         rows="1"
                         placeholder="Title"
                         onChange={(e) => this.handleTitleChange(e)} />
@@ -122,6 +139,7 @@ class AskQuestion extends Component {
                 <div>
                 <textarea
                     className="ask-box text"
+					ref= "question"
                     rows="5"
                     placeholder="What is your question?"
                     onChange={(e) => this.handleQuestionChange(e)} />
@@ -138,7 +156,7 @@ class AskQuestion extends Component {
                         onClick={(e, a = 3) => { this.handleClick(a) }}>Electrical</a>
                     <a className={engineerTypeCSS[4] ? "ask-box type selected" : "ask-box type"}
                         onClick={(e, a = 4) => { this.handleClick(a) }}>Civil</a>
-                    <Button  id="ask-box-button" onClick={() => this.handleAsk()}>Ask</Button>
+                    <Button disabled={this.state.button} id="ask-box-button" onClick={() => this.handleAsk()}>Ask</Button>
                 </div>
             </div>
         )

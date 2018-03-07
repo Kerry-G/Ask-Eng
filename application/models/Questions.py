@@ -6,9 +6,9 @@ if len(sys.argv) >= 2:
 else:
     arg = "run"
 if arg == "test":
-    from test import db
+    from test import db, app
 else:
-    from index import db
+    from index import db, app
 
 
 class Question(db.Model):
@@ -99,28 +99,17 @@ def modifyQuestion(id, title, text, engineer):
         response = question
     return response
 
-# NOT SURE IF WORKS, SHOULD BE TESTED
-def incrementUps(id):
-    response = False
-    question = Question.query.filter_by(id=id).first()
-    if question is not None:
-        question.ups = question.ups+ 1
-        db.session.commit()
-        response = True
-    return response
 
-def incrementDowns(id):
-    response = False
-    question = Question.query.filter_by(id=id).first()
-    if question is not None:
-        question.downs = question.downs + 1
-        db.session.commit()
-        response = True
-    return response
+
 
 # Get all Question returns list of users or an empty list
-def getQuestions(limit=20):
+def getQuestions(loggedin_id, limit=20):
+    from application.models import Users
+    from application.models import Votes
     response = []
+
+    if loggedin_id < 0: # means user is not logged in
+        print("NOT LOGGED IN")
 
     if limit is None:
         questions = Question.query.all()
@@ -129,51 +118,109 @@ def getQuestions(limit=20):
 
     if questions is not None:
         for question in questions:
-            user = User.query.filter_by(id=question.user_id).first()
+            user = Users.User.query.filter_by(id=question.user_id).first()
             ques = dict(question)
-            ques['user'] = dict(user)
-            del ques['user_id']
+            if user is None:
+                ques['user'] = {}
+            else:
+                ques['user'] = dict(user)
+
+            if loggedin_id == -1:
+                ques['vote_status'] = '0'
+            else:
+                try:
+                    ques['vote_status'] = Votes.getVote(loggedin_id, ques['id'], 'question')['vote_status']
+                except KeyError:
+                    ques['vote_status'] = '0'
             response.append(ques)
     return response
 
 
-def getQuestionsByUser(user_id):
+def getQuestionsByUser(user_id, loggedin_id):
+    from application.models import Users
     response = []
 
     questions = Question.query.filter_by(user_id=user_id).all()
     if questions is not None:
         for question in questions:
-            user = User.query.filter_by(id=question.user_id).first()
-            ques = dict(question)
-            ques['user'] = dict(user)
-            del ques['user_id']
+            if loggedin_id == -1:
+                user = Users.User.query.filter_by(id=question.user_id).first()
+                app.logger.info(user)
+                ques = dict(question)
+                if user is None:
+                    ques['user'] = {}
+                else:
+                    ques['user'] = dict(user)
+
+                del ques['user_id']
+                ques['vote_status'] = Votes.getVote(loggedin_id, ques['id'], 'question')
+                app.logger.info(ques['vote_status'])
+            else:
+                user = {}
+                ques = dict(question)
+                ques['user'] = dict(user)
+                del ques['user_id']
+
             response.append(ques)
     return response
 
 
-def getQuestionByEngineer(engineer):
+def getQuestionByEngineer(engineer,loggedin_id):
+    from application.models import Users
     response = []
 
     questions = Question.query.filter_by(engineer=engineer).all()
 
     if questions is not None:
         for question in questions:
-            user = User.query.filter_by(id=question.user_id).first()
-            ques = dict(question)
-            ques['user'] = dict(user)
-            del ques['user_id']
+            if loggedin_id == -1:
+                user = Users.User.query.filter_by(id=question.user_id).first()
+                ques = dict(question)
+                if user is None:
+                    ques['user'] = {}
+                else:
+                    ques['user'] = dict(user)
+
+                del ques['user_id']
+                ques['vote_status'] = Votes.getVote(loggedin_id, ques['id'], 'question')
+                app.logger.info(ques['vote_status'])
+            else:
+                user = {}
+                ques = dict(question)
+                ques['user'] = dict(user)
+                del ques['user_id']
+
             response.append(ques)
     return response
 
-def getQuestionsByBoth(engineer, user_id):
+def getQuestionsByBoth(engineer, user_id,loggedin_id):
+    from application.models import Users
+    from application.models import Votes
+
     response = []
     questions = Question.query.filter_by(user_id=user_id,engineer=engineer).all()
     if questions is not None:
         for question in questions:
-            user = User.query.filter_by(id=question.user_id).first()
-            ques = dict(question)
-            ques['user'] = dict(user)
-            del ques['user_id']
+            if loggedin_id == -1:
+                user = Users.User.query.filter_by(id=question.user_id).first()
+                ques = dict(question)
+                app.logger.info(user)
+                if user is None:
+                    ques['user'] = {}
+                else:
+                    ques['user'] = dict(user)
+
+                del ques['user_id']
+                ques['vote_status'] = Votes.getVote(loggedin_id, ques['id'], 'question')
+                app.logger.info(ques['vote_status'])
+            else:
+                user = {}
+                ques = dict(question)
+                ques['user'] = dict(user)
+                del ques['user_id']
+
             response.append(ques)
     return response
+
+
 

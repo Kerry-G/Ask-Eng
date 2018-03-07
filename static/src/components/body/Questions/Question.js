@@ -7,6 +7,9 @@ import Votes from "../../votes/Votes";
 class Question extends Component {
     constructor(props) {
         super(props);
+        this.state = {
+            status: 0
+        };
     }
 
     render() {
@@ -17,7 +20,10 @@ class Question extends Component {
                 <Row>
                     <Col lg={12}>
                         <Votes
-                        question = {this.props.question}/>
+                        question = {this.props.question}
+                        status = {this.props.question.vote_status}
+                        user={this.props.user}
+                        />
                         <Row>
                             <h1><span className="question-tag">{this.props.question.engineer}</span>
                             <Link to={path} style={{textDecoration: 'none'}}>{this.props.question.title}</Link></h1>

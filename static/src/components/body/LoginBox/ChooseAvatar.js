@@ -2,7 +2,6 @@ import React, { Component } from 'react'
 import { Image, Modal, Button } from 'react-bootstrap'
 import { fetchAPI } from '../../utility'
 import { updateUser } from '../../../store/auth'
-import { Profile } from '../Profile/Profile'
 
 class ChooseAvatar extends Component {
 

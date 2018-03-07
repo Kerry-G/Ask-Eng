@@ -2,7 +2,6 @@ import React, { Component } from 'react'
 import { Row, Col, Grid } from 'react-bootstrap'
 import Register from './Register'
 import Login from './LoginBox/Login'
-import ProfileCard from '..//body/Profile//ProfileCard'
 import AskQuestion from './AskQuestion/AskQuestion'
 import DefaultAskQuestion from './AskQuestion/DefaultAskQuestion'
 import { connect } from 'react-redux'
@@ -17,6 +16,7 @@ class Body extends Component {
     super(props);
     this.handleShowRegister = this.handleShowRegister.bind(this);
     this.handleCloseRegister = this.handleCloseRegister.bind(this);
+	this.handleQuestions = this.handleQuestions.bind(this);
     this.state = {
       showRegister: false,
     };
@@ -30,14 +30,17 @@ class Body extends Component {
     this.setState({ showRegister: true });
   }
 
+  handleQuestions(){
+	  this.questions.getQuestions();
+  }
+
   render() {
-    let login, askQuestion, profileCard;
+    let login, askQuestion;
     if ((Object.keys(this.props.user).length === 0 && this.props.user.constructor === Object)) { //if no user is login 
       login = <Col lg={4}>  <div className="box-login"> <Login registerModal={this.handleShowRegister} /> </div></Col>
       askQuestion = <Col lg={8}><DefaultAskQuestion register={this.handleShowRegister} /> </Col>
     } else {
-      askQuestion = <div className="ask-question-box"> <AskQuestion /> </div> 
-      profileCard = <div className="profile-card"><ProfileCard /> </div>
+      askQuestion = <div className="ask-question-box"> <AskQuestion updateQuestions={this.handleQuestions} /> </div> 
     }
 
     return (
@@ -50,8 +53,7 @@ class Body extends Component {
                     <div>
                     {askQuestion}
                     {login}
-                    {<Questions/>}
-                    {/* {profileCard} */}
+                    {<Questions user={this.props.user} ref={questions => this.questions =questions}/>}
                   </div>
                   )
                 }} />

@@ -69,7 +69,8 @@ def getAnswer(id):
     if answer is None:
         return None
     else:
-        return dict(answer)
+        answer = dict(answer)
+        return answer
 
 
 # Returns True if answer is deleted
@@ -95,12 +96,14 @@ def modifyAnswer(id, text):
 
 
 def getAnswersByUser(user_id):
+    from application.models import Votes
     response = []
 
     answers = Answer.query.filter_by(user_id=user_id).all()
 
     if answers is not None:
         for answer in answers:
+            answer['vote_status'] = Votes.Vote.getVote(user_id, answer['id'], 'answer')
             response.append(dict(answer))
     return response
 
@@ -124,3 +127,4 @@ def acceptAnswer(id):
         answer.accepted = True
         db.session.commit()
     return response
+

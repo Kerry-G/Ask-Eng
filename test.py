@@ -28,7 +28,7 @@ def test_users():
         return 1
     if Users.userVerified("starwarsfan", "wookie"):
         return 2
-    if Users.modifyUser(1, "Boba", "Fett", "Killer", "guns"):
+    if Users.modifyUser(1, "Boba", "Fett", "Killer"):
         return 3
 
     # test with existing user
@@ -48,7 +48,7 @@ def test_users():
         return 8
     if user["password_hash"] == "wookie":
         return 9
-    if not Users.modifyUser(user["id"], "Han", "Solo", "Ship", "leia"):
+    if not Users.modifyUser(user["id"], "Han", "Solo", "Ship"):
         return 10
     user = Users.getUser("starwarsfan")
     if user["fname"] != "Han" or user["lname"] != "Solo" or user["engineer"] != "Ship" \
