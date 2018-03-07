@@ -88,9 +88,6 @@ def questionsRoute():
         app.logger.info(id)
 
 
-
-
-
         if 'question_id' in questionArgs:
             q = Questions.getQuestion(questionArgs['question_id'])
             question = questionResponse(q)

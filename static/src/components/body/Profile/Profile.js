@@ -46,7 +46,8 @@ class Profile extends Component {
 	async getQuestions() {
 		try {
 			let engineerArray = ["","&engineer=Software","&engineer=Mechanical","&engineer=Computer","&engineer=Electrical","&engineer=Civil"]
-      fetchAPI("GET", "/api/qa/questions/?" + engineerArray[(this.state.activeQuery)] + this.state.extraQuery).then(response => {
+      //fetchAPI("GET", "/api/qa/questions/?" + engineerArray[(this.state.activeQuery)] + this.state.extraQuery).then(response => {
+			fetchAPI("GET", "/api/qa/questions/?loggedin_id" +  "=" + this.props.user.id).then(response => {
 				console.log(response)
 				if (response.success) {
 					this.setState({

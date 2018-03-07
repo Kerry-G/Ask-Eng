@@ -10,8 +10,6 @@ def engineerTypes():
 '''
 This is a SQLAlchemy model for reference.
 '''
-
-
 class User(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     fname = db.Column(db.String(30))
@@ -110,7 +108,7 @@ def deleteUser(email):
 # NOT SURE IF WORKS, SHOULD BE TESTED
 def modifyUser(id, fname, lname, engineer):
     response = False
-    user = getUserById(id)
+    user = User.query.filter_by(id=id).first()
     if user is not None:
         user.engineer = engineer
         user.lname = lname

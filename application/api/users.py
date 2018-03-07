@@ -103,6 +103,7 @@ def userRoute(id):
 
     if request.method == 'PUT':
         # Modify a user and find our whether it is successful or not
+        app.logger.info(data)
         success = Users.modifyUser(id, fname=data['fname'], lname=data['lname'], engineer=data['engineer'])
 
         if success:
