@@ -40,7 +40,7 @@ def searchRoute():
 
     if request.method == 'POST':
 	# UPDATE FOR PROPER METHOD
-        answers = Search.createSearch(searchString=data['searchString'])
+        answers = Search.searchQuestions(searchString=data['searchString'])
         
 	if answers != []:
 	    success = False
