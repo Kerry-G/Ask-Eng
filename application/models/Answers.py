@@ -1,4 +1,5 @@
 from datetime import datetime
+from application.models import Votes
 import sys
 if len(sys.argv) >= 2:
     arg = sys.argv[2]
@@ -60,7 +61,7 @@ def createAnswer(text, user_id, question_id):
     except:
         response = False
 
-    return response
+    return dict(response)
 
 
 # Returns True if answer is found
@@ -95,27 +96,41 @@ def modifyAnswer(id, text):
     return response
 
 
-def getAnswersByUser(user_id):
-    from application.models import Votes
+def getAnswersByUser(user_id, loggedin_id=-1):
     response = []
 
     answers = Answer.query.filter_by(user_id=user_id).all()
 
     if answers is not None:
         for answer in answers:
-            answer['vote_status'] = Votes.Vote.getVote(user_id, answer['id'], 'answer')
-            response.append(dict(answer))
+            ans = dict(answer)
+            if loggedin_id == -1:
+                ans['vote_status'] = {'vote_status':0}
+            else:
+                try:
+                    ans['vote_status'] = Votes.getVote(loggedin_id, answer['id'], 'answer')['vote_status']
+                except KeyError:
+                    ans['vote_status'] = {'vote_status':0}
+            response.append(dict(ans))
     return response
 
 
-def getAnswersByQuestion(question_id):
+def getAnswersByQuestion(question_id, loggedin_id=-1):
     response = []
 
-    answers = Answer.query.filter_by(question_id=question_id).all()
+    answers = Answer.query.filter_by(user_id=question_id).all()
 
     if answers is not None:
         for answer in answers:
-            response.append(dict(answer))
+            ans = dict(answer)
+            if loggedin_id == -1:
+                ans['vote_status'] = {'vote_status':0}
+            else:
+                try:
+                    ans['vote_status'] = Votes.getVote(loggedin_id, answer['id'], 'answer')['vote_status']
+                except KeyError:
+                    ans['vote_status'] = {'vote_status':0}
+            response.append(dict(ans))
     return response
 
 

@@ -7,3 +7,12 @@ def convertRequestDataToDict(data):
 	data  = data.decode('utf8').replace("'",'"')
 	data = json.loads(data)
 	return data
+
+
+def dump(data):
+	return str(data) + ":(" + str(type(data)) + ")"
+
+
+
+
+

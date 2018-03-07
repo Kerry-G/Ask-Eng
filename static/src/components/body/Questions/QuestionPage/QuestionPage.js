@@ -4,6 +4,7 @@ import {Col, Row, Well} from 'react-bootstrap'
 import Answer from './Answer.js'
 import AnswerQuestion from './AnswerQuestion.js'
 import Votes from "../../../votes/Votes";
+import { connect } from 'react-redux'
 
 class QuestionPage extends Component {
     constructor(props) {
@@ -52,6 +53,7 @@ class QuestionPage extends Component {
                 return (
                     <div key={answer.id}>
                         <Answer
+                            user={this.props.user}
                             answer={answer}
                         />
                     </div>
@@ -66,8 +68,10 @@ class QuestionPage extends Component {
                     </Row>
                     <Row className="question-box-text">
                         <Col md={1}>
+                            {console.log(this.state.question)}
                             <Votes
                                 question={this.state.question}
+                                status = {this.state.vote_status} //this may switch
                                 user={this.props.user}
                             />
                         </Col>
@@ -87,7 +91,9 @@ class QuestionPage extends Component {
                           </Well>
                         </Col>
                     </Row>
+                    <div>
                     {answers}
+                    </div>
                 </div>
             )
         } else {
@@ -95,4 +101,15 @@ class QuestionPage extends Component {
         }
     }
 }
+
+function mapStateToProps(state) {
+    return {
+        user: state.login.user
+    }
+}
+
+QuestionPage = connect(
+    mapStateToProps,
+)(QuestionPage);
+
 export default QuestionPage;

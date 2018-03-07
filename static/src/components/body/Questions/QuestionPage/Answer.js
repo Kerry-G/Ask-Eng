@@ -3,6 +3,7 @@ import {fetchAPI} from '../../../utility'
 import { Col, Row, Well, Image } from 'react-bootstrap'
 import FontAwesome from 'react-fontawesome'
 import moment from 'moment'
+import Votes from "../../../votes/Votes";
 
 class Answer extends Component {
   constructor(props) {
@@ -15,22 +16,11 @@ class Answer extends Component {
         <div key={this.props.answer.id} className="question-box">
         <Row>
           <Col lg={3} xs={4}>
-            <div className="square">
-              <div className="fontawesomearrow down">
-                <FontAwesome name='chevron-up' />
-              </div>
-              <div className="points down">
-                {this.props.answer.ups}
-              </div>
-            </div>
-            <div className="square">
-              <div className="fontawesomearrow up">
-                <FontAwesome name='chevron-down' />
-              </div>
-              <div className="points up">
-                {this.props.answer.downs}
-              </div>
-            </div>
+            <Votes
+                        question = {this.props.answer}
+                        status = {this.props.answer.vote_status}
+                        user={this.props.user}
+            />
             <Image src={avatarPath} width={64} circle />
           </Col>
 
