@@ -76,7 +76,10 @@ class Profile extends Component {
 		//Own account
 		if (!this.state.alert && (this.props.match.params.id == this.props.user.id)) {
 			console.log(this.props.user)
-			ProfileInfo = <div> <ProfileCard user={this.props.user} /> <Edit/> </div> 
+			ProfileInfo = <div> 
+				<ProfileCard user={this.props.user} />
+			 	<Edit user={this.props.user}/> 
+			 </div> 
 
 
 		} else if (!this.state.alert && (!(this.props.match.params.id === this.state.id))) { //viewing another person's profile
