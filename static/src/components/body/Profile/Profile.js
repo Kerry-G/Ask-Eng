@@ -4,8 +4,8 @@ import { fetchAPI } from '../../utility'
 import { connect } from 'react-redux'
 import ProfileCard from './ProfileCard'
 import Question from '..//Questions//Question'
+import Search from '..//Questions//Search'
 import Edit from './Edit'
-
 
 class Profile extends Component {
 	constructor(props) {
@@ -92,10 +92,9 @@ class Profile extends Component {
 				<Nav bsStyle="tabs" activeKey={this.state.activeKey} onSelect={k => this.handleSelect(k)}>
 					<NavItem onClick={() => { this.setState({ activeQuery: "0" }) }} eventKey="0">
 						Question
+						
 			</NavItem>
-					<NavItem onClick={() => { this.setState({ activeQuery: "2" }) }} eventKey="1" >
-						Answer
-			</NavItem>
+			
 					<NavDropdown eventKey="6" title="Sort" id="nav-dropdown">
 						<MenuItem onClick={() => this.setState({ extraQuery: "&sort=title" })} eventKey="6.1">Title</MenuItem>
 						<MenuItem onClick={() => this.setState({ extraQuery: "&sort=register_date&reverse=1" })} eventKey="6.2">Newest</MenuItem>
@@ -103,6 +102,7 @@ class Profile extends Component {
 						<MenuItem eventKey="6.4">Ups</MenuItem>
 						<MenuItem eventKey="6.5">Downs</MenuItem>
 					</NavDropdown>
+					<Search> </Search >
 				</Nav>
 					{questions}
 				</Col>

@@ -1,7 +1,10 @@
 import React, { Component } from 'react'
 import { fetchAPI } from '../../utility'
-import { Nav, NavItem, NavDropdown, MenuItem } from 'react-bootstrap'
+import { Nav, NavItem, NavDropdown, MenuItem, Button } from 'react-bootstrap'
 import Question from './Question'
+import FontAwesome from 'react-fontawesome'
+import moment from 'moment'
+import Search from '../Questions//Search'
 
 
 class Questions extends Component {
@@ -12,6 +15,7 @@ class Questions extends Component {
       activeKey:"0",
       activeQuery:"0",
       extraQuery:""
+
     };
   }
 
@@ -78,6 +82,7 @@ class Questions extends Component {
           <MenuItem eventKey="6.4">Ups</MenuItem>
           <MenuItem eventKey="6.5">Downs</MenuItem>
         </NavDropdown>
+         <Search>  </Search> 
         </Nav>
         {questions}
       </div>
