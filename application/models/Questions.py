@@ -1,14 +1,6 @@
 from datetime import datetime
 from application.models.Users import User
 import sys
-if len(sys.argv) >= 2:
-    arg = sys.argv[2]
-else:
-    arg = "run"
-if arg == "test":
-    from test import db
-else:
-    from index import db
 
 
 class Question(db.Model):
