@@ -20,8 +20,8 @@ class EditModal extends Component {
                         </Row>
                         <Row>
                         {!input.overlay
-                            ? <textarea
-                            className={input.className}
+                            ? <textarea 
+                            className="input-edit"
                             rows="1"
                             cols="45"
                             placeholder={input.placeholder}
@@ -29,7 +29,7 @@ class EditModal extends Component {
                             />
                             : <OverlayTrigger trigger="focus" placement="bottom" overlay={popoverFocus}>
                                 <textarea
-                                className={input.className}
+                                className="input-edit"
                                 rows="1"
                                 cols="45"
                                 placeholder={input.placeholder}
@@ -59,10 +59,10 @@ class EditModal extends Component {
                 <Modal.Footer>
                     <Grid fluid>
                         <Row>
-                            <Button onClick={this.props.onClick}>
+                            <Button className="reg-btn" onClick={this.props.onClick}>
                                 Cancel
                             </Button>
-                            <Button disabled={this.props.disabled} onClick={this.props.handleSubmit}>
+                            <Button className ="reg-btn"disabled={this.props.disabled} onClick={this.props.handleSubmit}>
                                 Submit
                             </Button>
                         </Row>

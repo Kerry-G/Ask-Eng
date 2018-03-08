@@ -431,9 +431,29 @@ profile card edit
     justify-content: space-evenly;
 }
 #box-edit-links a{
-    border : 1px solid black;
-    width:64px;
-    height:64px;
-    margin:15px;
-    cursor: pointer;
+    text-decoration: none;
+   cursor: pointer;
+}
+
+.input-edit{
+    width: 50%;
+    height: 30px;
+    resize: none
+}
+
+.change-fname{
+    color: #e74c3c;
+    border-color: #c0392b;
+}
+
+.profile-badges{
+    color: black;
+    & :hover {
+        color: #c0392b;
+    }
+}
+
+#box-edit-links{
+    margin-top: 5px;
+    margin-bottom: 5px;
 }
