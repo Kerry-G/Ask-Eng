@@ -238,7 +238,6 @@ textarea {
 @media only screen and (max-width: 70em) {
   .ask-box-footer {
     width: 100%;
-    padding-top: 1rem;
     display: flex;
     flex-wrap: wrap;
     justify-content: center; } }
@@ -397,6 +396,21 @@ textarea {
     color: orange; }
   .search:focus {
     outline: none; }
+
+/*==========================================
+profile card edit
+=========================================*/
+#box-edit-links {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-evenly; }
+
+#box-edit-links a {
+  border: 1px solid black;
+  width: 64px;
+  height: 64px;
+  margin: 15px;
+  cursor: pointer; }
 
 #searchButton {
   float: right;
