@@ -1,6 +1,8 @@
 import React, { Component } from 'react'
 import { Image } from 'react-bootstrap'
 import Dropdown from '../header/Dropdown'
+import ChooseAvatar from '../body/LoginBox/ChooseAvatar'
+
 
 class Headermenu extends Component {
 

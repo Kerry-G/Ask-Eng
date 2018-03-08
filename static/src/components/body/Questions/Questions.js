@@ -1,8 +1,11 @@
 import React, { Component } from 'react'
 import { fetchAPI } from '../../utility'
-import { Nav, NavItem, NavDropdown, MenuItem } from 'react-bootstrap'
+import { Nav, NavItem, NavDropdown, MenuItem, Button } from 'react-bootstrap'
 import Question from './Question'
-import { connect } from 'react-redux'
+import FontAwesome from 'react-fontawesome'
+import moment from 'moment'
+import Search from '../Questions//Search'
+
 
 class Questions extends Component {
   constructor(props) {
@@ -12,6 +15,7 @@ class Questions extends Component {
       activeKey:"0",
       activeQuery:"0",
       extraQuery:""
+
     };
   }
 
@@ -21,11 +25,9 @@ class Questions extends Component {
 
   async getQuestions() {
     try {
-      console.log(this.props.user)
       let loggedin_id = this.props.user===undefined ? -1 : this.props.user.id;
       let engineerArray = ["","&engineer=Software","&engineer=Mechanical","&engineer=Computer","&engineer=Electrical","&engineer=Civil"]
       fetchAPI("GET", "/api/qa/questions/?" + engineerArray[(this.state.activeQuery)] + this.state.extraQuery + "&loggedin_id=" + loggedin_id).then(response => {
-       console.log(response)
         if (response.success) {
           this.setState({
             questions: response.questions
@@ -43,10 +45,12 @@ class Questions extends Component {
   }
 
   render() {
+    {console.log(this.state.questions)}
+
     let questions = this.state.questions.map((question) => {
       return (
         <div key={question.id}>
-          <Question question={question} />
+          <Question question={question} user={this.props.user} />
         </div>
       )
     })
@@ -78,21 +82,12 @@ class Questions extends Component {
           <MenuItem eventKey="6.4">Ups</MenuItem>
           <MenuItem eventKey="6.5">Downs</MenuItem>
         </NavDropdown>
+         <Search>  </Search> 
         </Nav>
         {questions}
       </div>
     )
   }
 }
-
-function mapStateToProps(state) {
-  return {
-    user: state.login.user
-  }
-}
-
-Questions = connect(
-  mapStateToProps,
-)(Questions);
 
 export default Questions;

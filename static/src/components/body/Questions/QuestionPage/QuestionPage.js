@@ -4,6 +4,7 @@ import {Col, Row, Well} from 'react-bootstrap'
 import Answer from './Answer.js'
 import AnswerQuestion from './AnswerQuestion.js'
 import Votes from "../../../votes/Votes";
+import { connect } from 'react-redux'
 
 class QuestionPage extends Component {
     constructor(props) {
@@ -33,7 +34,7 @@ class QuestionPage extends Component {
 
     async getQuestion() {
         try {
-            fetchAPI("GET", "/api/qa/questions/?question_id=" + this.props.match.params.id).then(response => {
+            fetchAPI("GET", "/api/qa/questions/?question_id=" + this.props.match.params.id + "&loggedin_id=" + this.props.user.id).then(response => {
                 if (response.success) {
                     this.setState({
                         question: response.question,
@@ -52,6 +53,7 @@ class QuestionPage extends Component {
                 return (
                     <div key={answer.id}>
                         <Answer
+                            user={this.props.user}
                             answer={answer}
                         />
                     </div>
@@ -67,7 +69,11 @@ class QuestionPage extends Component {
                     <Row className="question-box-text">
                         <Col md={1}>
                             <Votes
-                                question={this.state.question}/>
+                                question={this.state.question}
+                                status = {this.state.question.vote_status} //this may switch
+                                user={this.props.user}
+                                comment_status = {'question'}
+                            /> 
                         </Col>
                         <Col md={11}>
                             <h1>{this.state.question.title}</h1>
@@ -85,7 +91,9 @@ class QuestionPage extends Component {
                           </Well>
                         </Col>
                     </Row>
+                    <div>
                     {answers}
+                    </div>
                 </div>
             )
         } else {
@@ -93,4 +101,15 @@ class QuestionPage extends Component {
         }
     }
 }
+
+function mapStateToProps(state) {
+    return {
+        user: state.login.user
+    }
+}
+
+QuestionPage = connect(
+    mapStateToProps,
+)(QuestionPage);
+
 export default QuestionPage;

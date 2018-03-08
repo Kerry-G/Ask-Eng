@@ -107,6 +107,7 @@ h1{
     padding-right: 10px;
     padding-left: 10px;
     text-decoration: none;
+    display: inline;
 }
 .reg-btn-color:hover{
     border:2px solid #c0392b;
@@ -399,8 +400,9 @@ textarea{
 }
 
 .search{
+    position: relative;
     float: right;
-    width:auto;
+    width:20rem;
     transition: all 10s;
     &:hover{
         width:300px;
@@ -409,4 +411,14 @@ textarea{
     &:focus{
         outline: none; 
     }
+}
+
+#searchButton{
+    float: right;
+    width:30px;
+    height: 30px;
+    border-radius: 50%;
+    margin-right:10px;
+    padding-left:5px;
+    text-align: left;
 }

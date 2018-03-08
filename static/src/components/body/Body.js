@@ -53,7 +53,7 @@ class Body extends Component {
                     <div>
                     {askQuestion}
                     {login}
-                    {<Questions ref={questions => this.questions =questions}/>}
+                    {<Questions user={this.props.user} ref={questions => this.questions =questions}/>}
                   </div>
                   )
                 }} />

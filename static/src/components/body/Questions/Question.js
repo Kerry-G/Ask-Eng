@@ -12,20 +12,19 @@ class Question extends Component {
         };
     }
 
-
-    
-
     render() {
-        console.log(this.props)
         let time = moment(this.props.question.register_date).subtract(5, "hours").fromNow()
         let path = "/question/" + this.props.question.id;
         return (
             <div key={this.props.question.id} className="question-box">
                 <Row>
                     <Col lg={12}>
+                    {console.log(this.props.question)}
                         <Votes
                         question = {this.props.question}
                         status = {this.props.question.vote_status}
+                        user={this.props.user}
+                        comment_status = {'question'}
                         />
                         <Row>
                             <h1><span className="question-tag">{this.props.question.engineer}</span>

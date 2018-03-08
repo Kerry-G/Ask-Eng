@@ -1,5 +1,15 @@
-from index import db
 from datetime import datetime
+from application.models.Users import User
+from application.models import Votes
+import sys
+if len(sys.argv) >= 2:
+    arg = sys.argv[2]
+else:
+    arg = "run"
+if arg == "test":
+    from test import db, app
+else:
+    from index import db, app
 
 
 class Question(db.Model):
@@ -59,12 +69,14 @@ def createQuestion(title, text, engineer, user_id):
 
 
 # Returns the question if question is found
-def getQuestion(id):
+def getQuestion(id, loggedin_id=-1):
     question = Question.query.filter_by(id=id).first()
     if question is None:
         return None
     else:
-        return dict(question)
+        question = dict(question)
+        question['vote_status'] = Votes.getVote(loggedin_id, question['id'], 'question')['vote_status']
+    return question
 
 # Returns True if question is deleted
 def deleteQuestion(id):
@@ -117,100 +129,105 @@ def getQuestions(loggedin_id, limit=20):
                 ques['user'] = dict(user)
 
             if loggedin_id == -1:
-                ques['vote_status'] = '0'
+                ques['vote_status'] = {'vote_status':0}
             else:
                 try:
                     ques['vote_status'] = Votes.getVote(loggedin_id, ques['id'], 'question')['vote_status']
                 except KeyError:
-                    ques['vote_status'] = '0'
+                    ques['vote_status'] = {'vote_status':0}
             response.append(ques)
     return response
 
 
 def getQuestionsByUser(user_id, loggedin_id):
     from application.models import Users
+    from application.models import Votes
     response = []
 
-    questions = Question.query.filter_by(user_id=user_id).all()
+    if loggedin_id < 0: # means user is not logged in
+        print("NOT LOGGED IN")
 
+    questions = Question.query.filter_by(user_id=user_id).all()
     if questions is not None:
         for question in questions:
-            if loggedin_id == -1:
-                user = Users.User.query.filter_by(id=question.user_id).first()
-                app.logger.info(user)
-                ques = dict(question)
-                if user is None:
-                    ques['user'] = {}
-                else:
-                    ques['user'] = dict(user)
-
-                del ques['user_id']
-                ques['vote_status'] = Votes.getVote(loggedin_id, ques['id'], 'question')
-                app.logger.info(ques['vote_status'])
+            user = Users.User.query.filter_by(id=question.user_id).first()
+            ques = dict(question)
+            if user is None:
+                ques['user'] = {}
             else:
-                user = {}
-                ques = dict(question)
                 ques['user'] = dict(user)
-                del ques['user_id']
 
+            if loggedin_id == -1:
+                ques['vote_status'] = {'vote_status':0}
+            else:
+                try:
+                    ques['vote_status'] = Votes.getVote(loggedin_id, ques['id'], 'question')['vote_status']
+                except KeyError:
+                    ques['vote_status'] = {'vote_status':0}
             response.append(ques)
     return response
 
 
-def getQuestionByEngineer(engineer,loggedin_id):
+# Get all Question returns list of users or an empty list
+def getQuestionByEngineer(engineer, loggedin_id):
     from application.models import Users
+    from application.models import Votes
     response = []
+
+    if loggedin_id < 0: # means user is not logged in
+        print("NOT LOGGED IN")
+
 
     questions = Question.query.filter_by(engineer=engineer).all()
 
+
     if questions is not None:
         for question in questions:
-            if loggedin_id == -1:
-                user = Users.User.query.filter_by(id=question.user_id).first()
-                ques = dict(question)
-                if user is None:
-                    ques['user'] = {}
-                else:
-                    ques['user'] = dict(user)
-
-                del ques['user_id']
-                ques['vote_status'] = Votes.getVote(loggedin_id, ques['id'], 'question')
-                app.logger.info(ques['vote_status'])
+            user = Users.User.query.filter_by(id=question.user_id).first()
+            ques = dict(question)
+            if user is None:
+                ques['user'] = {}
             else:
-                user = {}
-                ques = dict(question)
                 ques['user'] = dict(user)
-                del ques['user_id']
 
+            if loggedin_id == -1:
+                ques['vote_status'] = {'vote_status':0}
+            else:
+                try:
+                    ques['vote_status'] = Votes.getVote(loggedin_id, ques['id'], 'question')['vote_status']
+                except KeyError:
+                    ques['vote_status'] = {'vote_status':0}
             response.append(ques)
     return response
 
-def getQuestionsByBoth(engineer, user_id,loggedin_id):
+def getQuestionsByBoth(engineer, user_id, loggedin_id):
     from application.models import Users
     from application.models import Votes
-
     response = []
-    questions = Question.query.filter_by(user_id=user_id,engineer=engineer).all()
+
+    if loggedin_id < 0: # means user is not logged in
+        print("NOT LOGGED IN")
+
+
+    questions = Question.query.filter_by(engineer=engineer, user_id=user_id).all()
+
+
     if questions is not None:
         for question in questions:
-            if loggedin_id == -1:
-                user = Users.User.query.filter_by(id=question.user_id).first()
-                ques = dict(question)
-                app.logger.info(user)
-                if user is None:
-                    ques['user'] = {}
-                else:
-                    ques['user'] = dict(user)
-
-                del ques['user_id']
-                ques['vote_status'] = Votes.getVote(loggedin_id, ques['id'], 'question')
-                app.logger.info(ques['vote_status'])
+            user = Users.User.query.filter_by(id=question.user_id).first()
+            ques = dict(question)
+            if user is None:
+                ques['user'] = {}
             else:
-                user = {}
-                ques = dict(question)
                 ques['user'] = dict(user)
-                del ques['user_id']
 
+            if loggedin_id == -1:
+                ques['vote_status'] = {'vote_status':0}
+            else:
+                try:
+                    ques['vote_status'] = Votes.getVote(loggedin_id, ques['id'], 'question')['vote_status']
+                except KeyError:
+                    ques['vote_status'] = {'vote_status':0}
             response.append(ques)
     return response
 

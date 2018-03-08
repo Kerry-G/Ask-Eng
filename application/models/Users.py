@@ -1,6 +1,14 @@
-from index import db, app
 from datetime import datetime
 from passlib.hash import sha256_crypt
+import sys
+if len(sys.argv) >= 2:
+    arg = sys.argv[2]
+else:
+    arg = "run"
+if arg == "test":
+    from test import db
+else:
+    from index import db
 
 
 def engineerTypes():
@@ -10,8 +18,6 @@ def engineerTypes():
 '''
 This is a SQLAlchemy model for reference.
 '''
-
-
 class User(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     fname = db.Column(db.String(30))
@@ -107,19 +113,18 @@ def deleteUser(email):
     return response
 
 
-# NOT SURE IF WORKS, SHOULD BE TESTED
-def modifyUser(id, fname, lname, engineer, display_image):
+# Returns true if user has been modified.
+def modifyUser(id, fname, lname, engineer, email):
     response = False
-    user = getUserById(id)
+    user = User.query.filter_by(id=id).first()
     if user is not None:
-        user.display_image = display_image
         user.engineer = engineer
         user.lname = lname
         user.fname = fname
+        user.email = email
         db.session.commit()
         response = True
     return response
-
 
 
 # Update a user's password
@@ -129,8 +134,9 @@ def updatePassword(email, oldPassword, newPassword):
         user = User.query.filter_by(email=email).first()
         user.password_hash = sha256_crypt.hash(newPassword)
         db.session.commit()
-
+        response = True
     return response
+
 
 def updateDisplayImage(user_id, display_image):
     user = User.query.filter_by(id=user_id).first()
@@ -165,6 +171,7 @@ def getUserById(id):
     else:
         return dict(user)
 
+
 def deleteUser(id):
     response = False
     user = getUserById(id)
@@ -173,6 +180,7 @@ def deleteUser(id):
         db.session.remove(user)
         db.session.commit()
     return response
+
 
 def getUserId(email):
     user = User.query.filter_by(email=email).first()
