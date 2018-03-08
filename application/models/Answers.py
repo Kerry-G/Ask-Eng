@@ -1,6 +1,7 @@
 from datetime import datetime
 import sys
 
+
 class Answer(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     text = db.Column(db.String(1000))
@@ -66,13 +67,14 @@ def getAnswer(id):
 
 
 # Returns True if answer is deleted
-def deleteAnswer(id):
+def deleteAnswer(id, user_id):
     response = False
     if answerExists(id):
-        response = True
         answer = Answer.query.filter_by(id=id).first()
-        answer.is_deleted=True
-        db.session.commit()
+        if answer.user_id == user_id:
+            response = True
+            answer.is_deleted=True
+            db.session.commit()
     return response
 
 

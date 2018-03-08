@@ -72,13 +72,14 @@ def getQuestion(id):
         return dict(question)
 
 # Returns True if question is deleted
-def deleteQuestion(id):
+def deleteQuestion(id, user_id):
     response = False
     if questionExists(id):
-        response = True
         question = Question.query.filter_by(id=id).first()
-        question.is_deleted=True
-        db.session.commit()
+        if question.user_id == user_id:
+            response = True
+            question.is_deleted=True
+            db.session.commit()
     return response
 
 
