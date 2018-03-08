@@ -15,18 +15,16 @@ httpMethods = ['PUT', 'GET', 'POST', 'DELETE']
 
 
 def questionResponse(question):
-    if question is None:
+    if question is None or question.is_deleted is True:
         return None
     else:
         answers = []
         for answer in Answers.getAnswersByQuestion(question['id']):
-            answer['user'] = Users.getUser(answer['user_id'])
-            answers.append(answer)
+            if answer.is_deleted is False
+                answer['user'] = Users.getUser(answer['user_id'])
+                answers.append(answer)
         question['answers'] = answers
         return question
-
-
-
 
 
 def validateQuestionRequest(request):
@@ -65,7 +63,7 @@ def questionsRoute():
         question = Questions.createQuestion(data['title'], data['text'], data['engineer'], data['user_id'])
 
         app.logger.info(question)
-        if question is not None:
+        if question is not None and question.is_deleted is False:
             success = True
             status = "OK"
             message = "Question added."
@@ -162,7 +160,7 @@ def answerQuestion():
         answer = Answers.createAnswer(data['text'], data['user_id'], data['question_id'])
 
 
-        if answer is not None:
+        if answer is not None and answer.is_deleted is False:
             answer['user'] = Users.getUser(answer['user_id'])
             success = True
             status = "OK"
