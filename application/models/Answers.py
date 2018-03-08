@@ -1,14 +1,5 @@
 from datetime import datetime
 import sys
-if len(sys.argv) >= 2:
-    arg = sys.argv[2]
-else:
-    arg = "run"
-if arg == "test":
-    from test import db
-else:
-    from index import db
-
 
 class Answer(db.Model):
     id = db.Column(db.Integer, primary_key=True)
