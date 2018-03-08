@@ -84,7 +84,7 @@ def questionsRoute():
 		# get logged in user id, if it's set then continue, else set it to -1
 		try: 
 			id = int(questionArgs['loggedin_id'])
-		except KeyError:
+		except:
 			id = -1
 		app.logger.info("USER ID (-1 means logged out): " + str(id))
 
