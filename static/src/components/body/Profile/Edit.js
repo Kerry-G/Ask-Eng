@@ -4,12 +4,14 @@ import { fetchAPI } from './../../utility'
 import { updateUser, login } from '../../../store/auth'
 import EditLink from './EditLink.js'
 import EditModal from './EditModal.js'
+import FontAwesome from 'react-fontawesome' 
+import ChooseAvatar from '../LoginBox/ChooseAvatar'
 
 class Edit extends Component {
     constructor(props) {
         super(props)
         this.state = {
-			showFnameModal: false,
+			showFnameModal: false,	
             fname: this.props.user.fname,
 
 			showLnameModal: false,
@@ -29,6 +31,8 @@ class Edit extends Component {
 			verified : true,
 			validPassword : false,
 			validEmail : true,
+
+			showAvatar: false,
 
         };
 		//These handlers are used to determine which modal to show.
@@ -50,6 +54,10 @@ class Edit extends Component {
 		this.handleEmailPwChange = this.handleEmailPwChange.bind(this);
 		this.handleNewPwChange = this.handleNewPwChange.bind(this);
 
+		//Handler to show or hide the modal pop-up for the avatar
+		this.handleShowAvatar = this.handleShowAvatar.bind(this);
+        this.handleCloseAvatar = this.handleCloseAvatar.bind(this);
+
     }
 
 	handleChange_fname(){
@@ -67,6 +75,14 @@ class Edit extends Component {
 	handleChange_eng(){
 		this.setState({ showEngineerModal: true})
 	}
+	handleCloseAvatar() {
+		this.setState({ showAvatar: false });
+	  }
+	
+	handleShowAvatar() {
+		this.setState({ showAvatar: true });
+	}
+	
 
 	//When closing a modal, set all the modal values to false and reset the input values.
 	handleClose(){
@@ -244,26 +260,26 @@ class Edit extends Component {
 				<Panel.Body>
 					<div id="box-edit-links">
 						<EditLink
-							id="change-fname"
 							onClick={()=>this.handleChange_fname()}
-							title="First Name"
+							title={<FontAwesome name='far fa-address-card fa-2x' color="#e74c3c"  /> }
 						/>
 						<EditLink
-							id="change-lname"
 							onClick={()=>this.handleChange_lname()}
-							title="Last Name"
+							title={<FontAwesome name='fas fa-user-secret fa-2x'  /> }
 						/>
 						<EditLink
-							id="change-pass"
 							onClick={()=>this.handleChange_pass()}
-							title="Password"
+							title={<FontAwesome name='far fa-unlock fa-2x'  /> }
 						/>
 						<EditLink
-							id="change-eng"
 							onClick={()=>this.handleChange_eng()}
-							title="Discipline"
+							title={<FontAwesome name='fas fa-cogs fa-2x'  /> }
 						/>
-					</div>
+						<EditLink
+							onClick= {()=>this.handleShowAvatar()}
+							title={<FontAwesome name='fab fa-black-tie fa-2x'  /> }
+						/>
+ 					</div>
 				</Panel.Body>
 			</Panel>
 			{/* First Name */}
@@ -274,7 +290,6 @@ class Edit extends Component {
 				regularInput = {true}
 				inputs={[{
 					title:"First name",
-					className: "change_fname_textbox",
 					placeholder: "Enter your first name here",
 					onChange: (e)=> this.handleFnameChange(e)
 				}]}
@@ -290,7 +305,6 @@ class Edit extends Component {
 				regularInput = {true}
 				inputs={[{
 					title:"Last name",
-					className: "change_lname_textbox",
 					placeholder: "Enter your last name here",
 					onChange: (e)=> this.handleLnameChange(e)
 				}]}
@@ -306,18 +320,15 @@ class Edit extends Component {
 				regularInput = {true}
 				inputs={[{
 						title:"Email",
-						className: "textarea_email",
 						placeholder: "Enter your email here",
 						onChange: (e)=> this.handleEmailPwChange(e)
 					},{
 						title:"Current Password",
-						className: "textarea_current_pw",
 						placeholder: "Enter your first name here",
 						onChange: (e)=> this.handleCurrentPwChange(e)
 					},{
 						overlay: true,
 						title: "New Password",
-						className: "textarea_new_pw",
 						placeholder: "Enter your first name here",
 						onChange: (e)=> this.handleNewPwChange(e)
 				}]}
@@ -345,6 +356,12 @@ class Edit extends Component {
 				disabled={this.state.eng === "" || this.state.eng === this.props.user.engineer}
 				onClick={()=>this.handleClose()}
 				handleSubmit={() => this.handleSubmit()}
+			/>
+			<ChooseAvatar 
+              show={this.state.showAvatar}
+              user = {this.props.user}
+              handleOpen={this.handleOpen}
+              handleClose={this.handleCloseAvatar}
 			/>
 			</div>
         );

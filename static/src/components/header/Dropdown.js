@@ -34,17 +34,11 @@ class Dropdown extends Component {
             noCaret
             id="dropdown-no-caret"
           >
-            <MenuItem eventKey="1" href={profile_path} >My profile</MenuItem>
-            <MenuItem eventKey="2" onClick= {this.handleShowAvatar} >Settings</MenuItem>
-                        
+            <MenuItem eventKey="1" href={profile_path} >My profile</MenuItem>    
             <MenuItem divider />
             <MenuItem eventKey="4" onClick={logOut}> Logout  </MenuItem>
           </DropdownButton>
-          <ChooseAvatar 
-              show={this.state.showAvatar}
-              user = {this.props.user}
-              handleOpen={this.handleOpen}
-              handleClose={this.handleCloseAvatar}/>
+
     </ButtonToolbar > 
     
     )
