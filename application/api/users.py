@@ -103,8 +103,8 @@ def userRoute(id):
 
     if request.method == 'PUT':
         # Modify a user and find our whether it is successful or not
-        success = Users.modifyUser(id, fname=data['fname'], lname=data['lname'], engineer=data['engineer'],
-                                   display_image=data['display_image'])
+        app.logger.info(data)
+        success = Users.modifyUser(id, fname=data['fname'], lname=data['lname'], engineer=data['engineer'], email=data['email'])
 
         if success:
             status = "OK"
@@ -270,14 +270,34 @@ def displayimageRoute():
     response = json.dumps({'success': success, 'status': status, 'message': message})
     return response
 
+@users.route('/api/users/password/<string:id>', methods=httpMethods)
+def newPassword(id):
+    # convert request data to dictionary
+    data = toDict(request.data)
 
+    success = False  # assume the response is unsucessful
+    message = ""  # assume an empty message
+    status = ""  # accepted statues: 'OK', 'DENIED', 'FAILURE', 'WARNING', 'INVALID'
+    response = {}  # assume the response is empty dict() for now
+    user = {} # set the users to an empty list
+
+    if request.method == 'PUT':
+	    #Change user's password
+        app.logger.info(data)
+        success = Users.updatePassword(email=data['email'], oldPassword=data['oldPassword'], newPassword=data['newPassword'])
+
+        if success:
+            status = "OK"
+            message = "Password changed."
+        else:
+            status = "FAILURE"
+            message = "User does not exist."
+
+    else:
+        success = False
+        status = "WARNING"
+        message = "HTTP method invalid."
     
+    response = json.dumps({'success': success, 'status': status, 'message': message,'user':user})
 
-
-
-
-
-    
-
-
-
+    return response
