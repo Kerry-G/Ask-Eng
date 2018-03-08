@@ -1,6 +1,5 @@
-from index import db
 from datetime import datetime
-from application.models import Users, Questions
+import sys
 
 
 class Answer(db.Model):
@@ -12,6 +11,7 @@ class Answer(db.Model):
     question_id = db.Column(db.Integer, nullable=False)
     ups = db.Column(db.Integer)
     downs = db.Column(db.Integer)
+    is_deleted = db.Column(db.Boolean)
 
     def __repr__(self):
         return '<Answer %r>' % self.id
@@ -26,6 +26,7 @@ class Answer(db.Model):
         yield 'question_id', self.question_id
         yield 'ups', self.ups
         yield 'downs', self.downs
+        yield 'is_deleted', self.is_deleted
 
 
 # Initializes the database
@@ -34,14 +35,14 @@ db.create_all()
 
 # Returns True if user exists
 def answerExists(id):
-    return Answer.query.filter_by(id=id).first() is not None
+    return Answer.query.filter_by(id=id).first() is not None and Answer.query.filter_by(id=id).first().is_deleted is False
 
 
 # Returns True if answer is created
 def createAnswer(text, user_id, question_id):
     try:
         # Create the new Answer
-        answer = Answer(text=text, accepted=False, user_id=user_id, question_id=question_id, ups=0, downs=0)
+        answer = Answer(text=text, accepted=False, user_id=user_id, question_id=question_id, ups=0, downs=0, is_deleted=False)
 
         # Add it
         db.session.add(answer)
@@ -59,7 +60,7 @@ def createAnswer(text, user_id, question_id):
 # Returns True if answer is found
 def getAnswer(id):
     answer = Answer.query.filter_by(id=id).first()
-    if answer is None:
+    if answer is None or answer.is_deleted is True:
         return None
     else:
         return dict(answer)
@@ -71,7 +72,7 @@ def deleteAnswer(id):
     if answerExists(id):
         response = True
         answer = Answer.query.filter_by(id=id).first()
-        db.session.remove(answer)
+        answer.is_deleted=True
         db.session.commit()
     return response
 
@@ -80,7 +81,7 @@ def deleteAnswer(id):
 def modifyAnswer(id, text):
     response = False
     answer = getAnswer(id)
-    if answer is not None:
+    if answer is not None and answer.is_deleted is False:
         answer.text = text
         db.session.commit()
         response = True
@@ -94,7 +95,8 @@ def getAnswersByUser(user_id):
 
     if answers is not None:
         for answer in answers:
-            response.append(dict(answer))
+            if answer.is_deleted is False:
+                response.append(dict(answer))
     return response
 
 
@@ -105,14 +107,15 @@ def getAnswersByQuestion(question_id):
 
     if answers is not None:
         for answer in answers:
-            response.append(dict(answer))
+            if answer.is_deleted is False:
+                response.append(dict(answer))
     return response
 
 
 def acceptAnswer(id):
     answer = Answer.query.filter_by(id=id).first()
     response = False
-    if answer is not None:
+    if answer is not None and answer.is_deleted is False:
         response = True
         answer.accepted = True
         db.session.commit()
