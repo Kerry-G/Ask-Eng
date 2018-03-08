@@ -1,5 +1,6 @@
 from datetime import datetime
 from application.models.Users import User
+from application.models import Votes
 import sys
 if len(sys.argv) >= 2:
     arg = sys.argv[2]
