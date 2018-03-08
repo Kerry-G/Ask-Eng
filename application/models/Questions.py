@@ -1,6 +1,14 @@
-from index import db
 from datetime import datetime
-from application.models import Votes, Answers
+from application.models.Users import User
+import sys
+if len(sys.argv) >= 2:
+    arg = sys.argv[2]
+else:
+    arg = "run"
+if arg == "test":
+    from test import db, app
+else:
+    from index import db, app
 
 
 class Question(db.Model):
@@ -138,10 +146,7 @@ def getQuestionsByUser(user_id, loggedin_id):
     if loggedin_id < 0: # means user is not logged in
         print("NOT LOGGED IN")
 
-
     questions = Question.query.filter_by(user_id=user_id).all()
-
-
     if questions is not None:
         for question in questions:
             user = Users.User.query.filter_by(id=question.user_id).first()

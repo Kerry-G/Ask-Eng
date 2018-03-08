@@ -1,17 +1,25 @@
-#language: python
-#python:
-#  - "3.6"
-#install:
-#  - pip install -r requirements.txt
-#script: pytest
+matrix:
+  include:
+    language: python
+    virtualenv:
+      system_site_packages: true
+    python:
+      - "3.6"
+    cache:
+      - pip
+    install:
+      - pip install --user -r requirements.txt
 
-language: node_js
-node_js:
-  - 9
-cache:
-  directories:
-    - static/node_modules
+    language: node_js
+    node_js:
+      - 9
+    cache:
+      directories:
+        - static/node_modules
+
 script:
+  - python test.py 0 test
   - cd static && npm install && npm test
+
 notifications:
     slack: ask-eng:K2sBuzmuU1XHLA9JroSjpsh8

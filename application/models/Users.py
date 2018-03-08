@@ -1,6 +1,14 @@
-from index import db, app
 from datetime import datetime
 from passlib.hash import sha256_crypt
+import sys
+if len(sys.argv) >= 2:
+    arg = sys.argv[2]
+else:
+    arg = "run"
+if arg == "test":
+    from test import db
+else:
+    from index import db
 
 
 def engineerTypes():
@@ -119,7 +127,6 @@ def modifyUser(id, fname, lname, engineer, email):
     return response
 
 
-
 # Update a user's password
 def updatePassword(email, oldPassword, newPassword):
     response = False
@@ -129,6 +136,7 @@ def updatePassword(email, oldPassword, newPassword):
         db.session.commit()
         response = True
     return response
+
 
 def updateDisplayImage(user_id, display_image):
     user = User.query.filter_by(id=user_id).first()
@@ -163,6 +171,7 @@ def getUserById(id):
     else:
         return dict(user)
 
+
 def deleteUser(id):
     response = False
     user = getUserById(id)
@@ -171,6 +180,7 @@ def deleteUser(id):
         db.session.remove(user)
         db.session.commit()
     return response
+
 
 def getUserId(email):
     user = User.query.filter_by(email=email).first()

@@ -1,6 +1,14 @@
-from index import db
 from datetime import datetime
 from application.models import Votes
+import sys
+if len(sys.argv) >= 2:
+    arg = sys.argv[2]
+else:
+    arg = "run"
+if arg == "test":
+    from test import db
+else:
+    from index import db
 
 
 class Answer(db.Model):
@@ -91,7 +99,7 @@ def modifyAnswer(id, text):
 def getAnswersByUser(user_id, loggedin_id=-1):
     response = []
 
-    answers = Answer.query.filter_by(user_id=question_id).all()
+    answers = Answer.query.filter_by(user_id=user_id).all()
 
     if answers is not None:
         for answer in answers:
