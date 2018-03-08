@@ -29,6 +29,7 @@ class Edit extends Component {
 
 			verified : true,
 			validPassword : false,
+			validEmail : true,
 
         };
 		//These handlers are used to determine which modal to show.
@@ -89,13 +90,41 @@ class Edit extends Component {
 						newpw: '',
 						verifyemail: '',
 						verified: true,
-						validPassword : false})
+						validPassword : false,
+						validEmail: true})
 	}
 
-	//Submit and change info (this can change first name, last name, email or engineering).
+	//Submit and change info (this can change first name, last name or engineering).
 	handleSubmit(){
 		this.modifyUserInfo()
 	}
+
+	//Submit and change email (check if email already exists first).
+	handleSubmitEmail(){
+		this.checkEmail()
+	}
+
+	//Check if email is existent or not. If not, then proceed and modify user information.
+	async checkEmail(){
+		try {
+			let data = {email: this.state.email}
+
+			fetchAPI("POST", '/api/users/email/', data).then(response =>{
+			console.log(response)
+			if (response.success){
+				this.setState({validEmail: true})
+				this.setState({validEmail : false})
+				}
+			else{
+				this.setState({validEmail: true})
+				this.modifyUserInfo()
+				}
+            }).catch((e) => console.error("Error:" + e))
+        } catch (e) {
+            console.log("Error: ", e);
+        }
+    }
+
 
 	//Changes user information and reloads the profile card accordingly. This method can change first name, last name,
 	//email and engineering discipline. Once changed and submitted, the modal in question is closed.
@@ -111,7 +140,7 @@ class Edit extends Component {
             fetchAPI("PUT", '/api/users/' + this.props.user.id, data).then(response => {
 				console.log(response)
                 if (response.success) {
-                    console.log(response)
+                    console.log(response + "lol")
 					let updatedUser = JSON.parse(JSON.stringify(this.props.user))
 					updatedUser.fname = data.fname
 					updatedUser.lname = data.lname
@@ -209,8 +238,12 @@ class Edit extends Component {
 	}
 
     render() {
-		//edit is assigned the correct modal to be displayed. options is for the engineering choices.
-		let edit,options, alert, popoverFocus;
+		//edit is assigned the correct modal to be displayed. options is for the engineering choices. alert will be used
+		//to display error messages when attempting to change the password. popoverFocus is used as a focus When
+		//entering a new password to remind the user of the constraints. existentEmail will be used to notify the user
+		//if the new email entered is already in use.
+
+		let edit,options, alert, popoverFocus, existentEmail;
 		options = [
             { value: 'software', label: 'Software Engineering' },
             { value: 'mechanical', label: 'Mechanical Engineering' },
@@ -219,7 +252,7 @@ class Edit extends Component {
             { value: 'civil', label: 'Civil Engineering' }
         ];
 		if (!this.state.verified)
-			 alert = <div className="flash animated" id="welcome"><Alert bsStyle="warning">Invalid email or password!</Alert></div>
+			 alert = <div className="flash animated" id="invalid"><Alert bsStyle="warning">Invalid email or password!</Alert></div>
 
 		popoverFocus = <Popover 
 						title="Your password should be safe!" 
@@ -227,6 +260,9 @@ class Edit extends Component {
 						Your password must contain atleast one lowercase character,
 						one uppercase character, one special character "@#$%",
 						and atleast 6 characters.</Popover>
+
+		if (!this.state.validEmail)
+			existentEmail = <div className="flash animated" id="existentEmail"><Alert bsStyle="warning">Email already in use!</Alert></div>
 
 		if (this.state.showFnameModal == true){
 			edit = <Modal dialogClassName="fname_modal" show={true} onHide={this.handleClose}>
@@ -311,6 +347,7 @@ class Edit extends Component {
 		else if (this.state.showEmailModal == true){
 			edit = <Modal dialogClassName="email_modal" show={true} onHide={this.handleClose}>
 						 <Modal.Body>
+							{existentEmail}
 							<Grid fluid>
 								<textarea
 								className="change_email_textbox"
@@ -324,7 +361,7 @@ class Edit extends Component {
 						<Grid fluid>
 								<Row>
 									<Button onClick={()=> this.handleClose()}> Cancel </Button>
-									<Button disabled={this.state.email==this.props.user.email || this.state.email==""} onClick={() => this.handleSubmit()}> Submit </Button>
+									<Button disabled={this.state.email==this.props.user.email || this.state.email==""} onClick={() => this.handleSubmitEmail()}> Submit </Button>
 								</Row>
 						</Grid>
 						</Modal.Footer>
