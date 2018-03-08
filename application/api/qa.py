@@ -20,8 +20,9 @@ def questionResponse(question):
     else:
         answers = []
         for answer in Answers.getAnswersByQuestion(question['id']):
-            answer['user'] = Users.getUser(answer['user_id'])
-            answers.append(answer)
+            if answer.is_deleted is False:
+                answer['user'] = Users.getUser(answer['user_id'])
+                answers.append(answer)
         question['answers'] = answers
         return question
 
