@@ -1,6 +1,6 @@
 import React, {Component} from 'react'
 import {fetchAPI} from '../../../utility'
-import {Col, Row, Well, Image} from 'react-bootstrap'
+import {Col, Row, Image} from 'react-bootstrap'
 import Answer from './Answer.js'
 import AnswerQuestion from './AnswerQuestion.js'
 import moment from 'moment'
@@ -81,6 +81,13 @@ class QuestionPage extends Component {
 
             return (
                 <div className="answer-page">
+                    <Row>
+                        <Col md={12}>
+                            <span className="question-tag-answer">{this.state.question.engineer}</span>
+                            submitted by <Image src={avatarPath} width={24} circle /> {this.state.fname} {this.state.lname}
+                            &nbsp;- {moment(this.state.question.register_date).format("LL")} 
+                        </Col>
+                    </Row>
                     <Row className="question-box-text">
                         <Col xs={1} md={1}>
                             <Votes
@@ -97,13 +104,6 @@ class QuestionPage extends Component {
                     </Row>
                     <Row>
                         <Col md={12}>
-                            <span className="question-tag-answer">{this.state.question.engineer}</span>
-                            posted on {moment(this.state.question.register_date).format("LL")} 
-                            &nbsp;by {this.state.fname} {this.state.lname} <Image src={avatarPath} width={24} circle />
-                        </Col>
-                    </Row>
-                    <Row>
-                        <Col md={12}>
                         <div className="answer-box">
                             <AnswerQuestion
                                 id={this.props.match.params.id}
@@ -113,7 +113,7 @@ class QuestionPage extends Component {
                         </Col>
                     </Row>
                     <div>
-                    {answers}
+                        {answers}
                     </div>
                 </div>
             )

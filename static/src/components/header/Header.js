@@ -11,14 +11,14 @@ class Header extends Component {
            
     return (
       <Row className="header">
-        <Col xs={7} lg={6}>
+        <Col xs={7} lg={7}>
           <h1>
             <Link to='/' style={{ textDecoration: 'none', color: '#e74c3c' }}>
               <Image src={image} width={30} circle />&nbsp;Ask<small>ENG</small>
             </Link>    
           </h1>
         </Col>
-        <Col  xs={5} lg={6}>
+        <Col  xs={5} lg={5}>
           <div className ="menu">
             <Col lgOffset ={8}>
               <Headermenu

@@ -362,7 +362,8 @@ textarea {
 /* END question box */
 /* answer-page */
 .question-box-text {
-  margin: auto auto 2rem auto; }
+  margin: auto;
+  padding: 2rem; }
 
 .answer-page h1 {
   font-size: 3rem;
