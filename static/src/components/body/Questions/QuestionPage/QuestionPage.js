@@ -1,8 +1,9 @@
 import React, {Component} from 'react'
 import {fetchAPI} from '../../../utility'
-import {Col, Row, Well} from 'react-bootstrap'
+import {Col, Row, Well, Image} from 'react-bootstrap'
 import Answer from './Answer.js'
 import AnswerQuestion from './AnswerQuestion.js'
+import moment from 'moment'
 import Votes from "../../../votes/Votes";
 import { connect } from 'react-redux'
 
@@ -13,23 +14,29 @@ class QuestionPage extends Component {
             question: {
                 answers: []
             },
+            fname: "",
+            lname: "",
+            display_image: "",
+            user_id: "",
             loading: true
         }
-		this.answerhandler = this.answerhandler.bind(this);
-    }
-	
-	answerhandler() {
-		console.log("question answered");
-        this.getQuestion();
+		this.answerHandler = this.answerHandler.bind(this);
     }
 
-	componentDidMount(){
-		this.getQuestion()
-	}
-	
+	  answerHandler() {
+  		console.log("question answered");
+        this.getQuestion();
+        this.getUser();
+    }
+
+    componentDidMount(){
+      this.getQuestion().then(
+        () => this.getUser()
+      )
+    }
+
     componentWillMount() {
-        this.setState({loading: true});
-        this.getQuestion()
+      this.setState({loading: true});
     }
 
     async getQuestion() {
@@ -38,9 +45,28 @@ class QuestionPage extends Component {
                 if (response.success) {
                     this.setState({
                         question: response.question,
-                        loading: false
+                        loading: false,
+                        user_id: response.question.user_id
                     })
                 }
+                console.log(response)
+            })
+        } catch (e) {
+            console.error("Error:", e)
+        }
+    }
+
+    async getUser() {
+        try {
+            fetchAPI("GET", "/api/users/" + this.state.user_id).then(response => {
+                if (response.success) {
+                    this.setState({
+                        fname: response.users[0].fname,
+                        lname: response.users[0].lname,
+                        display_image: response.users[0].display_image
+                    })
+                }
+                console.log(response)
             })
         } catch (e) {
             console.error("Error:", e)
@@ -48,6 +74,7 @@ class QuestionPage extends Component {
     }
 
     render() {
+        let avatarPath = `\\images\\avatar\\`+this.state.display_image;
         if (!this.state.loading) {
             let answers = this.state.question.answers.map((answer) => {
                 return (
@@ -57,17 +84,18 @@ class QuestionPage extends Component {
                             answer={answer}
                         />
                     </div>
-                )
-            });
+                )            });
             return (
                 <div className="answer-page">
                     <Row>
                         <Col md={12}>
                             <span className="question-tag">{this.state.question.engineer}</span>
+                            posted on {moment(this.state.question.register_date).format("LL")} <br/>
+                            by <Image src={avatarPath} width={24} circle /> {this.state.fname} {this.state.lname} 
                         </Col>
                     </Row>
                     <Row className="question-box-text">
-                        <Col md={1}>
+                        <Col xs={1} md={1}>
                             <Votes
                                 question={this.state.question}
                                 status = {this.state.question.vote_status} //this may switch
@@ -75,7 +103,7 @@ class QuestionPage extends Component {
                                 comment_status = {'question'}
                             /> 
                         </Col>
-                        <Col md={11}>
+                        <Col xs={11} md={11}>
                             <h1>{this.state.question.title}</h1>
                             <p>{this.state.question.text}</p>
                         </Col>
@@ -85,9 +113,9 @@ class QuestionPage extends Component {
                             <Well bsSize="large">
                                 <h2> Know the Answer? </h2>
                                 <AnswerQuestion
-                                id={this.props.match.params.id}
-								updateanswers={this.answerhandler}
-                            />
+                                  id={this.props.match.params.id}
+                                  updateanswers={this.answerhandler}
+                                />
                           </Well>
                         </Col>
                     </Row>
