@@ -267,12 +267,19 @@ class Edit extends Component {
 		if (this.state.showFnameModal == true){
 			edit = <Modal dialogClassName="fname_modal" show={true} onHide={this.handleClose}>
 						 <Modal.Body>
-							<textarea
-								className="change_fname_textbox"
-								rows = "1"
-								cols = "45"
-								placeholder="Enter your first name here"
-								onChange={(e) => this.handleFnameChange(e)} />
+							<Grid fluid>
+								<Row>
+									First Name
+								</Row>
+								<Row>
+									<textarea
+									className="change_fname_textbox"
+									rows = "1"
+									cols = "45"
+									placeholder="Enter your first name here"
+									onChange={(e) => this.handleFnameChange(e)} />
+								</Row>
+							</Grid>
 						 </Modal.Body>
 						<Modal.Footer>
 							<Grid fluid>
@@ -289,12 +296,17 @@ class Edit extends Component {
 			edit = <Modal dialogClassName="lname_modal" show={true} onHide={this.handleClose}>
 						 <Modal.Body>
 							<Grid fluid>
-								<textarea
-								className="change_lname_textbox"
-								rows = "1"
-								cols = "45"
-								placeholder="Enter your last name here"
-								onChange={(e) => this.handleLnameChange(e)} />
+								<Row>
+									Last name
+								</Row>
+								<Row>
+									<textarea
+									className="change_lname_textbox"
+									rows = "1"
+									cols = "45"
+									placeholder="Enter your last name here"
+									onChange={(e) => this.handleLnameChange(e)} />
+								</Row>
 							</Grid>
 						 </Modal.Body>
 						<Modal.Footer>
@@ -312,26 +324,43 @@ class Edit extends Component {
 			edit = <Modal dialogClassName="pw_modal" show={true} onHide={this.handleClose}>
 						 <Modal.Body>
 							{alert}
-							<textarea
-								className="textarea_email"
-								rows = "1"
-								cols = "45"
-								placeholder="Enter your email here"
-								onChange={(e) => this.handleEmailPwChange(e)} />
-							<textarea
-								className="textarea_current_pw"
-								rows = "1"
-								cols = "45"
-								placeholder="Enter your current password here"
-								onChange={(e) => this.handleCurrentPwChange(e)} />
-							<OverlayTrigger trigger="focus" placement="bottom" overlay={popoverFocus}>
-							<textarea
-								className="textarea_new_pw"
-								rows = "1"
-								cols = "45"
-								placeholder="Enter your new password here"
-								onChange={(e) => this.handleNewPwChange(e)} />
-							</OverlayTrigger>
+							<Grid fluid>
+								<Row>
+									Email
+								</Row>
+								<Row>
+									<textarea
+									className="textarea_email"
+									rows = "1"
+									cols = "45"
+									placeholder="Enter your email here"
+									onChange={(e) => this.handleEmailPwChange(e)} />
+								</Row>
+								<Row>
+									Current password
+								</Row>
+								<Row>
+									<textarea
+									className="textarea_current_pw"
+									rows = "1"
+									cols = "45"
+									placeholder="Enter your current password here"
+									onChange={(e) => this.handleCurrentPwChange(e)} />
+								</Row>
+								<Row>
+									New Password
+								</Row>
+								<Row>
+									<OverlayTrigger trigger="focus" placement="bottom" overlay={popoverFocus}>
+									<textarea
+									className="textarea_new_pw"
+									rows = "1"
+									cols = "45"
+									placeholder="Enter your new password here"
+									onChange={(e) => this.handleNewPwChange(e)} />
+									</OverlayTrigger>
+								</Row>
+							</Grid>
 						 </Modal.Body>
 						<Modal.Footer>
 						<Grid fluid>
@@ -349,12 +378,17 @@ class Edit extends Component {
 						 <Modal.Body>
 							{existentEmail}
 							<Grid fluid>
-								<textarea
-								className="change_email_textbox"
-								rows = "1"
-								cols = "45"
-								placeholder="Enter your email here"
-								onChange={(e) => this.handleEmailChange(e)} />
+								<Row> 
+									New Email
+								</Row>
+								<Row>
+									<textarea
+									className="change_email_textbox"
+									rows = "1"
+									cols = "45"
+									placeholder="Enter your email here"
+									onChange={(e) => this.handleEmailChange(e)} />
+								</Row>
 							</Grid>
 						 </Modal.Body>
 						<Modal.Footer>
@@ -372,7 +406,7 @@ class Edit extends Component {
 			edit = <Modal dialogClassName="engineer_modal" show={true} onHide={this.handleClose}>
 						 <Modal.Body>
 							<Grid fluid>
-								 <ControlLabel>Engineering Field</ControlLabel>
+								 <ControlLabel>Select your Engineering Field</ControlLabel>
 									<Select
 										name="form-field-name"
 										value={this.state.eng}
@@ -406,11 +440,11 @@ class Edit extends Component {
 					Edit profile
 				</Panel.Heading>
 				<Panel.Body>
-					<a id="change_fname" onClick={() => this.handleChange_fname()}> Change First Name </a><br></br>
-					<a id="change_lname" onClick={() => this.handleChange_lname()}> Change Last Name </a><br></br>
-					<a id="change_pass" onClick={() => this.handleChange_pass()}> Change Password </a><br></br>
-					<a id="change_email" onClick={() => this.handleChange_email()}> Change Email </a><br></br>
-					<a id="change_eng" onClick={() => this.handleChange_eng()}> Change Discipline </a><br></br>
+					<a id="change_fname" style={{cursor: 'pointer'}} onClick={() => this.handleChange_fname()}> Change First Name </a><br></br>
+					<a id="change_lname" style={{cursor: 'pointer'}} onClick={() => this.handleChange_lname()}> Change Last Name </a><br></br>
+					<a id="change_pass" style={{cursor: 'pointer'}} onClick={() => this.handleChange_pass()}> Change Password </a><br></br>
+					<a id="change_email" style={{cursor: 'pointer'}} onClick={() => this.handleChange_email()}> Change Email </a><br></br>
+					<a id="change_eng" style={{cursor: 'pointer'}} onClick={() => this.handleChange_eng()}> Change Discipline </a><br></br>
 				</Panel.Body>
               </Panel>
 			  {edit}
