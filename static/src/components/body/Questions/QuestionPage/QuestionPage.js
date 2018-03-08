@@ -73,7 +73,7 @@ class QuestionPage extends Component {
     }
 
     render() {
-        let avatarPath = `\\images\\avatar\\`;
+        let avatarPath = `\\images\\avatar\\`+this.state.display_image;
         if (!this.state.loading) {
             let answers = this.state.question.answers.map((answer) => {
                 return (
@@ -89,7 +89,7 @@ class QuestionPage extends Component {
                         <Col md={12}>
                             <span className="question-tag">{this.state.question.engineer}</span>
                             posted on {moment(this.state.question.register_date).format("LL")} <br/>
-                            by {this.state.fname} {this.state.lname}
+                            by <Image src={avatarPath} width={24} circle /> {this.state.fname} {this.state.lname} 
                         </Col>
                     </Row>
                     <Row className="question-box-text">
@@ -110,7 +110,7 @@ class QuestionPage extends Component {
                                 <h2> Know the Answer? </h2>
                                 <AnswerQuestion
                                   id={this.props.match.params.id}
-  								                updateanswers={this.answerhandler}
+                                  updateanswers={this.answerhandler}
                                 />
                           </Well>
                         </Col>
