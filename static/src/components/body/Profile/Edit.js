@@ -347,7 +347,7 @@ class Edit extends Component {
 				regularInput = {false}
 				label = "Select your Engineering Field"
 				selectname = "form-field-name"
-				eng = {this.state.eng}
+				value = {this.state.eng}
 				options = {options}
 				onChange = {(e) => {
 					if (e !== null) {
