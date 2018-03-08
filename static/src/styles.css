@@ -365,10 +365,30 @@ textarea {
   margin: auto auto 2rem auto; }
 
 .answer-page h1 {
-  font-size: 2.5rem; }
+  font-size: 3rem;
+  margin: 10px; }
 
 .answer-page p {
-  font-size: 1.7rem; }
+  margin: 10px;
+  font-size: 2rem; }
+
+.answer-box {
+  border: 0.1em solid #c7d0d2;
+  border-radius: 0.2em;
+  box-shadow: inset 0 1.5px 3px rgba(190, 190, 190, 0.4), 0 0 0 5px #f5f7f8;
+  padding: 1em;
+  margin: 2rem; }
+
+.question-tag-answer {
+  float: left;
+  background-color: #e74c3c;
+  color: white;
+  padding: 2px;
+  padding-right: 10px;
+  padding-left: 10px;
+  margin-right: 10px;
+  margin-left: 2rem;
+  font-size: 1.4rem; }
 
 .modal-title {
   color: #e74c3c; }
@@ -384,6 +404,9 @@ textarea {
   background-color: #ecf0f1;
   border-color: #ecf0f1; }
 
+/*===============================
+START SEARCH
+=================================*/
 .search {
   position: relative;
   float: right;
@@ -404,6 +427,9 @@ textarea {
   padding-left: 5px;
   text-align: left; }
 
+/*==========================================
+END SEARCH
+============================================*/
 /*==========================================
 profile card edit
 =========================================*/

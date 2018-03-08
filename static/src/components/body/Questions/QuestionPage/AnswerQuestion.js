@@ -39,7 +39,7 @@ class AnswerQuestion extends Component {
     handleAsk() {
 		this.saveAnswer();
 		this.cleanState();
-		this.props.updateanswers();
+		this.props.updateAnswers();
     }
 
     async saveAnswer() {

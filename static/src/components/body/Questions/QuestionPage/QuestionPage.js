@@ -23,16 +23,12 @@ class QuestionPage extends Component {
 		this.answerHandler = this.answerHandler.bind(this);
     }
 
-	  answerHandler() {
-  		console.log("question answered");
-        this.getQuestion();
-        this.getUser();
+    answerHandler() {
+        this.getQuestion()
     }
 
     componentDidMount(){
-      this.getQuestion().then(
-        () => this.getUser()
-      )
+        this.getQuestion()
     }
 
     componentWillMount() {
@@ -47,9 +43,8 @@ class QuestionPage extends Component {
                         question: response.question,
                         loading: false,
                         user_id: response.question.user_id
-                    })
+                    }, ()=>this.getUser())
                 }
-                console.log(response)
             })
         } catch (e) {
             console.error("Error:", e)
@@ -59,15 +54,13 @@ class QuestionPage extends Component {
     async getUser() {
         try {
             fetchAPI("GET", "/api/users/" + this.state.user_id).then(response => {
-                if (response.success) {
-                    this.setState({
-                        fname: response.users[0].fname,
-                        lname: response.users[0].lname,
-                        display_image: response.users[0].display_image
-                    })
-                }
-                console.log(response)
-            })
+            if (response.success) {
+                this.setState({
+                    fname: response.user.fname,
+                    lname: response.user.lname,
+                    display_image: response.user.display_image
+                })
+            }})
         } catch (e) {
             console.error("Error:", e)
         }
@@ -84,21 +77,15 @@ class QuestionPage extends Component {
                             answer={answer}
                         />
                     </div>
-                )            });
+            )});
+
             return (
                 <div className="answer-page">
-                    <Row>
-                        <Col md={12}>
-                            <span className="question-tag">{this.state.question.engineer}</span>
-                            posted on {moment(this.state.question.register_date).format("LL")} <br/>
-                            by <Image src={avatarPath} width={24} circle /> {this.state.fname} {this.state.lname} 
-                        </Col>
-                    </Row>
                     <Row className="question-box-text">
                         <Col xs={1} md={1}>
                             <Votes
                                 question={this.state.question}
-                                status = {this.state.question.vote_status} //this may switch
+                                status = {this.state.question.vote_status}
                                 user={this.props.user}
                                 comment_status = {'question'}
                             /> 
@@ -110,13 +97,19 @@ class QuestionPage extends Component {
                     </Row>
                     <Row>
                         <Col md={12}>
-                            <Well bsSize="large">
-                                <h2> Know the Answer? </h2>
-                                <AnswerQuestion
-                                  id={this.props.match.params.id}
-                                  updateanswers={this.answerhandler}
-                                />
-                          </Well>
+                            <span className="question-tag-answer">{this.state.question.engineer}</span>
+                            posted on {moment(this.state.question.register_date).format("LL")} 
+                            &nbsp;by {this.state.fname} {this.state.lname} <Image src={avatarPath} width={24} circle />
+                        </Col>
+                    </Row>
+                    <Row>
+                        <Col md={12}>
+                        <div className="answer-box">
+                            <AnswerQuestion
+                                id={this.props.match.params.id}
+                                updateAnswers={this.answerHandler}
+                            />
+                        </div>
                         </Col>
                     </Row>
                     <div>
