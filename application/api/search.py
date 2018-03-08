@@ -23,49 +23,49 @@ httpMethods = ['PUT', 'GET', 'POST', 'DELETE']
 
 @search.route('/api/', methods=httpMethods)
 def index():
-    return json.dumps({'success': True, 'status': 'OK', 'message': 'Ping is sucussful.'})
+	return json.dumps({'success': True, 'status': 'OK', 'message': 'Ping is sucussful.'})
 
 
 @search.route('/api/search/', methods=httpMethods)
 def searchRoute():
-    data = toDict(request.data)  # toDict takes the request data and converts it to a dictionary
+	data = request.args.to_dict()  # toDict takes the request data and converts it to a dictionary
 
-    success = False  # assume the response is unsucessful
-    message = ""  # assume an empty message
-    status = ""  # accepted statues: 'OK', 'DENIED', 'FAILURE', 'WARNING', 'INVALID'
-    response = {}  # assume the response is empty dict() for now
-    answers = [] # set the answers to an empty list
-    answer = {} # assume there is none answer
+	success = False  # assume the response is unsucessful
+	message = ""  # assume an empty message
+	status = ""  # accepted statues: 'OK', 'DENIED', 'FAILURE', 'WARNING', 'INVALID'
+	response = {}  # assume the response is empty dict() for now
+	answers = [] # set the answers to an empty list
+	answer = {} # assume there is none answer
 
 
-    if request.method == 'POST':
-	# UPDATE FOR PROPER METHOD
-        answers = Search.searchQuestions(searchString=data['searchString'])
-        
-	if answers != []:
-	    success = False
-            status = "OK"
-            message = "Search was successful"
-     
-        else:
-            status = "FAILURE"
-            message = "No answers"
+	if request.method == 'POST': # UPDATE FOR PROPER METHOD
+		if 'searchString' in data:
+			answers = Search.searchQuestions(searchString=data['searchString'])
+		if answers != []:
+			success = True
+			status = "OK"
+			message = "Search was successful"
+		 
+		else:
+			success = False
+			status = "FAILURE"
+			message = "No answers"
 
-        # make the response a json object
-        response = json.dumps({'success': success, 'status': status, 'message': message, 'answers': answer})
+		# make the response a json object
+		response = json.dumps({'success': success, 'status': status, 'message': message, 'answers': answer})
   
-    elif request.method == 'DELETE':
-        success = False
-        status = "DENIED"
-        message = "Nothing to delete"
-        response = json.dumps({'success': success, 'status': status, 'message': message})
-    else:
-        success = False
-        status = "WARNING"
-        message = "HTTP method invalid."
-        response = json.dumps({'success': success, 'status': status, 'message': message})
+	elif request.method == 'DELETE':
+		success = False
+		status = "DENIED"
+		message = "Nothing to delete"
+		response = json.dumps({'success': success, 'status': status, 'message': message})
+	else:
+		success = False
+		status = "WARNING"
+		message = "HTTP method invalid."
+		response = json.dumps({'success': success, 'status': status, 'message': message})
 
-    return response
+	return response
 
 
 
