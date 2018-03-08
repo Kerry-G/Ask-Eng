@@ -16,7 +16,7 @@ users = Blueprint('users', __name__)
 
 @users.route('/api/', methods=['PUT', 'GET', 'POST', 'DELETE'])
 def index():
-    return json.dumps({'success': True, 'status': 'OK', 'message': 'Ping is sucussful.'})
+	return json.dumps({'success': True, 'status': 'OK', 'message': 'Ping is sucussful.'})
 ```
 
 We start by declaring a variable `users` and instantiating an object `Blueprint`, what this does is not really important except for the fact that it is required. It will by imported by index.py and be 'attached' to our app. The next line is harder to discern `@users.route('/api/', methods=['PUT', 'GET', 'POST', 'DELETE'])`. This is the syntax for a decorator. We essentially are saying here `when the /api/ route is reached with any of these http methods please launch the function below me`. Index runs and returns a json object saying `yeah you've reached me`. We establish this route to make it easy for the front-end to determine if its connected to the backend.
@@ -27,33 +27,33 @@ Now if you check out the tables in the [api](https://github.com/Kerry-G/SOEN341-
 from flask import request
 @users.route('/api/users/', methods=httpMethods)
 def usersRoute():
-    data = toDict(request.data)  # toDict takes the request data and converts it to a dictionary
+	data = toDict(request.data)  # toDict takes the request data and converts it to a dictionary
 
-    success = False  # assume the response is unsucessful
-    message = ""  # assume an empty message
-    status = ""  # accepted statues: 'OK', 'DENIED', 'FAILURE', 'WARNING', 'INVALID'
-    response = {}  # assume the response is empty dict() for now
-    users = [] # set the users to an empty list
-    user = {} # assume there is none User
+	success = False  # assume the response is unsucessful
+	message = ""  # assume an empty message
+	status = ""  # accepted statues: 'OK', 'DENIED', 'FAILURE', 'WARNING', 'INVALID'
+	response = {}  # assume the response is empty dict() for now
+	users = [] # set the users to an empty list
+	user = {} # assume there is none User
 
 
-    if request.method == 'POST':
-        # Create a user and find our whether it is successful or not
-        success = Users.createUser(fname=data['fname'], lname=data['lname'], email=data['email'],
-                                       password=data['password'], engineer=data['engineer'],
-                                       display_image=data['display_image'])
-        if success:
-            status = "OK"
-            message = "User added."
-        else:
-            status = "FAILURE"
-            message = "Duplicate Email."
+	if request.method == 'POST':
+		# Create a user and find our whether it is successful or not
+		success = Users.createUser(fname=data['fname'], lname=data['lname'], email=data['email'],
+									   password=data['password'], engineer=data['engineer'],
+									   display_image=data['display_image'])
+		if success:
+			status = "OK"
+			message = "User added."
+		else:
+			status = "FAILURE"
+			message = "Duplicate Email."
 
-        # make the response a json object
-        response = json.dumps({'success': success, 'status': status, 'message': message, 'user': user})
-    ...
+		# make the response a json object
+		response = json.dumps({'success': success, 'status': status, 'message': message, 'user': user})
+	...
 
-    return response
+	return response
 ```
 
 #### /models/
