@@ -105,14 +105,15 @@ def deleteUser(email):
     return response
 
 
-# NOT SURE IF WORKS, SHOULD BE TESTED
-def modifyUser(id, fname, lname, engineer):
+# Returns true if user has been modified.
+def modifyUser(id, fname, lname, engineer, email):
     response = False
     user = User.query.filter_by(id=id).first()
     if user is not None:
         user.engineer = engineer
         user.lname = lname
         user.fname = fname
+        user.email = email
         db.session.commit()
         response = True
     return response
@@ -126,7 +127,7 @@ def updatePassword(email, oldPassword, newPassword):
         user = User.query.filter_by(email=email).first()
         user.password_hash = sha256_crypt.hash(newPassword)
         db.session.commit()
-
+        response = True
     return response
 
 def updateDisplayImage(user_id, display_image):

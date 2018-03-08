@@ -4,6 +4,7 @@ import Select from 'react-select'
 import { Panel, Glyphicon, Image, Media, Button} from 'react-bootstrap'
 import { fetchAPI } from './../../utility'
 import { connect } from 'react-redux'
+import { updateUser, login } from '../../../store/auth'
 
 class Edit extends Component {
     constructor(props) {
@@ -26,9 +27,8 @@ class Edit extends Component {
 			showEngineerModal: false,
 			eng: this.props.user.engineer,
 
-			verified : false,
-
-
+			verified : true,
+			validPassword : false,
 
         };
 		//These handlers are used to determine which modal to show.
@@ -74,7 +74,7 @@ class Edit extends Component {
 	}
 
 
-	//When closing a modal, set all the modal values to false, as well as input values.
+	//When closing a modal, set all the modal values to false and reset the input values.
 	handleClose(){
 		this.setState({ showFnameModal: false, 
 						showLnameModal: false, 
@@ -88,18 +88,17 @@ class Edit extends Component {
 						currentpw: '',
 						newpw: '',
 						verifyemail: '',
-						verified: false})
+						verified: true,
+						validPassword : false})
 	}
 
 	//Submit and change info (this can change first name, last name, email or engineering).
-	// NOT FUNCTIONAL AT THE MOMENT
 	handleSubmit(){
-		this.modifyUserInfo();
-
-		this.handleClose();
+		this.modifyUserInfo()
 	}
 
-	//NOT FUNCTIONAL AT THE MOMENT.
+	//Changes user information and reloads the profile card accordingly. This method can change first name, last name,
+	//email and engineering discipline. Once changed and submitted, the modal in question is closed.
 	async modifyUserInfo() {
         try {
 			  let data = {
@@ -113,7 +112,13 @@ class Edit extends Component {
 				console.log(response)
                 if (response.success) {
                     console.log(response)
-					console.log("lol")
+					let updatedUser = JSON.parse(JSON.stringify(this.props.user))
+					updatedUser.fname = data.fname
+					updatedUser.lname = data.lname
+					updatedUser.engineer = data.engineer
+					updatedUser.email = data.email
+					updateUser(updatedUser)
+					this.handleClose();
                 }
             }).catch((e) => console.error("Error:" + e))
         } catch (e) {
@@ -121,23 +126,49 @@ class Edit extends Component {
         }
     }
 
-	//This submit button is used to change the password. It first verifies the email and then current password.
-	//NOT FULLY FUNCTIONAL.
+	//This submit button is used to change the password.
 	handleSubmitPassword(){
-		let user = {email : this.state.verifyemail, password : this.state.currentpw}
-		this.authenticate(user)
-		if (this.state.verified == true){
-			this.modifyPassword()
-			this.handleClose()
-		}
-		
-			
+		this.modifyPassword()
 	}
 
-
+	//modifyPassword() uses a method from users.py that first checks whether or not the email and current password
+	//are valid, then checks if the new password is valid.
 	async modifyPassword(){
-	
+		try {
+			  let data = {
+				user_id : this.props.user.id,
+				email: this.state.verifyemail,
+				oldPassword : this.state.currentpw,
+				newPassword : this.state.newpw,
+			}
+            fetchAPI("PUT", '/api/users/password/' + this.props.user.id, data).then(response => {
+				console.log(response)
+                if (response.success) {
+					this.setState({verified: true})
+					this.handleClose();
+                }
+				else{
+					this.setState({verified : true})
+					this.setState({verified : false})
+				}
+            }).catch((e) => console.error("Error:" + e))
+        } catch (e) {
+            console.log("Error: ", e);
+        }
 	}
+
+	//Method to check if the new password is valid.
+	validatePassword(pw) {
+        if (/(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%]).{6,20}/.test(pw)) {
+            this.setState({
+                validPassword: true
+            })
+        } else {
+            this.setState({
+                validPassword: false
+            })
+        }
+    }
 
 	handleFnameChange(e) {
         this.setState({
@@ -174,27 +205,12 @@ class Edit extends Component {
 		this.setState({
 			newpw: e.target.value
 		})
-	}
-
-	//When changing password, this will verify that email and current password entered in modal is correct.
-	async authenticate(user){
-		fetchAPI("POST", "/api/users/authenticate/", user).then(
-		  response => {
-			try{
-			  if (response.success){
-				this.setState({verified: true})
-			  }
-			  else{
-				this.setState({verified: false})
-			  }
-			} catch(e){console.error("Error", e)}
-		  }
-		).catch((e)=>console.error("Error:", e))
+		this.validatePassword(e.target.value)
 	}
 
     render() {
 		//edit is assigned the correct modal to be displayed. options is for the engineering choices.
-		let edit,options;
+		let edit,options, alert, popoverFocus;
 		options = [
             { value: 'software', label: 'Software Engineering' },
             { value: 'mechanical', label: 'Mechanical Engineering' },
@@ -202,6 +218,15 @@ class Edit extends Component {
             { value: 'electrical', label: 'Electrical Engineering' },
             { value: 'civil', label: 'Civil Engineering' }
         ];
+		if (!this.state.verified)
+			 alert = <div className="flash animated" id="welcome"><Alert bsStyle="warning">Invalid email or password!</Alert></div>
+
+		popoverFocus = <Popover 
+						title="Your password should be safe!" 
+						id="popover-basic">
+						Your password must contain atleast one lowercase character,
+						one uppercase character, one special character "@#$%",
+						and atleast 6 characters.</Popover>
 
 		if (this.state.showFnameModal == true){
 			edit = <Modal dialogClassName="fname_modal" show={true} onHide={this.handleClose}>
@@ -250,12 +275,7 @@ class Edit extends Component {
 		else if (this.state.showPwModal == true){
 			edit = <Modal dialogClassName="pw_modal" show={true} onHide={this.handleClose}>
 						 <Modal.Body>
-							<textarea
-								className="textarea_current_pw"
-								rows = "1"
-								cols = "45"
-								placeholder="Enter your current password here"
-								onChange={(e) => this.handleCurrentPwChange(e)} />
+							{alert}
 							<textarea
 								className="textarea_email"
 								rows = "1"
@@ -263,17 +283,25 @@ class Edit extends Component {
 								placeholder="Enter your email here"
 								onChange={(e) => this.handleEmailPwChange(e)} />
 							<textarea
+								className="textarea_current_pw"
+								rows = "1"
+								cols = "45"
+								placeholder="Enter your current password here"
+								onChange={(e) => this.handleCurrentPwChange(e)} />
+							<OverlayTrigger trigger="focus" placement="bottom" overlay={popoverFocus}>
+							<textarea
 								className="textarea_new_pw"
 								rows = "1"
 								cols = "45"
 								placeholder="Enter your new password here"
 								onChange={(e) => this.handleNewPwChange(e)} />
+							</OverlayTrigger>
 						 </Modal.Body>
 						<Modal.Footer>
 						<Grid fluid>
 								<Row>
 									<Button onClick={()=> this.handleClose()}> Cancel </Button>
-									<Button disabled={this.state.currentpw == "" || this.state.newpw == "" || this.state.verifyemail ==""} onClick={()=> this.handleSubmitPassword()}> Submit </Button>
+									<Button disabled={this.state.currentpw == "" || !this.state.validPassword || this.state.verifyemail ==""} onClick={()=> this.handleSubmitPassword()}> Submit </Button>
 								</Row>
 						</Grid>
 						</Modal.Footer>
