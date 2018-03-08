@@ -1,12 +1,16 @@
 import React, { Component } from 'react'
-import { Grid, Col, Row, Modal, FormGroup, FormControl, HelpBlock, ControlLabel, Alert, Popover, OverlayTrigger,Button } from 'react-bootstrap'
+import { Grid, Row, Modal, ControlLabel, Popover, OverlayTrigger,Button } from 'react-bootstrap'
 import Select from 'react-select'
 
 class EditModal extends Component {
-    constructor(props) {
-        super(props)
-    }
     render() {
+        let popoverFocus = <Popover 
+            title="Your password should be safe!" 
+            id="popover-basic">
+            Your password must contain atleast one lowercase character,
+            one uppercase character, one special character "@#$%",
+            and atleast 6 characters.</Popover>
+
         const Input = this.props.regularInput 
             ? this.props.inputs.map(
                 input => { return (
@@ -15,13 +19,24 @@ class EditModal extends Component {
                             {input.title}
                         </Row>
                         <Row>
-                        <textarea
+                        {!input.overlay
+                            ? <textarea
                             className={input.className}
                             rows="1"
                             cols="45"
                             placeholder={input.placeholder}
                             onChange={input.onChange} 
-                        />
+                            />
+                            : <OverlayTrigger trigger="focus" placement="bottom" overlay={popoverFocus}>
+                                <textarea
+                                className={input.className}
+                                rows="1"
+                                cols="45"
+                                placeholder={input.placeholder}
+                                onChange={input.onChange} 
+                                />
+                            </OverlayTrigger>
+                        }
                         </Row>
                     </div>);
                 })

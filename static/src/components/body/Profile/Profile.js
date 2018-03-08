@@ -48,7 +48,6 @@ class Profile extends Component {
 			let engineerArray = ["","&engineer=Software","&engineer=Mechanical","&engineer=Computer","&engineer=Electrical","&engineer=Civil"]
       //fetchAPI("GET", "/api/qa/questions/?" + engineerArray[(this.state.activeQuery)] + this.state.extraQuery).then(response => {
 			fetchAPI("GET", "/api/qa/questions/?loggedin_id" +  "=" + this.props.user.id).then(response => {
-				console.log(response)
 				if (response.success) {
 					this.setState({
 						questions: response.questions
@@ -75,15 +74,11 @@ class Profile extends Component {
 		let ProfileInfo;
 		//Own account
 		if (!this.state.alert && (this.props.match.params.id == this.props.user.id)) {
-			console.log(this.props.user)
 			ProfileInfo = <div> 
 				<ProfileCard user={this.props.user} />
 			 	<Edit user={this.props.user}/> 
 			 </div> 
-
-
 		} else if (!this.state.alert && (!(this.props.match.params.id === this.state.id))) { //viewing another person's profile
-			console.log(this.props.user)
 			ProfileInfo = <ProfileCard user={this.state.user} />
 		} else { //Profile inexistent
 			ProfileInfo = <div> <h1> User was not found. </h1> </div>
@@ -95,10 +90,10 @@ class Profile extends Component {
 				<Nav bsStyle="tabs" activeKey={this.state.activeKey} onSelect={k => this.handleSelect(k)}>
 					<NavItem onClick={() => { this.setState({ activeQuery: "0" }) }} eventKey="0">
 						Question
-			</NavItem>
+					</NavItem>
 					<NavItem onClick={() => { this.setState({ activeQuery: "2" }) }} eventKey="1" >
 						Answer
-			</NavItem>
+					</NavItem>
 					<NavDropdown eventKey="6" title="Sort" id="nav-dropdown">
 						<MenuItem onClick={() => this.setState({ extraQuery: "&sort=title" })} eventKey="6.1">Title</MenuItem>
 						<MenuItem onClick={() => this.setState({ extraQuery: "&sort=register_date&reverse=1" })} eventKey="6.2">Newest</MenuItem>
