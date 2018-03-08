@@ -81,13 +81,6 @@ class QuestionPage extends Component {
 
             return (
                 <div className="answer-page">
-                    <Row>
-                        <Col md={12}>
-                            <span className="question-tag">{this.state.question.engineer}</span>
-                            posted on {moment(this.state.question.register_date).format("LL")}                           
-                             by <Image src={avatarPath} width={24} circle /> {this.state.fname} {this.state.lname} 
-                        </Col>
-                    </Row>
                     <Row className="question-box-text">
                         <Col xs={1} md={1}>
                             <Votes
@@ -104,13 +97,19 @@ class QuestionPage extends Component {
                     </Row>
                     <Row>
                         <Col md={12}>
-                            <Well bsSize="large">
-                                <h2> Know the Answer? </h2>
-                                <AnswerQuestion
-                                  id={this.props.match.params.id}
-                                  updateAnswers={this.answerHandler}
-                                />
-                          </Well>
+                            <span className="question-tag-answer">{this.state.question.engineer}</span>
+                            posted on {moment(this.state.question.register_date).format("LL")} 
+                            &nbsp;by {this.state.fname} {this.state.lname} <Image src={avatarPath} width={24} circle />
+                        </Col>
+                    </Row>
+                    <Row>
+                        <Col md={12}>
+                        <div className="answer-box">
+                            <AnswerQuestion
+                                id={this.props.match.params.id}
+                                updateAnswers={this.answerHandler}
+                            />
+                        </div>
                         </Col>
                     </Row>
                     <div>
