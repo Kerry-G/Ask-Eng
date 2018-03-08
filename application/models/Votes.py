@@ -1,6 +1,16 @@
-from index import db, app
+import sys
+if len(sys.argv) >= 2:
+    arg = sys.argv[2]
+else:
+    arg = "run"
+if arg == "test":
+    from test import db
+else:
+    from index import db
 from datetime import datetime
 from application.util import dump
+
+
 class Vote(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     vote_date = db.Column(db.DateTime, nullable=False, default=datetime.utcnow)
