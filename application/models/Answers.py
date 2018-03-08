@@ -1,6 +1,6 @@
 from index import db
 from datetime import datetime
-
+from application.models import Votes
 
 
 class Answer(db.Model):
@@ -110,7 +110,7 @@ def getAnswersByUser(user_id, loggedin_id=-1):
 def getAnswersByQuestion(question_id, loggedin_id=-1):
     response = []
 
-    answers = Answer.query.filter_by(user_id=question_id).all()
+    answers = Answer.query.filter_by(question_id=question_id).all()
 
     if answers is not None:
         for answer in answers:
@@ -119,7 +119,7 @@ def getAnswersByQuestion(question_id, loggedin_id=-1):
                 ans['vote_status'] = {'vote_status':0}
             else:
                 try:
-                    ans['vote_status'] = Votes.getVote(loggedin_id, answer['id'], 'answer')['vote_status']
+                    ans['vote_status'] = Votes.getVote(loggedin_id, ans['id'], 'answer')['vote_status']
                 except KeyError:
                     ans['vote_status'] = {'vote_status':0}
             response.append(dict(ans))

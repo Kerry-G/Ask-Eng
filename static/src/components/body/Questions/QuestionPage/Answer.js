@@ -20,6 +20,7 @@ class Answer extends Component {
                         question = {this.props.answer}
                         status = {this.props.answer.vote_status}
                         user={this.props.user}
+                        comment_status = {'answer'}
             />
             <Image src={avatarPath} width={64} circle />
           </Col>

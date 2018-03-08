@@ -41,6 +41,8 @@ class Questions extends Component {
   }
 
   render() {
+    {console.log(this.state.questions)}
+
     let questions = this.state.questions.map((question) => {
       return (
         <div key={question.id}>

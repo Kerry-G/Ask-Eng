@@ -1,5 +1,6 @@
 from index import db
 from datetime import datetime
+from application.models import Votes, Answers
 
 
 class Question(db.Model):
@@ -59,12 +60,14 @@ def createQuestion(title, text, engineer, user_id):
 
 
 # Returns the question if question is found
-def getQuestion(id):
+def getQuestion(id, loggedin_id=-1):
     question = Question.query.filter_by(id=id).first()
     if question is None:
         return None
     else:
-        return dict(question)
+        question = dict(question)
+        question['vote_status'] = Votes.getVote(loggedin_id, question['id'], 'question')['vote_status']
+    return question
 
 # Returns True if question is deleted
 def deleteQuestion(id):

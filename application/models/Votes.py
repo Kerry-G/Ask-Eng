@@ -113,7 +113,7 @@ def setVote(user_id, comment_id, comment_status, vote_status):
 				user.downs -= 1
 				comment.downs -= 1
 		app.logger.info("USER.ups = " + str(user.ups)+ ", USER.downs = " + str(user.downs))
-		app.logger.info("COMMNT.ups = " + str(comment.ups)+ ", COMMNT.downs = " + str(comment.downs))
+		app.logger.info(comment_status + "=> COMMENT.ups = " + str(comment.ups)+ ", COMMNT.downs = " + str(comment.downs))
 		vote.vote_status = vote_status # set the vote status
 		db.session.commit()
 

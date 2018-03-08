@@ -34,7 +34,7 @@ class QuestionPage extends Component {
 
     async getQuestion() {
         try {
-            fetchAPI("GET", "/api/qa/questions/?question_id=" + this.props.match.params.id).then(response => {
+            fetchAPI("GET", "/api/qa/questions/?question_id=" + this.props.match.params.id + "&loggedin_id=" + this.props.user.id).then(response => {
                 if (response.success) {
                     this.setState({
                         question: response.question,
@@ -68,12 +68,12 @@ class QuestionPage extends Component {
                     </Row>
                     <Row className="question-box-text">
                         <Col md={1}>
-                            {console.log(this.state.question)}
                             <Votes
                                 question={this.state.question}
-                                status = {this.state.vote_status} //this may switch
+                                status = {this.state.question.vote_status} //this may switch
                                 user={this.props.user}
-                            />
+                                comment_status = {'question'}
+                            /> 
                         </Col>
                         <Col md={11}>
                             <h1>{this.state.question.title}</h1>

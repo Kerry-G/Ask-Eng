@@ -19,10 +19,11 @@ def questionResponse(question, loggedin_id=-1):
         return None
     else:
         answers = []
-        print(loggedin_id)
+        print(len(Answers.getAnswersByQuestion(question['id'],loggedin_id)))
         for answer in Answers.getAnswersByQuestion(question['id'],loggedin_id):
             answer['user'] = Users.getUser(answer['user_id'])
             answers.append(answer)
+            app.logger.info(answer)
         question['answers'] = answers
         return question
 
@@ -81,19 +82,18 @@ def questionsRoute():
         questionArgs = request.args.to_dict()
 
         # get logged in user id, if it's set then continue, else set it to -1
-        try:
+        try: 
             id = int(questionArgs['loggedin_id'])
-        except:
+        except KeyError:
             id = -1
-        app.logger.info("USER LOG IN STATE: " + str(id))
-
-
-
+        app.logger.info("USER ID (-1 means logged out): " + str(id))
 
 
         if 'question_id' in questionArgs:
-            q = Questions.getQuestion(questionArgs['question_id'])
+            q = Questions.getQuestion(questionArgs['question_id'], id)
+            app.logger.info(q)
             question = questionResponse(q,id)
+            app.logger.info(question)
             success = True
             status = 'OK'
             message = 'Question with anwsers.'

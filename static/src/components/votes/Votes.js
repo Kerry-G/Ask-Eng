@@ -14,6 +14,7 @@ class Votes extends Component {
         this.vote = this.vote.bind(this);
         this.voteDown = this.voteDown.bind(this);
         this.voteUp = this.voteUp.bind(this);
+
     }
 
     componentDidUpdate(previousProps, previousState){
@@ -85,7 +86,7 @@ class Votes extends Component {
             let body = {
                 vote_status: status,
                 loggedin_id: loggedin_id,
-                comment_status: 'question'
+                comment_status: this.props.comment_status
             };
             console.log(body);
             fetchAPI("PUT", "/api/qa/questions/" + this.props.question.id, body).then(response => {
