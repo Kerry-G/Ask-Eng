@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Col, Nav, NavItem, NavDropdown, MenuItem, Panel, Glyphicon, Image, Media  } from 'react-bootstrap'
+import { Col, Nav, NavItem, NavDropdown, MenuItem } from 'react-bootstrap'
 import { fetchAPI } from '../../utility'
 import { connect } from 'react-redux'
 import ProfileCard from './ProfileCard'
@@ -45,9 +45,7 @@ class Profile extends Component {
 
 	async getQuestions() {
 		try {
-			let engineerArray = ["","&engineer=Software","&engineer=Mechanical","&engineer=Computer","&engineer=Electrical","&engineer=Civil"]
-      //fetchAPI("GET", "/api/qa/questions/?" + engineerArray[(this.state.activeQuery)] + this.state.extraQuery).then(response => {
-			fetchAPI("GET", "/api/qa/questions/?loggedin_id" +  "=" + this.props.user.id).then(response => {
+			fetchAPI("GET", "/api/qa/questions/?loggedin_id" +  "=" + this.props.user.id + this.state.extraQuery).then(response => {
 				if (response.success) {
 					this.setState({
 						questions: response.questions
@@ -97,8 +95,8 @@ class Profile extends Component {
 						<MenuItem onClick={() => this.setState({ extraQuery: "&sort=title" })} eventKey="6.1">Title</MenuItem>
 						<MenuItem onClick={() => this.setState({ extraQuery: "&sort=register_date&reverse=1" })} eventKey="6.2">Newest</MenuItem>
 						<MenuItem onClick={() => this.setState({ extraQuery: "&sort=register_date&reverse=0" })} eventKey="6.3">Oldest</MenuItem>
-						<MenuItem eventKey="6.4">Ups</MenuItem>
-						<MenuItem eventKey="6.5">Downs</MenuItem>
+						<MenuItem onClick={()=>this.setState({extraQuery:"&sort=downs"})} eventKey="6.4">Ups</MenuItem>
+						<MenuItem onClick={()=>this.setState({extraQuery:"&sort=ups"})} eventKey="6.5">Downs</MenuItem>
 					</NavDropdown>
 					<Search> </Search >
 				</Nav>

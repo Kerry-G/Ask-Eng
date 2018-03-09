@@ -12,6 +12,9 @@ tall:       (min-height: 780px), */
 #app {
   padding-bottom: 6rem; }
 
+h1, h2, h3, h4, h5, h6, p, div, textarea {
+  word-wrap: break-word; }
+
 /* HEADER */
 .header {
   margin: 0 0 25px;
@@ -362,8 +365,7 @@ textarea {
 /* END question box */
 /* answer-page */
 .question-box-text {
-  margin: auto; 
-  padding-top: 1rem; }
+  margin: auto auto 2rem auto; }
 
 .answer-page h1 {
   font-size: 3rem;

@@ -7,9 +7,7 @@ class EditModal extends Component {
         let popoverFocus = <Popover 
             title="Your password should be safe!" 
             id="popover-basic">
-            Your password must contain atleast one lowercase character,
-            one uppercase character, one special character "@#$%",
-            and atleast 6 characters.</Popover>
+            Your password must contain atleast atleast 6 characters.</Popover>
 
         const Input = this.props.regularInput 
             ? this.props.inputs.map(

@@ -45,8 +45,6 @@ class Questions extends Component {
   }
 
   render() {
-    {console.log(this.state.questions)}
-
     let questions = this.state.questions.map((question) => {
       return (
         <div key={question.id}>
@@ -79,8 +77,8 @@ class Questions extends Component {
           <MenuItem onClick={()=>this.setState({extraQuery:"&sort=title"})} eventKey="6.1">Title</MenuItem>
           <MenuItem onClick={()=>this.setState({extraQuery:"&sort=register_date&reverse=1"})}  eventKey="6.2">Newest</MenuItem>
           <MenuItem onClick={()=>this.setState({extraQuery:"&sort=register_date&reverse=0"})}  eventKey="6.3">Oldest</MenuItem>
-          <MenuItem eventKey="6.4">Ups</MenuItem>
-          <MenuItem eventKey="6.5">Downs</MenuItem>
+          <MenuItem onClick={()=>this.setState({extraQuery:"&sort=downs"})} eventKey="6.4">Ups</MenuItem>
+          <MenuItem onClick={()=>this.setState({extraQuery:"&sort=ups"})} eventKey="6.5">Downs</MenuItem>
         </NavDropdown>
          <Search>  </Search> 
         </Nav>

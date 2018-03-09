@@ -79,6 +79,22 @@ class QuestionPage extends Component {
                     </div>
             )});
 
+         let userLogin = !((Object.keys(this.props.user).length === 0 && this.props.user.constructor === Object)) //if no user is login
+         let askQuestion;
+         if(userLogin){
+            askQuestion = <Row>
+                <Col md={12}>
+                    <div className="answer-box">
+                        <AnswerQuestion
+                            id={this.props.match.params.id}
+                            updateAnswers={this.answerHandler}
+                        />
+                    </div>
+                </Col>
+            </Row>
+         } else {
+             askQuestion = null;
+         }
             return (
                 <div className="answer-page">
                     <Row>
@@ -102,16 +118,7 @@ class QuestionPage extends Component {
                             <p>{this.state.question.text}</p>
                         </Col>
                     </Row>
-                    <Row>
-                        <Col md={12}>
-                        <div className="answer-box">
-                            <AnswerQuestion
-                                id={this.props.match.params.id}
-                                updateAnswers={this.answerHandler}
-                            />
-                        </div>
-                        </Col>
-                    </Row>
+                    {askQuestion}
                     <div>
                         {answers}
                     </div>

@@ -191,7 +191,7 @@ class Edit extends Component {
 
 	//Method to check if the new password is valid.
 	validatePassword(pw) {
-        if (/(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%]).{6,20}/.test(pw)) {
+        if (pw.length > 6) {
             this.setState({
                 validPassword: true
             })
@@ -261,23 +261,23 @@ class Edit extends Component {
 					<div id="box-edit-links">
 						<EditLink
 							onClick={()=>this.handleChange_fname()}
-							title={<FontAwesome name='far fa-address-card fa-2x' color="#e74c3c"  /> }
+							title={<FontAwesome name='far fa-address-card fa-2x' color="#e74c3c" />}
 						/>
 						<EditLink
 							onClick={()=>this.handleChange_lname()}
-							title={<FontAwesome name='fas fa-user-secret fa-2x'  /> }
+							title={<FontAwesome name='fas fa-user-secret fa-2x' />}
 						/>
 						<EditLink
 							onClick={()=>this.handleChange_pass()}
-							title={<FontAwesome name='far fa-unlock fa-2x'  /> }
+							title={<FontAwesome name='far fa-unlock fa-2x' />}
 						/>
 						<EditLink
 							onClick={()=>this.handleChange_eng()}
-							title={<FontAwesome name='fas fa-cogs fa-2x'  /> }
+							title={<FontAwesome name='fas fa-cogs fa-2x' />}
 						/>
 						<EditLink
 							onClick= {()=>this.handleShowAvatar()}
-							title={<FontAwesome name='fab fa-black-tie fa-2x'  /> }
+							title={<FontAwesome name='fab fa-black-tie fa-2x' />}
 						/>
  					</div>
 				</Panel.Body>

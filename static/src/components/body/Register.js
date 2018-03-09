@@ -57,7 +57,7 @@ class Register extends Component {
     }
 
     validatePassword(pw) {
-        if (/(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%]).{6,20}/.test(pw)) {
+        if (pw.length > 6) {
             this.setState({
                 validPassword: "success"
             })
@@ -191,9 +191,7 @@ class Register extends Component {
         const popoverFocus = <Popover 
         title="Your password should be safe!" 
         id="popover-basic">
-        Your password must contain atleast one lowercase character,
-        one uppercase character, one special character "@#$%",
-        and atleast 6 characters.</Popover>
+        Your password must be atleast 6 characters.</Popover>
         let body
         if (this.state.page === 1) {
             body =
