@@ -55,6 +55,25 @@ class Profile extends Component {
 		} catch (e) { console.error("Error:", e) }
 	}
 
+	handleSearch(word){
+		try{
+		  let results = [];
+		  fetchAPI("GET", "/api/qa/questions/?loggedin_id" +  "=" + this.props.user.id + this.state.extraQuery).then(response => {
+			if (response.success) {
+			  let questions = response.questions
+			  for (let i in questions){
+				if (questions[i].title.includes(word.value)){
+				  results.push(questions[i])
+				}
+			  }
+			  this.setState({
+				questions: results
+			  })
+			}
+		  })}
+		  catch(e){console.error("Error: ", e)}
+	  }
+
 	handleSelect(eventKey) {
 		this.setState({
 		  activeKey:eventKey
@@ -98,7 +117,9 @@ class Profile extends Component {
 						<MenuItem onClick={()=>this.setState({extraQuery:"&sort=downs"})} eventKey="6.4">Ups</MenuItem>
 						<MenuItem onClick={()=>this.setState({extraQuery:"&sort=ups"})} eventKey="6.5">Downs</MenuItem>
 					</NavDropdown>
-					<Search> </Search >
+					<Search
+						handleSearch={(word) => this.handleSearch(word)}
+					/>
 				</Nav>
 					{questions}
 				</Col>

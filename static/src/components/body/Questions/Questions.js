@@ -4,7 +4,7 @@ import { Nav, NavItem, NavDropdown, MenuItem, Button } from 'react-bootstrap'
 import Question from './Question'
 import FontAwesome from 'react-fontawesome'
 import moment from 'moment'
-import Search from '../Questions//Search'
+import Search from '../Questions/Search'
 
 
 class Questions extends Component {
@@ -40,8 +40,28 @@ class Questions extends Component {
   handleSelect(eventKey) {
     this.setState({
       activeKey:eventKey
-    },()=>{this.getQuestions()} )
-    
+    },()=>{this.getQuestions()} ) 
+  }
+
+  handleSearch(word){
+    try{
+      let loggedin_id = this.props.user===undefined ? -1 : this.props.user.id;
+      let engineerArray = ["","&engineer=Software","&engineer=Mechanical","&engineer=Computer","&engineer=Electrical","&engineer=Civil"]
+      let results = [];
+      fetchAPI("GET", "/api/qa/questions/?" + engineerArray[(this.state.activeQuery)] + this.state.extraQuery + "&loggedin_id=" + loggedin_id).then(response => {
+        if (response.success) {
+          let questions = response.questions
+          for (let i in questions){
+            if (questions[i].title.includes(word.value)){
+              results.push(questions[i])
+            }
+          }
+          this.setState({
+            questions: results
+          })
+        }
+      })}
+      catch(e){console.error("Error: ", e)}
   }
 
   render() {
@@ -80,7 +100,9 @@ class Questions extends Component {
           <MenuItem onClick={()=>this.setState({extraQuery:"&sort=downs"})} eventKey="6.4">Ups</MenuItem>
           <MenuItem onClick={()=>this.setState({extraQuery:"&sort=ups"})} eventKey="6.5">Downs</MenuItem>
         </NavDropdown>
-         <Search>  </Search> 
+         <Search
+          handleSearch={(word) => this.handleSearch(word)}
+         />
         </Nav>
         {questions}
       </div>
