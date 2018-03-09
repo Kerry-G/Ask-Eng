@@ -1,4 +1,5 @@
 # SOEN341-UB2
+[![Build Status](https://travis-ci.org/Kerry-G/Ask-Eng.svg?branch=master)](https://travis-ci.org/Kerry-G/Ask-Eng)
 An engineering question and answer board.
 
 ## Requirements
