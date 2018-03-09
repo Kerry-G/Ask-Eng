@@ -59,7 +59,7 @@ class Answer extends Component {
             <Col lg={10} md={8} xs={7}>
               <h1>{this.props.answer.title}</h1>
               {this.state.fname} {this.state.lname}
-              &nbsp;- {moment(this.props.answer.register_date).format("LL")}
+              &nbsp;- {moment(this.props.answer.register_date).format("LLL")}
               <p>{this.props.answer.text}</p>
             </Col>
           </Row>

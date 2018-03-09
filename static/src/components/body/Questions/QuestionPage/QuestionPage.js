@@ -101,7 +101,7 @@ class QuestionPage extends Component {
                         <Col md={12}>
                             <span className="question-tag-answer">{this.state.question.engineer}</span>
                             submitted by <Image src={avatarPath} width={24} circle /> {this.state.fname} {this.state.lname}
-                            &nbsp;- {moment(this.state.question.register_date).format("LL")} 
+                            &nbsp;- {moment(this.state.question.register_date).format("LLL")} 
                         </Col>
                     </Row>
                     <Row className="question-box-text">
