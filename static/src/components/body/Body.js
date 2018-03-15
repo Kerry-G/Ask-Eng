@@ -9,6 +9,7 @@ import { Route } from 'react-router-dom'
 import Profile from './Profile/Profile'
 import Questions from './Questions/Questions';
 import QuestionPage from './Questions/QuestionPage/QuestionPage';
+import Edit from './Profile/Edit';
 
 class Body extends Component {
 
@@ -60,6 +61,7 @@ class Body extends Component {
                 <Route exact path='/question/:id' component={QuestionPage} />
                 <Route exact path='/users/' component={Profile} />
                 <Route path='/users/:id' component={Profile} />
+				<Route path='/edit' component={Edit}/>
           </Row>
           <Register
             show={this.state.showRegister}
