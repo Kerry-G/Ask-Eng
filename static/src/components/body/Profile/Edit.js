@@ -31,7 +31,7 @@ class Edit extends Component {
 			showAvatar: false,
 
 			passwordChanged : false,
-			emailChanged: false,
+			emailVerified: false,
 			processing: false,
 			submitted: false,
         };
@@ -78,6 +78,27 @@ class Edit extends Component {
 	//Submit and
 	handleSubmit(){
 		this.setState({processing: true, submitted: true})
+		//Modifying email cases.
+		//Case 1: Email entered is valid and is not the original email.
+		if (this.state.validEmail && this.state.email != this.props.user.email){
+			this.checkEmail()
+		}
+		//Case 2: Email entered is not valid.
+		else if (!this.state.validEmail){
+			this.setState({emailVerified: false}, function(){
+				this.endSubmission()
+			})
+		}
+		//Case 3: No new email is entered.
+		else if (this.state.email == this.props.user.email)
+			this.setState({emailVerified: true}, function(){
+				this.modifyingPassword()
+			})
+		else
+			this.modifyingPassword()
+	}
+
+	modifyingPassword(){
 
 		//modifying password cases. Case 1: all fields are entered, new password is valid and new passwords match.
 		if (this.state.currentpw!='' && this.state.newpw!='' && this.state.verifynewpw!='' && this.state.matchingPasswords && this.state.validPassword){
@@ -86,41 +107,20 @@ class Edit extends Component {
 		//Case 2: At least one of the fields is empty, or the new passwords do not match, or the new password is not valid.
 		else if (((this.state.currentpw!='' || this.state.newpw !='' || this.state.verifynewpw!='') && (this.state.currentpw=='' || this.state.newpw=='' || this.state.verifynewpw=='')) || !this.state.validPassword || !this.state.matchingPasswords){
 			this.setState({passwordChanged: false}, function(){
-				this.modifyingEmail()
+				this.endSubmission()
 			})
 		}
 		//Case 3: All the fields are empty and the password is not to be changed.
 		else
 			this.setState({passwordChanged: true}, function(){
-				this.modifyingEmail()
-			})
-	}
-
-	modifyingEmail(){
-		//Modifying email cases. All cases verify that password change was successful.
-		//Case 1: Email entered is valid and is not the original email.
-		if (this.state.passwordChanged && this.state.validEmail && this.state.email != this.props.user.email){
-			this.checkEmail()
-		}
-		//Case 2: Email entered is not valid.
-		else if (this.state.passwordChanged && !this.state.validEmail){
-			this.setState({emailChanged: false}, function(){
 				this.modifyingInfo()
 			})
-		}
-		//Case 3: No new email is entered.
-		else if (this.state.passwordChanged && this.state.email == this.props.user.email)
-			this.setState({emailChanged: true}, function(){
-				this.modifyingInfo()
-			})
-		else
-			this.modifyingInfo()
 	}
 
 	modifyingInfo(){
 		//Modifying rest of information (fname, lname, engineering). All cases check that email and password changes were successful.
 		//Case 1: At least of the fields is not empty. Mark the end of the submission by setting 'processing' to false.
-		if (this.state.passwordChanged && this.state.emailChanged && (this.state.fname != this.props.user.fname || this.state.lname != this.props.user.lname || this.state.eng != this.props.user.engineer) ){
+		if (this.state.passwordChanged && this.state.emailVerified && (this.state.fname != this.props.user.fname || this.state.lname != this.props.user.lname || this.state.eng != this.props.user.engineer || this.state.email != this.props.user.email) ){
 			this.modifyUserInfo()
 			this.setState({processing: false})
 		}
@@ -138,12 +138,12 @@ class Edit extends Component {
 			if (response.success){
 				this.setState({avilableEmail: true})
 				this.setState({availableEmail : false})
-				this.setState({emailChanged: false})
-				this.modifyingInfo()
+				this.setState({emailVerified: false})
+				this.endSubmission()
 				}
 			else{
-				this.setState({availableEmail: true, emailChanged: true})
-				this.modifyUserInfo()
+				this.setState({availableEmail: true, emailVerified: true})
+				this.modifyingPassword()
 				}
             }).catch((e) => console.error("Error:" + e))
         } catch (e) {
@@ -189,17 +189,21 @@ class Edit extends Component {
             fetchAPI("PUT", '/api/users/password/' + this.props.user.id, data).then(response => {
                 if (response.success) {
 					this.setState({passwordChanged: true})
-					this.modifyingEmail()
+					this.modifyingInfo()
                 }
 				else{
 					this.setState({passwordChanged : true})
 					this.setState({passwordChanged : false})
-					this.modifyingEmail()
+					this.endSubmission()
 				}
             }).catch((e) => console.error("Error:" + e))
         } catch (e) {
             console.log("Error: ", e);
         }
+	}
+
+	endSubmission(){
+		this.setState({processing: false})
 	}
 
 	//Method to check whether or not the new email is of correct format.
@@ -286,11 +290,11 @@ class Edit extends Component {
 			process = <div className="flash animated" id="processing"><Alert bsStyle="info">Processing Request...</Alert></div>
 		let alert = null;
 
-		if ((!this.state.passwordChanged ||!this.state.emailChanged) && !this.state.processing && this.state.submitted)
+		if ((!this.state.passwordChanged ||!this.state.emailVerified) && !this.state.processing && this.state.submitted)
 			 alert = <div className="flash animated" id="invalid"><Alert bsStyle="warning">Invalid email or password!</Alert></div>
       
 		let updated = null;
-		if (this.state.passwordChanged && alert==null && this.state.emailChanged  && !this.state.processing && this.state.submitted){
+		if (this.state.passwordChanged && alert==null && this.state.emailVerified  && !this.state.processing && this.state.submitted){
 			 updated = <div className="flash animated" id="sucess"><Alert bsStyle="success">Updated Information!</Alert></div>
 		}
 
