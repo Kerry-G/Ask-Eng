@@ -300,96 +300,102 @@ class Edit extends Component {
 
 	    let exit = '/';
 
-		return (
-			<div>
-				<Col lg={8}>
-					<form id="modify_profile">
-					<Panel bsStyle="primary">
-						<Panel.Heading>
-						  <Media>
-							<Media.Left>
-							  Edit Account Information
-							</Media.Left>
-						  </Media>
-						</Panel.Heading>
-						<Panel.Body>
-						{process}
-						{alert}
-						{updated}
-						<Grid fluid>
-						  <Row>{/*Change first name*/}
-							<Col sm={4}><b><big>First Name:</big></b></Col>
-							<Col sm={4}> <textarea cols="45" rows="1" label="First Name" onChange={(e) => this.handleFnameChange(e)}/></Col>
-							<br></br><hr></hr>
-						  </Row>
+		let userState=null;
+		if ((Object.keys(this.props.user).length === 0 && this.props.user.constructor === Object))
+			userState = <div> <big>You must be logged in to view this page.</big> </div>
+		else
+			userState=	<div>
+								<Col lg={8}>
+									<form id="modify_profile">
+									<Panel bsStyle="primary">
+										<Panel.Heading>
+										  <Media>
+											<Media.Left>
+											  Edit Account Information
+											</Media.Left>
+										  </Media>
+										</Panel.Heading>
+										<Panel.Body>
+										{process}
+										{alert}
+										{updated}
+										<Grid fluid>
+										  <Row>{/*Change first name*/}
+											<Col sm={4}><b><big>First Name:</big></b></Col>
+											<Col sm={4}> <textarea cols="45" rows="1" label="First Name" onChange={(e) => this.handleFnameChange(e)}/></Col>
+											<br></br><hr></hr>
+										  </Row>
 							
-						  <Row>{/*Change last name*/}
-							<Col sm={4}><b><big>Last Name:</big></b> </Col>
-							<Col sm={4}><textarea cols="45" rows="1" label="Last Name" onChange={(e) => this.handleLnameChange(e)}/></Col>
-							<br></br><hr></hr>
-						  </Row>
-						  <Row>{/*Change email*/}
-							<Col sm={4}><b><big>Email:</big></b><br></br><small>Email must be available</small> </Col>
-							<Col sm={4}><textarea cols="45" rows="1" label="Email" onChange={(e) => this.handleEmailChange(e)}/></Col>
-							<br></br><br></br><hr></hr>
-						  </Row>
-						  <Row>{/*Change engineering*/}
-							<Col sm={4}><b><big>Engineering: </big></b></Col>
-							<Col sm={5}><Select
-								name="form-field-name"
-								value={this.state.eng}
-								options={options}
-								onChange={(e) => {
-									if (e !== null) {
-										this.setState({ eng: e.value })
-									} else {
-										this.setState({ eng: '' })
-									}
-								}}
-							/></Col>
-							<br></br><br></br><hr></hr>
-						  </Row>
-						  <Row>{/*Change avatar*/}
-							<Col sm={4}><b><big>Avatar:</big></b></Col>
-							<Col sm={4}><Button onClick={() => this.setState({showAvatar : true})}>Click to Change Avatar</Button>
-								<ChooseAvatar 
-									show={this.state.showAvatar}
-									user = {this.props.user}
-									handleClose={this.handleCloseAvatar}
-								/>
-							</Col>
-							<br></br><hr></hr>
-						  </Row>
-						  <Row>{/*Change password*/}
-							<Col sm={4}><b><big>Password</big></b><br></br><small>Password must be at least 6 characters.</small> <br></br><br></br>Current Password: </Col>
-							<Col sm={4}><br></br><br></br><br></br><textarea cols="45" rows="1" label="Current Password" onChange={(e) => this.handleCurrentPwChange(e)}/></Col>
-						  </Row>
-						  <Row>
-							<Col sm={4}>New Password:</Col>
-							<Col sm={4}><textarea cols="45" rows="1" label="New Password" onChange={(e) => this.handleNewPwChange(e)}/></Col>
-						  </Row>
-						  <Row>
-							<Col sm={4}>Re-enter New Password: </Col>
-							<Col sm={4}><textarea cols="45" rows="1" label="New Password2" onChange={(e) => this.handleVerifyNewPwChange(e)}/></Col>
-						  </Row>
-						</Grid>
-						</Panel.Body>
-						<Panel.Footer>
-							<Media>
-								<Col sm={10}>
-									<Link to={exit}><Button >Home</Button></Link>
-									<Button  onClick={() => this.handleReset()}>Reset Form</Button>
-									<Button onClick={() => this.handleSubmit()}>Submit</Button> 
+										  <Row>{/*Change last name*/}
+											<Col sm={4}><b><big>Last Name:</big></b> </Col>
+											<Col sm={4}><textarea cols="45" rows="1" label="Last Name" onChange={(e) => this.handleLnameChange(e)}/></Col>
+											<br></br><hr></hr>
+										  </Row>
+										  <Row>{/*Change email*/}
+											<Col sm={4}><b><big>Email:</big></b><br></br><small>Email must be available</small> </Col>
+											<Col sm={4}><textarea cols="45" rows="1" label="Email" onChange={(e) => this.handleEmailChange(e)}/></Col>
+											<br></br><br></br><hr></hr>
+										  </Row>
+										  <Row>{/*Change engineering*/}
+											<Col sm={4}><b><big>Engineering: </big></b></Col>
+											<Col sm={5}><Select
+												name="form-field-name"
+												value={this.state.eng}
+												options={options}
+												onChange={(e) => {
+													if (e !== null) {
+														this.setState({ eng: e.value })
+													} else {
+														this.setState({ eng: '' })
+													}
+												}}
+											/></Col>
+											<br></br><br></br><hr></hr>
+										  </Row>
+										  <Row>{/*Change avatar*/}
+											<Col sm={4}><b><big>Avatar:</big></b></Col>
+											<Col sm={4}><Button onClick={() => this.setState({showAvatar : true})}>Click to Change Avatar</Button>
+												<ChooseAvatar 
+													show={this.state.showAvatar}
+													user = {this.props.user}
+													handleClose={this.handleCloseAvatar}
+												/>
+											</Col>
+											<br></br><hr></hr>
+										  </Row>
+										  <Row>{/*Change password*/}
+											<Col sm={4}><b><big>Password</big></b><br></br><small>Password must be at least 6 characters.</small> <br></br><br></br>Current Password: </Col>
+											<Col sm={4}><br></br><br></br><br></br><textarea cols="45" rows="1" label="Current Password" onChange={(e) => this.handleCurrentPwChange(e)}/></Col>
+										  </Row>
+										  <Row>
+											<Col sm={4}>New Password:</Col>
+											<Col sm={4}><textarea cols="45" rows="1" label="New Password" onChange={(e) => this.handleNewPwChange(e)}/></Col>
+										  </Row>
+										  <Row>
+											<Col sm={4}>Re-enter New Password: </Col>
+											<Col sm={4}><textarea cols="45" rows="1" label="New Password2" onChange={(e) => this.handleVerifyNewPwChange(e)}/></Col>
+										  </Row>
+										</Grid>
+										</Panel.Body>
+										<Panel.Footer>
+											<Media>
+												<Col sm={10}>
+													<Link to={exit}><Button >Home</Button></Link>
+													<Button  onClick={() => this.handleReset()}>Reset Form</Button>
+													<Button onClick={() => this.handleSubmit()}>Submit</Button> 
+												</Col>
+											</Media>
+										</Panel.Footer>
+									 </Panel>
+									 </form>
 								</Col>
-							</Media>
-						</Panel.Footer>
-					 </Panel>
-					 </form>
-				</Col>
-				<Col lg={4} >
-					<ProfileCard user={this.props.user}/>
-				</Col>
-			</div>
+								<Col lg={4} >
+									<ProfileCard user={this.props.user}/>
+								</Col>
+							</div>
+
+		return (
+			<div>{userState}</div>
         );
     }
 }
