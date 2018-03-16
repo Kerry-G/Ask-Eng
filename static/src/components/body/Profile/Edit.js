@@ -23,14 +23,17 @@ class Edit extends Component {
             email: this.props.user.email,
 			eng: this.props.user.engineer,
 
-			validPassword : false,
+			validPassword : true,
 			matchingPasswords : true,
+			availableEmail : true,
 			validEmail : true,
-			verified : true,
 
 			showAvatar: false,
 
-			success: false,
+			passwordChanged : false,
+			emailChanged: false,
+			processing: false,
+			submitted: false,
         };
 		//Handlers to either submit or close the modal.
 		this.handleSubmit = this.handleSubmit.bind(this);
@@ -50,6 +53,7 @@ class Edit extends Component {
 	
 	//When closing a modal, set all the modal values to false and reset the input values.
 	handleReset(){
+		document.getElementById("modify_profile").reset();
 		this.setState({ fname : this.props.user.fname,
 						lname : this.props.user.lname,
 						email : this.props.user.email,
@@ -57,10 +61,13 @@ class Edit extends Component {
 						currentpw: '',
 						newpw: '',
 						verifynewpw: '',
-						verified: true,
-						validPassword : false,
+						validPassword : true,
 						matchingPasswords : true,
-						validEmail: true})
+						validEmail: true,
+						availableEmail : true,
+						processing: false,
+						submitted: false,
+						})
 	}
 
 	//Handler closes the avatar modal.
@@ -68,23 +75,59 @@ class Edit extends Component {
 		this.setState({ showAvatar: false });
     }
 
-	//Submit and change info (this can change first name, last name or engineering).
+	//Submit and
 	handleSubmit(){
-		if (this.state.newpw != '' || this.state.currentpw !='' || this.state.verifynewpw !='')
+		this.setState({processing: true, submitted: true})
+
+		//modifying password cases. Case 1: all fields are entered, new password is valid and new passwords match.
+		if (this.state.currentpw!='' && this.state.newpw!='' && this.state.verifynewpw!='' && this.state.matchingPasswords && this.state.validPassword){
 			this.modifyPassword()
-		else{
-			this.setState({success: true})
-			}
+		}
+		//Case 2: At least one of the fields is empty, or the new passwords do not match, or the new password is not valid.
+		else if (((this.state.currentpw!='' || this.state.newpw !='' || this.state.verifynewpw!='') && (this.state.currentpw=='' || this.state.newpw=='' || this.state.verifynewpw=='')) || !this.state.validPassword || !this.state.matchingPasswords){
+			this.setState({passwordChanged: false}, function(){
+				this.modifyingEmail()
+			})
+		}
+		//Case 3: All the fields are empty and the password is not to be changed.
+		else
+			this.setState({passwordChanged: true}, function(){
+				this.modifyingEmail()
+			})
+	}
 
-		if (this.state.email != this.props.user.email)
-			this.checkEmail();
-		else{
-			this.setState({success: true})
-			}
+	modifyingEmail(){
+		//Modifying email cases. All cases verify that password change was successful.
+		//Case 1: Email entered is valid and is not the original email.
+		if (this.state.passwordChanged && this.state.validEmail && this.state.email != this.props.user.email){
+			this.checkEmail()
+		}
+		//Case 2: Email entered is not valid.
+		else if (this.state.passwordChanged && !this.state.validEmail){
+			this.setState({emailChanged: false}, function(){
+				this.modifyingInfo()
+			})
+		}
+		//Case 3: No new email is entered.
+		else if (this.state.passwordChanged && this.state.email == this.props.user.email)
+			this.setState({emailChanged: true}, function(){
+				this.modifyingInfo()
+			})
+		else
+			this.modifyingInfo()
+	}
 
-		if ((this.state.fname != this.props.user.fname || this.state.lname != this.props.user.lname || this.state.eng != this.props.user.engineer) && this.state.email==this.props.user.email )
-			this.modifyUserInfo();
-	}		
+	modifyingInfo(){
+		//Modifying rest of information (fname, lname, engineering). All cases check that email and password changes were successful.
+		//Case 1: At least of the fields is not empty. Mark the end of the submission by setting 'processing' to false.
+		if (this.state.passwordChanged && this.state.emailChanged && (this.state.fname != this.props.user.fname || this.state.lname != this.props.user.lname || this.state.eng != this.props.user.engineer) ){
+			this.modifyUserInfo()
+			this.setState({processing: false})
+		}
+		//Case 2: No fields entered. Mark the end of submission by setting 'processing' to false.
+		else
+			this.setState({processing: false})
+	}
 
 	//Check if email is existent or not. If not, then proceed and modify user information.
 	async checkEmail(){
@@ -93,12 +136,13 @@ class Edit extends Component {
 
 			fetchAPI("POST", '/api/users/email/', data).then(response =>{
 			if (response.success){
-				this.setState({validEmail: true})
-				this.setState({validEmail : false})
-				this.setState({success: false})
+				this.setState({avilableEmail: true})
+				this.setState({availableEmail : false})
+				this.setState({emailChanged: false})
+				this.modifyingInfo()
 				}
 			else{
-				this.setState({validEmail: true, success: true})
+				this.setState({availableEmail: true, emailChanged: true})
 				this.modifyUserInfo()
 				}
             }).catch((e) => console.error("Error:" + e))
@@ -118,14 +162,13 @@ class Edit extends Component {
 				email : this.state.email
 			}
             fetchAPI("PUT", '/api/users/' + this.props.user.id, data).then(response => {
-                if (response.success && this.state.success ) {
+                if (response.success) {
 					let updatedUser = JSON.parse(JSON.stringify(this.props.user))
 					updatedUser.fname = data.fname
 					updatedUser.lname = data.lname
 					updatedUser.engineer = data.engineer
 					updatedUser.email = data.email
 					updateUser(updatedUser)
-					this.handleReset();
                 }
             }).catch((e) => console.error("Error:" + e))
         } catch (e) {
@@ -133,8 +176,8 @@ class Edit extends Component {
         }
     }
 
-	//modifyPassword() uses a method from users.py that first checks whether or not the email and current password
-	//are valid, then checks if the new password is valid.
+	//modifyPassword() uses a method from users.py that checks whether or not the email and current password
+	//are valid. If the current password entered is incorrect, this will fail.
 	async modifyPassword(){
 		try {
 			  let data = {
@@ -144,20 +187,33 @@ class Edit extends Component {
 				newPassword : this.state.newpw,
 			}
             fetchAPI("PUT", '/api/users/password/' + this.props.user.id, data).then(response => {
-                if (response.success && this.state.matchingPasswords && this.state.validPassword) {
-					this.setState({verified: true})
-					this.setState({success: true})
+                if (response.success) {
+					this.setState({passwordChanged: true})
+					this.modifyingEmail()
                 }
 				else{
-					this.setState({verified : true})
-					this.setState({verified : false})
-					this.setState({success: false})
+					this.setState({passwordChanged : true})
+					this.setState({passwordChanged : false})
+					this.modifyingEmail()
 				}
             }).catch((e) => console.error("Error:" + e))
         } catch (e) {
             console.log("Error: ", e);
         }
 	}
+
+	//Method to check whether or not the new email is of correct format.
+	validateEmail(mail) {
+        if (/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(mail)) {
+            this.setState({
+                validEmail: true
+            })
+        } else {
+            this.setState({
+                validEmail: false
+            })
+        }
+    }
 
 	//Method to check if the new password is valid.
 	validatePassword(pw) {
@@ -171,6 +227,14 @@ class Edit extends Component {
             })
         }
     }
+
+	//Method to check if the new password and re-entered new password match. 
+	passwordMatching(pw1, pw2){
+		if (pw1==pw2)
+			this.setState({matchingPasswords : true})
+		else
+			this.setState({matchingPasswords : false})
+	}
 
 	handleFnameChange(e) {
         this.setState({
@@ -186,6 +250,7 @@ class Edit extends Component {
         this.setState({
             email: e.target.value
         })
+		this.validateEmail(e.target.value)
     }
 	handleCurrentPwChange(e){
 		this.setState({
@@ -198,24 +263,17 @@ class Edit extends Component {
 			newpw: e.target.value
 		})
 		this.validatePassword(e.target.value)
+		this.passwordMatching(this.state.verifynewpw, e.target.value)
 	}
 	
 	handleVerifyNewPwChange(e){
 		this.setState({
 			verifynewpw: e.target.value
 		})
-		if (e.target.value == this.state.newpw)
-			this.setState({matchingPasswords : true})
-		else
-			this.setState({matchingPasswords : false})
+		this.passwordMatching(e.target.value, this.state.newpw)
 	}
 
     render() {
-		/* edit is assigned the correct modal to be displayed. options is for the engineering choices. alert will be used
-		 * to display error messages when attempting to change the password. popoverFocus is used as a focus When
-		 * entering a new password to remind the user of the constraints.  
-		 */
-
 		let options = [
             { value: 'software', label: 'Software Engineering' },
             { value: 'mechanical', label: 'Mechanical Engineering' },
@@ -223,19 +281,25 @@ class Edit extends Component {
             { value: 'electrical', label: 'Electrical Engineering' },
             { value: 'civil', label: 'Civil Engineering' }
 		];
+		let process = null;
+		if (this.state.processing)
+			process = <div className="flash animated" id="processing"><Alert bsStyle="info">Processing Request...</Alert></div>
 		let alert = null;
-		if (!this.state.verified || !this.state.validEmail)
+
+		if ((!this.state.passwordChanged ||!this.state.emailChanged) && !this.state.processing && this.state.submitted)
 			 alert = <div className="flash animated" id="invalid"><Alert bsStyle="warning">Invalid email or password!</Alert></div>
       
 		let updated = null;
-		if (this.state.success)
-			 updated = <div className="flash animated" id="invalid"><Alert bsStyle="success">Updated Information!</Alert></div>
+		if (this.state.passwordChanged && alert==null && this.state.emailChanged  && !this.state.processing && this.state.submitted){
+			 updated = <div className="flash animated" id="sucess"><Alert bsStyle="success">Updated Information!</Alert></div>
+		}
 
-	    let cancel = '/users/' + this.props.user.id;
+	    let exit = '/';
 
 		return (
 			<div>
 				<Col lg={8}>
+					<form id="modify_profile">
 					<Panel bsStyle="primary">
 						<Panel.Heading>
 						  <Media>
@@ -245,6 +309,7 @@ class Edit extends Component {
 						  </Media>
 						</Panel.Heading>
 						<Panel.Body>
+						{process}
 						{alert}
 						{updated}
 						<Grid fluid>
@@ -293,7 +358,7 @@ class Edit extends Component {
 						  </Row>
 						  <Row>{/*Change password*/}
 							<Col sm={4}><b><big>Password</big></b><br></br><small>Password must be at least 6 characters.</small> <br></br><br></br>Current Password: </Col>
-							<Col sm={4}><br></br><br></br><br></br><textarea cols="45" rows="1" label="Current Password" onChange={(e) => this.handleCurrentPwChange}/></Col>
+							<Col sm={4}><br></br><br></br><br></br><textarea cols="45" rows="1" label="Current Password" onChange={(e) => this.handleCurrentPwChange(e)}/></Col>
 						  </Row>
 						  <Row>
 							<Col sm={4}>New Password:</Col>
@@ -307,13 +372,15 @@ class Edit extends Component {
 						</Panel.Body>
 						<Panel.Footer>
 							<Media>
-								<Media.Right>
-									<Link to={cancel}><Button>Return To Profile</Button></Link>
+								<Col sm={10}>
+									<Link to={exit}><Button >Home</Button></Link>
+									<Button  onClick={() => this.handleReset()}>Reset Form</Button>
 									<Button onClick={() => this.handleSubmit()}>Submit</Button> 
-								</Media.Right>
+								</Col>
 							</Media>
 						</Panel.Footer>
 					 </Panel>
+					 </form>
 				</Col>
 				<Col lg={4} >
 					<ProfileCard user={this.props.user}/>

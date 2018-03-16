@@ -25,6 +25,7 @@ class Dropdown extends Component {
 
   render() {
     let profile_path = '/users/' + this.props.user.id
+	let edit_path = '/edit'
     return (
     
      <ButtonToolbar >
@@ -35,7 +36,8 @@ class Dropdown extends Component {
             id="dropdown-no-caret"
           >
             <MenuItem eventKey="1" href={profile_path} >My profile</MenuItem>    
-            <MenuItem divider />
+			<MenuItem eventKey="2" href={edit_path}>Edit Profile </MenuItem>
+			<MenuItem divider />
             <MenuItem eventKey="4" onClick={logOut}> Logout  </MenuItem>
           </DropdownButton>
 
