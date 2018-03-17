@@ -1,4 +1,4 @@
-import React, { Component, View, Hr } from 'react'
+import React, { Component} from 'react'
 import { Alert, Panel, Col, Media, Button, Row, Form, FormGroup , FormControl, Grid, ControlLabel} from 'react-bootstrap'
 import { fetchAPI } from './../../utility'
 import { updateUser, login } from '../../../store/auth'
@@ -365,15 +365,17 @@ class Edit extends Component {
 										  </Row>
 										  <Row>{/*Change password*/}
 											<Col sm={4}><b><big>Password</big></b><br></br><small>Password must be at least 6 characters.</small> <br></br><br></br>Current Password: </Col>
-											<Col sm={4}><br></br><br></br><br></br><textarea cols="45" rows="1" label="Current Password" onChange={(e) => this.handleCurrentPwChange(e)}/></Col>
+											<Col sm={4}><br></br><br></br><br></br><FormControl style={{height:'30px', width:'147%'}} type="password" onChange={(e) => this.handleCurrentPwChange(e)}/></Col>
 										  </Row>
 										  <Row>
+											<br></br>
 											<Col sm={4}>New Password:</Col>
-											<Col sm={4}><textarea cols="45" rows="1" label="New Password" onChange={(e) => this.handleNewPwChange(e)}/></Col>
+											<Col sm={4}><FormControl style={{height:'30px', width:'147%'}} type="password" onChange={(e) => this.handleNewPwChange(e)}/></Col>
 										  </Row>
 										  <Row>
+											<br></br>
 											<Col sm={4}>Re-enter New Password: </Col>
-											<Col sm={4}><textarea cols="45" rows="1" label="New Password2" onChange={(e) => this.handleVerifyNewPwChange(e)}/></Col>
+											<Col sm={4}><FormControl style={{height:'30px', width:'147%'}} type="password" onChange={(e) => this.handleVerifyNewPwChange(e)}/></Col>
 										  </Row>
 										</Grid>
 										</Panel.Body>
