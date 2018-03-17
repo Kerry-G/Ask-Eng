@@ -105,7 +105,7 @@ class QuestionPage extends Component {
                         </Col>
                     </Row>
                     <Row className="question-box-text">
-                        <Col xs={1} md={1}>
+                        <Col xs={2} md={1}>
                             <Votes
                                 question={this.state.question}
                                 status = {this.state.question.vote_status}
@@ -113,7 +113,7 @@ class QuestionPage extends Component {
                                 comment_status = {'question'}
                             /> 
                         </Col>
-                        <Col xs={11} md={11}>
+                        <Col xs={10} md={11}>
                             <h1>{this.state.question.title}</h1>
                             <p>{this.state.question.text}</p>
                         </Col>

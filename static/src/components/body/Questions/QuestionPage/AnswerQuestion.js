@@ -76,7 +76,7 @@ class AnswerQuestion extends Component {
                         className="ask-box text"
 						ref="answering"
                         rows="5"
-                        placeholder="Answer away!"
+                        placeholder="Know the answer?"
                         onChange={(e) => this.handleAnswerChange(e)} />
                 </div>
                 <div className="ask-box-footer">
