@@ -18,9 +18,9 @@ class Header extends Component {
             </Link>    
           </h1>
         </Col>
-        <Col  xs={5} lg={5}>
+        <Col xs={5} lg={5}>
           <div className ="menu">
-            <Col lgOffset ={8}>
+            <Col style={{float: "right"}}>
               <Headermenu
               user = {this.props.user}/>
             </Col>

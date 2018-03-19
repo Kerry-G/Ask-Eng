@@ -36,7 +36,7 @@ class Dropdown extends Component {
             id="dropdown-no-caret"
           >
             <MenuItem eventKey="1" href={profile_path} >My profile</MenuItem>    
-			<MenuItem eventKey="2" href={edit_path}>Edit Profile </MenuItem>
+			<MenuItem eventKey="2" href={edit_path}>Edit profile </MenuItem>
 			<MenuItem divider />
             <MenuItem eventKey="4" onClick={logOut}> Logout  </MenuItem>
           </DropdownButton>
