@@ -47,7 +47,7 @@ class Answer extends Component {
       return (
         <div key={this.props.answer.id} className="question-box">
           <Row>
-            <Col lg={2} md={2} xs={2}>
+            <Col>
               <Votes
                   question = {this.props.answer}
                   status = {this.props.answer.vote_status}
@@ -55,7 +55,7 @@ class Answer extends Component {
                   comment_status = {'answer'}
               />
             </Col>
-            <Col lg={10} md={10} xs={10}>
+            <Col>
               <h1>{this.props.answer.title}</h1>
               <Image src={avatarPath} width={24} circle /> {this.state.fname} {this.state.lname}
               &nbsp;- {moment(this.props.answer.register_date).format("LLL")}
