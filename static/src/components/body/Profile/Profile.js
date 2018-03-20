@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Col, Nav, NavItem, NavDropdown, MenuItem } from 'react-bootstrap'
+import { Col, Nav, NavItem, NavDropdown, MenuItem, Grid } from 'react-bootstrap'
 import { fetchAPI } from '../../utility'
 import { connect } from 'react-redux'
 import ProfileCard from './ProfileCard'
@@ -102,29 +102,30 @@ class Profile extends Component {
 
 		return (
 			<div>
-				<Col lg={8}>
-				<Nav bsStyle="tabs" activeKey={this.state.activeKey} onSelect={k => this.handleSelect(k)}>
-					<NavItem onClick={() => { this.setState({ activeQuery: "0" }) }} eventKey="0">
-						Question
-						
-			</NavItem>
-			
-					<NavDropdown eventKey="6" title="Sort" id="nav-dropdown">
-						<MenuItem onClick={() => this.setState({ extraQuery: "&sort=title" })} eventKey="6.1">Title</MenuItem>
-						<MenuItem onClick={() => this.setState({ extraQuery: "&sort=register_date&reverse=1" })} eventKey="6.2">Newest</MenuItem>
-						<MenuItem onClick={() => this.setState({ extraQuery: "&sort=register_date&reverse=0" })} eventKey="6.3">Oldest</MenuItem>
-						<MenuItem onClick={()=>this.setState({extraQuery:"&sort=downs"})} eventKey="6.4">Ups</MenuItem>
-						<MenuItem onClick={()=>this.setState({extraQuery:"&sort=ups"})} eventKey="6.5">Downs</MenuItem>
-					</NavDropdown>
-					<Search
-						handleSearch={(word) => this.handleSearch(word)}
-					/>
-				</Nav>
-					{questions}
-				</Col>
-				<Col lg={4} >
-					{ProfileInfo}
-				</Col>
+				<Grid>
+					<Col lg={8}>
+					<Nav bsStyle="tabs" activeKey={this.state.activeKey} onSelect={k => this.handleSelect(k)}>
+						<NavItem onClick={() => { this.setState({ activeQuery: "0" }) }} eventKey="0">
+							Question
+							
+						</NavItem>
+						<NavDropdown eventKey="6" title="Sort" id="nav-dropdown">
+							<MenuItem onClick={() => this.setState({ extraQuery: "&sort=title" })} eventKey="6.1">Title</MenuItem>
+							<MenuItem onClick={() => this.setState({ extraQuery: "&sort=register_date&reverse=1" })} eventKey="6.2">Newest</MenuItem>
+							<MenuItem onClick={() => this.setState({ extraQuery: "&sort=register_date&reverse=0" })} eventKey="6.3">Oldest</MenuItem>
+							<MenuItem onClick={()=>this.setState({extraQuery:"&sort=downs"})} eventKey="6.4">Ups</MenuItem>
+							<MenuItem onClick={()=>this.setState({extraQuery:"&sort=ups"})} eventKey="6.5">Downs</MenuItem>
+						</NavDropdown>
+						<Search
+							handleSearch={(word) => this.handleSearch(word)}
+						/>
+					</Nav>
+						{questions}
+					</Col>
+					<Col lg={4} >
+						{ProfileInfo}
+					</Col>
+				</Grid>
 			</div>
 		);
 	}

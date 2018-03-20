@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { ButtonToolbar, DropdownButton,MenuItem } from 'react-bootstrap'
+import { ButtonToolbar, DropdownButton, MenuItem, Image } from 'react-bootstrap'
 import { logOut } from '..//..//store//auth'
 import FontAwesome from 'react-fontawesome' 
 import ChooseAvatar from '..//body//LoginBox//ChooseAvatar'
@@ -25,20 +25,29 @@ class Dropdown extends Component {
 
   render() {
     let profile_path = '/users/' + this.props.user.id
-	let edit_path = '/edit'
+    let edit_path = '/edit'
+    
+    let avatarPath;
+
+    if (this.props.user.display_image !== ""){
+      avatarPath = "\\images\\avatar\\" + this.props.user.display_image;
+    } else {
+      avatarPath = "\\images\\avatar\\4.png";
+    }
+    // replaced <FontAwesome name='fas fa-cog fa-2x' /> with avatar for mobile friendliness (see Headermenu.js)
     return (
     
-     <ButtonToolbar >
+     <ButtonToolbar>
           <DropdownButton
             bsStyle="default"
-            title = {<FontAwesome name='fas fa-cog fa-2x' />}
-            noCaret
+            title = {<Image src={avatarPath} onClick={this.handleShowAvatar} width={50} circle />}
+            pullRight
             id="dropdown-no-caret"
           >
             <MenuItem eventKey="1" href={profile_path} >My profile</MenuItem>    
-			<MenuItem eventKey="2" href={edit_path}>Edit profile </MenuItem>
-			<MenuItem divider />
-            <MenuItem eventKey="4" onClick={logOut}> Logout  </MenuItem>
+			      <MenuItem eventKey="2" href={edit_path}>Edit profile</MenuItem>
+			      <MenuItem divider />
+            <MenuItem eventKey="4" onClick={logOut}>Logout</MenuItem>
           </DropdownButton>
 
     </ButtonToolbar > 

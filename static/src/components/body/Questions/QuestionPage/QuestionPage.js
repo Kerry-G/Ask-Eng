@@ -1,6 +1,6 @@
 import React, {Component} from 'react'
 import {fetchAPI} from '../../../utility'
-import {Col, Row, Image} from 'react-bootstrap'
+import {Col, Row, Image, Grid} from 'react-bootstrap'
 import Answer from './Answer.js'
 import AnswerQuestion from './AnswerQuestion.js'
 import moment from 'moment'
@@ -97,10 +97,11 @@ class QuestionPage extends Component {
          }
             return (
                 <div className="answer-page">
+                <Grid>
                     <Row>
-                        <Col md={12}>
+                        <Col>
                             <span className="question-tag-answer">{this.state.question.engineer}</span>
-                            submitted by <Image src={avatarPath} width={24} circle /> {this.state.fname} {this.state.lname}
+                            <Image src={avatarPath} width={24} circle /> {this.state.fname} {this.state.lname}
                             &nbsp;- {moment(this.state.question.register_date).format("LLL")} 
                         </Col>
                     </Row>
@@ -118,6 +119,7 @@ class QuestionPage extends Component {
                             <p>{this.state.question.text}</p>
                         </Col>
                     </Row>
+                </Grid>
                     {askQuestion}
                     <div>
                         {answers}

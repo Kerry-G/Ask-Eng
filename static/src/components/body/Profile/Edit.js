@@ -325,7 +325,7 @@ class Edit extends Component {
 												<b><big>First Name:</big></b>
 											</Col>
 											<Col sm={4}>
-												<textarea cols="45" rows="1" label="First Name" onChange={(e) => this.handleFnameChange(e)}/>
+												<FormControl style={{height:'30px', width:'100%'}} label="First Name" onChange={(e) => this.handleFnameChange(e)}/>
 											</Col>
 											<br/><hr></hr>
 										</Row>
@@ -334,7 +334,7 @@ class Edit extends Component {
 												<b><big>Last Name:</big></b>
 											</Col>
 											<Col sm={4}>
-												<textarea cols="45" rows="1" label="Last Name" onChange={(e) => this.handleLnameChange(e)}/>	
+												<FormControl style={{height:'30px', width:'100%'}} label="Last Name" onChange={(e) => this.handleLnameChange(e)}/>	
 											</Col>
 											<br/><hr></hr>
 										</Row>
@@ -343,7 +343,7 @@ class Edit extends Component {
 												<b><big>Email:</big></b><br/><small>Email must be available.</small>
 											</Col>
 											<Col sm={4}>
-												<textarea cols="45" rows="1" label="Email" onChange={(e) => this.handleEmailChange(e)}/>
+												<FormControl style={{height:'30px', width:'100%'}} label="Email" onChange={(e) => this.handleEmailChange(e)}/>
 											</Col>
 											<br/><br/><hr></hr>
 										</Row>
@@ -419,8 +419,7 @@ class Edit extends Component {
 									</Panel.Body>
 									<Panel.Footer>
 										<Media>
-											<Col sm={12}>
-												<Link to={exit}><Button className = "reg-btn-color">Home</Button></Link>&nbsp;&nbsp;&nbsp;&nbsp;
+											<Col sm={12} xs={12} lg={12}>
 												<Button  className = "reg-btn-color" onClick={() => this.handleReset()}>Reset form</Button>
 												<Button style={{float: "right"}} className = "reg-btn-color" onClick={() => this.handleSubmit()}>Submit</Button> 
 											</Col>

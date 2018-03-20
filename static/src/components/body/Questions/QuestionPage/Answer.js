@@ -47,18 +47,17 @@ class Answer extends Component {
       return (
         <div key={this.props.answer.id} className="question-box">
           <Row>
-            <Col lg={2} md={4} xs={5}>
+            <Col lg={2} md={2} xs={2}>
               <Votes
                   question = {this.props.answer}
                   status = {this.props.answer.vote_status}
                   user={this.props.user}
                   comment_status = {'answer'}
               />
-              <Image src={avatarPath} width={64} circle />
             </Col>
-            <Col lg={10} md={8} xs={7}>
+            <Col lg={10} md={10} xs={10}>
               <h1>{this.props.answer.title}</h1>
-              {this.state.fname} {this.state.lname}
+              <Image src={avatarPath} width={24} circle /> {this.state.fname} {this.state.lname}
               &nbsp;- {moment(this.props.answer.register_date).format("LLL")}
               <p>{this.props.answer.text}</p>
             </Col>

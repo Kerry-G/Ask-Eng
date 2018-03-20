@@ -20,8 +20,8 @@ class Headermenu extends Component {
         <Dropdown
           user={this.props.user}
         />
-         <Image src={avatarPath} onClick={this.handleShowAvatar} width={64} circle />
       </div>;
+      //removed <Image src={avatarPath} onClick={this.handleShowAvatar} width={40} circle /> for mobile friendliness (see Dropdown.js)
     }
 
     return (
