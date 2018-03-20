@@ -121,6 +121,7 @@ class Profile extends Component {
 						/>
 					</Nav>
 						{questions}
+						<br/>
 					</Col>
 					<Col lg={4} >
 						{ProfileInfo}
