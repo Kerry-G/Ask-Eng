@@ -1,5 +1,5 @@
 import React from 'react';
-import { Login } from './../components/body/LoginBox/Login';
+import Login from './../components/body/LoginBox/Login';
 import { mount,shallow } from 'enzyme';
 
 
