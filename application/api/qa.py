@@ -60,11 +60,19 @@ def questionsRoute():
 		# make the response a json object
 		response = json.dumps({'success': success, 'status': status, 'message': message, 'question': question})
 	elif request.method == 'POST':
-
+		# get tags from post request, if not set then there are no tags
+		try:
+			tags = data['tags']
+		except:
+			tags = ''
+		
 		# Create a user and find our whether it is successful or not
-		question = Questions.createQuestion(data['title'], data['text'], data['engineer'], data['user_id'])
+		question = Questions.createQuestion(data['title'], data['text'], data['engineer'], data['user_id'], tags=tags)
 
+		print("---------------------")
 		app.logger.info(question)
+		print("---------------------")
+
 		if question is not None:
 			success = True
 			status = "OK"
@@ -159,6 +167,24 @@ def questionsIDRoute(id):
 
 	return response
 
+# TAG ROUTE
+@qa.route('/api/qa/tags/<string:id>', methods=httpMethods)
+def updateTags(id):
+	data = request.args.to_dict()
+
+	if request.method == 'PUT':
+		try:
+			Questions.updateTags(id,data['tags'])
+			app.logger.info(data['tags'])
+			response = json.dumps({'success': True, 'status':'OK', 'message':'Tags updated.'})
+		except KeyError:
+			response = json.dumps({'success':False, 'status':'FAILURE', 'message': 'Tags not updated.'})
+	else:
+		response = json.dumps({'success': False, 'status': 'FAILURE', 'message': 'Not proper keys.'})
+	
+	return response
+
+
 @qa.route('/api/qa/answer/', methods=httpMethods)
 def answerQuestion():
 	data = toDict(request.data)  # toDict takes the request data and converts it to a dictionary
@@ -173,7 +199,6 @@ def answerQuestion():
 
 		# Create a user and find our whether it is successful or not
 		answer = Answers.createAnswer(data['text'], data['user_id'], data['question_id'])
-
 
 		if answer is not None:
 			answer['user'] = Users.getUser(answer['user_id'])

@@ -22,6 +22,7 @@ class Question(db.Model):
 	user_id = db.Column(db.Integer, nullable=False)
 	ups = db.Column(db.Integer)
 	downs = db.Column(db.Integer)
+	tags = db.Column(db.String(1000))
 
 	def __repr__(self):
 		return '<Question %r>' % self.id
@@ -37,6 +38,9 @@ class Question(db.Model):
 		yield 'user_id', self.user_id
 		yield 'ups', self.ups
 		yield 'downs', self.downs
+		yield 'tags', self.tags
+	
+
 
 
 # Initializes the database
@@ -49,10 +53,10 @@ def questionExists(id):
 
 
 # Returns True if user is created
-def createQuestion(title, text, engineer, user_id):
+def createQuestion(title, text, engineer, user_id,tags=""):
 	try:
 		# Create the new Question
-		question = Question(title=title, text=text, engineer=engineer, closed=False, user_id=user_id, ups=0, downs=0)
+		question = Question(title=title, text=text, engineer=engineer, closed=False, user_id=user_id, ups=0, downs=0, tags=tags)
 
 		# Add it
 		db.session.add(question)
@@ -102,7 +106,14 @@ def modifyQuestion(id, title, text, engineer):
 		response = question
 	return response
 
-
+def updateTags(id, tags):
+	response = False
+	question = Question.query.filter_by(id=id).first()
+	if question is not None:
+		question.tags = tags
+		db.session.commit()
+		response = True
+	return response
 
 
 # Get all Question returns list of users or an empty list
