@@ -7,10 +7,10 @@ import os
 def test_questions():
     Questions.createQuestion("Question", "Please Answer", "software", 1)
     questions = Questions.getQuestionsByUser(1, 0)
-    #if questions:
-    #    return 0
-    #else:
-    #    return 1
+    if questions:
+        return 0
+    else:
+        return 1
     return 0
 
 
@@ -22,6 +22,7 @@ def test_answers():
     #else:
     #    return 1
     return 0
+
 
 def test_users():
     # test with non existing user
@@ -57,6 +58,29 @@ def test_users():
     if user["password_hash"] == "wookie":
         return 12
 
+    if Users.userIsConfirmed(user["id"]):
+        return 13
+    Users.confirmUser(user["id"])
+    if not Users.userIsConfirmed(user["id"]):
+        return 14
+
+    user2 = Users.getUserById(user["id"])
+
+    if user["fname"] != user2["fname"]:
+        return 15
+    if user["password_hash"] != user2["password_hash"]:
+        return 16
+
+    Users.updatePassword(user["email"], "wookie", "falcon")
+    if Users.userVerified("starwarsfan", "wookie"):
+        return 17
+    if not Users.userVerified("starwarsfan", "falcon"):
+        return 18
+
+    Users.deleteUser("starwarsfan")
+    if Users.getUser("starwarsfan"):
+        return 19
+
     return 0
 
 
@@ -76,19 +100,28 @@ CORS(app)
 
 if __name__ == '__main__':
     from application.models import Answers, Questions, Users
-
+    max_return_code = 0
     return_code = test_users()
     if return_code != 0:
         print("backend Test failed at User, Rc=" + str(return_code))
-        exit(return_code)
+
+    if return_code > max_return_code:
+        max_return_code = return_code
+
     return_code = test_questions()
     if return_code != 0:
         print("backend Test failed at Question, Rc=" + str(return_code))
-        exit(return_code)
+
+    if return_code > max_return_code:
+        max_return_code = return_code
+
     return_code = test_answers()
     if return_code != 0:
         print("backend Test failed at Answers, Rc=" + str(return_code))
-        exit(return_code)
+
+    if return_code > max_return_code:
+        max_return_code = return_code
+
     print("Backend Test completed")
-    exit(0)
+    exit(max_return_code)
 
