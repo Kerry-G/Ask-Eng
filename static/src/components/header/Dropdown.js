@@ -1,8 +1,6 @@
 import React, { Component } from 'react'
 import { ButtonToolbar, DropdownButton, MenuItem, Image } from 'react-bootstrap'
 import { logOut } from '..//..//store//auth'
-import FontAwesome from 'react-fontawesome' 
-import ChooseAvatar from '..//body//LoginBox//ChooseAvatar'
 
 class Dropdown extends Component {
 
@@ -40,7 +38,7 @@ class Dropdown extends Component {
      <ButtonToolbar>
           <DropdownButton
             bsStyle="default"
-            title = {<Image src={avatarPath} onClick={this.handleShowAvatar} width={50} circle />}
+            title = {<Image src={avatarPath} onClick={this.handleShowAvatar} width={40} circle />}
             pullRight
             id="dropdown-no-caret"
           >

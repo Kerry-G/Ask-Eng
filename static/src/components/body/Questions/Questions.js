@@ -1,9 +1,7 @@
 import React, { Component } from 'react'
 import { fetchAPI } from '../../utility'
-import { Nav, NavItem, NavDropdown, MenuItem, Button } from 'react-bootstrap'
+import { Nav, NavItem, NavDropdown, MenuItem } from 'react-bootstrap'
 import Question from './Question'
-import FontAwesome from 'react-fontawesome'
-import moment from 'moment'
 import Search from '../Questions/Search'
 
 

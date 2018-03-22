@@ -7,7 +7,7 @@ class Votes extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            vote : parseInt(this.props.question.ups - this.props.question.downs),
+            vote : parseInt(this.props.question.ups - this.props.question.downs,10),
             color: "black",
             status: 0, //0 means no vote, 1 means upvoted, -1 means downvoted
         };
@@ -24,7 +24,7 @@ class Votes extends Component {
     }
 
     componentDidMount(){
-        this.setState({status: parseInt(this.props.status)})
+        this.setState({status: parseInt(this.props.status,10)})
     }
 
     async vote(version) {

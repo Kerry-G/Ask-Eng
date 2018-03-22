@@ -45,7 +45,9 @@ class Register extends Component {
      * @author Kerry Gougeon
      */
     validateEmail(mail) {
+        /*eslint-disable*/
         if (/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(mail)) {
+        /*eslint-enable*/
             this.setState({
                 validEmail: "success"
             })

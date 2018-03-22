@@ -1,12 +1,10 @@
 import React, { Component} from 'react'
-import { Alert, Panel, Col, Media, Button, Row, Form, FormGroup , FormControl, Grid, ControlLabel} from 'react-bootstrap'
+import { Alert, Panel, Col, Media, Button, Row, FormControl, Grid,} from 'react-bootstrap'
 import { fetchAPI } from './../../utility'
-import { updateUser, login } from '../../../store/auth'
-import FontAwesome from 'react-fontawesome' 
+import { updateUser } from '../../../store/auth'
 import { connect } from 'react-redux'
 import ChooseAvatar from '../LoginBox/ChooseAvatar'
 import ProfileCard from './ProfileCard'
-import { Link } from 'react-router-dom'
 import Select from 'react-select'
 
 class Edit extends Component {
@@ -80,7 +78,7 @@ class Edit extends Component {
 		this.setState({processing: true, submitted: true})
 		//Modifying email cases.
 		//Case 1: Email entered is valid and is not the original email.
-		if (this.state.validEmail && this.state.email != this.props.user.email){
+		if (this.state.validEmail && this.state.email !== this.props.user.email){
 			this.checkEmail()
 		}
 		//Case 2: Email entered is not valid.
@@ -90,7 +88,7 @@ class Edit extends Component {
 			})
 		}
 		//Case 3: No new email is entered.
-		else if (this.state.email == this.props.user.email)
+		else if (this.state.email === this.props.user.email)
 			this.setState({emailVerified: true}, function(){
 				this.modifyingPassword()
 			})
@@ -101,11 +99,11 @@ class Edit extends Component {
 	modifyingPassword(){
 
 		//modifying password cases. Case 1: all fields are entered, new password is valid and new passwords match.
-		if (this.state.currentpw!='' && this.state.newpw!='' && this.state.verifynewpw!='' && this.state.matchingPasswords && this.state.validPassword){
+		if (this.state.currentpw!=='' && this.state.newpw!=='' && this.state.verifynewpw!=='' && this.state.matchingPasswords && this.state.validPassword){
 			this.modifyPassword()
 		}
 		//Case 2: At least one of the fields is empty, or the new passwords do not match, or the new password is not valid.
-		else if (((this.state.currentpw!='' || this.state.newpw !='' || this.state.verifynewpw!='') && (this.state.currentpw=='' || this.state.newpw=='' || this.state.verifynewpw=='')) || !this.state.validPassword || !this.state.matchingPasswords){
+		else if (((this.state.currentpw!=='' || this.state.newpw !=='' || this.state.verifynewpw!=='') && (this.state.currentpw==='' || this.state.newpw==='' || this.state.verifynewpw==='')) || !this.state.validPassword || !this.state.matchingPasswords){
 			this.setState({passwordChanged: false}, function(){
 				this.endSubmission()
 			})
@@ -120,7 +118,7 @@ class Edit extends Component {
 	modifyingInfo(){
 		//Modifying rest of information (fname, lname, engineering). All cases check that email and password changes were successful.
 		//Case 1: At least of the fields is not empty. Mark the end of the submission by setting 'processing' to false.
-		if (this.state.passwordChanged && this.state.emailVerified && (this.state.fname != this.props.user.fname || this.state.lname != this.props.user.lname || this.state.eng != this.props.user.engineer || this.state.email != this.props.user.email) ){
+		if (this.state.passwordChanged && this.state.emailVerified && (this.state.fname !== this.props.user.fname || this.state.lname !== this.props.user.lname || this.state.eng !== this.props.user.engineer || this.state.email !== this.props.user.email) ){
 			this.modifyUserInfo()
 			this.setState({processing: false})
 		}
@@ -208,15 +206,18 @@ class Edit extends Component {
 
 	//Method to check whether or not the new email is of correct format.
 	validateEmail(mail) {
-        if (/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(mail)) {
-            this.setState({
+		/* eslint-disable*/
+		if (/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(mail)) {
+		/* eslint-enable*/	
+			this.setState({
                 validEmail: true
             })
         } else {
             this.setState({
                 validEmail: false
             })
-        }
+		}
+		
     }
 
 	//Method to check if the new password is valid.
@@ -234,7 +235,7 @@ class Edit extends Component {
 
 	//Method to check if the new password and re-entered new password match. 
 	passwordMatching(pw1, pw2){
-		if (pw1==pw2)
+		if (pw1===pw2)
 			this.setState({matchingPasswords : true})
 		else
 			this.setState({matchingPasswords : false})
@@ -297,8 +298,6 @@ class Edit extends Component {
 		if (this.state.passwordChanged && alert==null && this.state.emailVerified  && !this.state.processing && this.state.submitted){
 			 updated = <div className="flash animated" id="sucess"><Alert bsStyle="success">Updated Information!</Alert></div>
 		}
-
-	    let exit = '/';
 
 		let userState=null;
 		if ((Object.keys(this.props.user).length === 0 && this.props.user.constructor === Object))

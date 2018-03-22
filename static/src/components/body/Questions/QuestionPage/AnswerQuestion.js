@@ -2,7 +2,6 @@ import React, { Component } from 'react'
 import { Button } from 'react-bootstrap'
 import { fetchAPI } from '../../../utility'
 import { connect } from 'react-redux'
-import { withRouter } from 'react-router'
 
 class AnswerQuestion extends Component {
     constructor(props) {
