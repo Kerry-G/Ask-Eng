@@ -14,8 +14,6 @@ def test_questions():
     if questions.questionExists(1):
         return 1
     
-
-
     Questions.createQuestion("Question", "Please Answer", "software", id)
     questions = Questions.getQuestionsByUser(id, 0)
     if not questions:
@@ -102,7 +100,7 @@ def test_users():
     if not Users.userVerified("starwarsfan", "falcon"):
         return 18
 
-    Users.deleteUser("starwarsfan")
+    Users.deleteUser(1)
     if Users.getUser("starwarsfan"):
         return 19
 
