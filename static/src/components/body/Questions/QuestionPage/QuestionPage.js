@@ -55,6 +55,7 @@ class QuestionPage extends Component {
         try {
             fetchAPI("GET", "/api/users/" + this.state.user_id).then(response => {
             if (response.success) {
+                console.log(response.user)
                 this.setState({
                     fname: response.user.fname,
                     lname: response.user.lname,
@@ -67,8 +68,11 @@ class QuestionPage extends Component {
     }
 
     render() {
+        let tags = ["stuff", "try","Ok","Node.js"];
         let avatarPath = `\\images\\avatar\\`+this.state.display_image;
         if (!this.state.loading) {
+            let userLogin = !((Object.keys(this.props.user).length === 0 && this.props.user.constructor === Object)) //if no user is login
+            let askQuestion;
             let answers = this.state.question.answers.map((answer) => {
                 return (
                     <div key={answer.id}>
@@ -78,9 +82,13 @@ class QuestionPage extends Component {
                         />
                     </div>
             )});
-
-         let userLogin = !((Object.keys(this.props.user).length === 0 && this.props.user.constructor === Object)) //if no user is login
-         let askQuestion;
+            let tagsInfo = tags.map((tag)=>{
+                return (
+                    <span key={tag} className="question-tags">
+                        {tag}
+                    </span>
+                )
+            })
          if(userLogin){
             askQuestion = <Row>
                 <Col md={12}>
@@ -92,41 +100,43 @@ class QuestionPage extends Component {
                     </div>
                 </Col>
             </Row>
-         } else {
-             askQuestion = null;
-         }
-            return (
-                <div className="answer-page">
-                <Grid>
-                    <Row>
-                        <Col>
-                            <span className="question-tag-answer">{this.state.question.engineer}</span>
-                            <Image src={avatarPath} width={24} circle /> {this.state.fname} {this.state.lname}
-                            &nbsp;- {moment(this.state.question.register_date).format("LLL")} 
-                        </Col>
-                    </Row>
-                    <Row className="question-box-text">
-                        <Col>
-                            <Votes
-                                question={this.state.question}
-                                status = {this.state.question.vote_status}
-                                user={this.props.user}
-                                comment_status = {'question'}
-                            /> 
-                        </Col>
-                        <Col>
-                            <h1>{this.state.question.title}</h1>
-                            <p>{this.state.question.text}</p>
-                        </Col>
-                    </Row>
-                    {askQuestion}
-                    <div>
-                        {answers}
-                    </div>
-                </Grid>
+         } else { askQuestion = null; }
+        
+         return (
+            <div className="answer-page">
+            <Grid>
+                <Row>
+                    <Col>
+                        <span className="question-tag-answer">{this.state.question.engineer}</span>
+                        <Image src={avatarPath} width={24} circle /> {this.state.fname} {this.state.lname}
+                        &nbsp;- {moment(this.state.question.register_date).format("LLL")} 
+                        <span className="question-tags-answer">
+                        {tagsInfo}
+                        </span>
+                    </Col>
+                </Row>
+                <Row className="question-box-text">
+                    <Col>
+                        <Votes
+                            question={this.state.question}
+                            status = {this.state.question.vote_status}
+                            user={this.props.user}
+                            comment_status = {'question'}
+                        /> 
+                    </Col>
+                    <Col>
+                        <h1>{this.state.question.title}</h1>
+                        <p>{this.state.question.text}</p>
+                    </Col>
+                </Row>
+                {askQuestion}
+                <div>
+                    {answers}
                 </div>
-            )
-        } else {
+            </Grid>
+            </div>
+        )
+    } else {
             return <h2>Loading...</h2>
         }
     }
