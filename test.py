@@ -5,12 +5,30 @@ import os
 
 
 def test_questions():
-    Questions.createQuestion("Question", "Please Answer", "software", 1)
-    questions = Questions.getQuestionsByUser(1, 0)
-    #if questions:
-    #    return 0
-    #else:
-    #    return 1
+    # create test user
+    Users.createUser("Mark", "Hamill", "starwarsfan", "wookie", "Space", "chewbaca", True)
+    id = Users.getUserId("starwarsfan")
+ 
+    if Questions.questionExists(1):
+        return 1
+    
+ 
+
+    Questions.createQuestion("Question", "Please Answer", "software", id)
+    questions = Questions.getQuestionsByUser(id, 0)
+    if not questions:
+        return 2
+    
+    question = Questions.getQuestion(1)
+    if not question:
+        return 3
+    
+    if not Questions.getQuestionByEngineer('software', id):
+        return 4
+ 
+    if not Questions.deleteQuestion(1):
+        return 5
+ 
     return 0
 
 
@@ -22,6 +40,7 @@ def test_answers():
     #else:
     #    return 1
     return 0
+
 
 def test_users():
     # test with non existing user
@@ -57,6 +76,26 @@ def test_users():
     if user["password_hash"] == "wookie":
         return 12
 
+    if Users.userIsConfirmed(user["id"]):
+        return 13
+    Users.confirmUser(user["id"])
+    if not Users.userIsConfirmed(user["id"]):
+        return 14
+
+    user2 = Users.getUserById(user["id"])
+
+    if user["fname"] != user2["fname"]:
+        return 15
+    if user["password_hash"] != user2["password_hash"]:
+        return 16
+
+    Users.updatePassword(user["email"], "wookie", "falcon")
+    if Users.userVerified("starwarsfan", "wookie"):
+        return 17
+    if not Users.userVerified("starwarsfan", "falcon"):
+        return 18
+
+
     return 0
 
 
@@ -76,19 +115,28 @@ CORS(app)
 
 if __name__ == '__main__':
     from application.models import Answers, Questions, Users
-
+    max_return_code = 0
     return_code = test_users()
     if return_code != 0:
         print("backend Test failed at User, Rc=" + str(return_code))
-        exit(return_code)
+
+    if return_code > max_return_code:
+        max_return_code = return_code
+
     return_code = test_questions()
     if return_code != 0:
         print("backend Test failed at Question, Rc=" + str(return_code))
-        exit(return_code)
+
+    if return_code > max_return_code:
+        max_return_code = return_code
+
     return_code = test_answers()
     if return_code != 0:
         print("backend Test failed at Answers, Rc=" + str(return_code))
-        exit(return_code)
+
+    if return_code > max_return_code:
+        max_return_code = return_code
+
     print("Backend Test completed")
-    exit(0)
+    exit(max_return_code)
 
