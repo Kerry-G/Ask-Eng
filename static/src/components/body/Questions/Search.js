@@ -1,6 +1,5 @@
 import React, { Component } from 'react'
-import { Form, FormControl, Button} from 'react-bootstrap'
-import FontAwesome from 'react-fontawesome' 
+import { Form, FormControl} from 'react-bootstrap'
 
 class Search extends Component{
     render() {

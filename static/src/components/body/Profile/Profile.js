@@ -5,7 +5,7 @@ import { connect } from 'react-redux'
 import ProfileCard from './ProfileCard'
 import Question from '..//Questions//Question'
 import Search from '..//Questions//Search'
-import Edit from './Edit'
+
 
 class Profile extends Component {
 	constructor(props) {
@@ -45,7 +45,7 @@ class Profile extends Component {
 
 	async getQuestions() {
 		try {
-			fetchAPI("GET", "/api/qa/questions/?loggedin_id" +  "=" + this.props.user.id + this.state.extraQuery).then(response => {
+			fetchAPI("GET", "/api/qa/questions/?loggedin_id=" + this.props.user.id + this.state.extraQuery).then(response => {
 				if (response.success) {
 					this.setState({
 						questions: response.questions
@@ -58,7 +58,7 @@ class Profile extends Component {
 	handleSearch(word){
 		try{
 		  let results = [];
-		  fetchAPI("GET", "/api/qa/questions/?loggedin_id" +  "=" + this.props.user.id + this.state.extraQuery).then(response => {
+		  fetchAPI("GET", "/api/qa/questions/?loggedin_id=" + this.props.user.id + this.state.extraQuery).then(response => {
 			if (response.success) {
 			  let questions = response.questions
 			  for (let i in questions){
@@ -90,7 +90,7 @@ class Profile extends Component {
 		})
 		let ProfileInfo;
 		//Own account
-		if (!this.state.alert && (this.props.match.params.id == this.props.user.id)) {
+		if (!this.state.alert && (this.props.match.params.id === this.props.user.id)) {
 			ProfileInfo = <div> 
 				<ProfileCard user={this.props.user} />
 			 </div> 
@@ -107,7 +107,6 @@ class Profile extends Component {
 					<Nav bsStyle="tabs" activeKey={this.state.activeKey} onSelect={k => this.handleSelect(k)}>
 						<NavItem onClick={() => { this.setState({ activeQuery: "0" }) }} eventKey="0">
 							Question
-							
 						</NavItem>
 						<NavDropdown eventKey="6" title="Sort" id="nav-dropdown">
 							<MenuItem onClick={() => this.setState({ extraQuery: "&sort=title" })} eventKey="6.1">Title</MenuItem>

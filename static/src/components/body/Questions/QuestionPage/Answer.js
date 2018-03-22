@@ -1,7 +1,6 @@
 import React, { Component } from 'react'
 import {fetchAPI} from '../../../utility'
 import { Col, Row, Image } from 'react-bootstrap'
-import FontAwesome from 'react-fontawesome'
 import moment from 'moment'
 import Votes from "../../../votes/Votes"
 import { connect } from 'react-redux'
