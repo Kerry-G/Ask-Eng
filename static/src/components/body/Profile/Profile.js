@@ -5,6 +5,7 @@ import { connect } from 'react-redux'
 import ProfileCard from './ProfileCard'
 import Question from '..//Questions//Question'
 import Search from '..//Questions//Search'
+import { updateUser } from './../../../store/auth'
 
 
 class Profile extends Component {
@@ -92,6 +93,7 @@ class Profile extends Component {
 		//Own account
 		if (!this.state.alert && (this.props.match.params.id === this.props.user.id)) {
 			ProfileInfo = <div> 
+				{updateUser(this.state.user)}
 				<ProfileCard user={this.props.user} />
 			 </div> 
 		} else if (!this.state.alert && (!(this.props.match.params.id === this.state.id))) { //viewing another person's profile
