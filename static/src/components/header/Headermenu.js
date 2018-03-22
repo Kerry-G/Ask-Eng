@@ -1,5 +1,4 @@
 import React, { Component } from 'react'
-import { Image } from 'react-bootstrap'
 import Dropdown from '../header/Dropdown'
 
 class Headermenu extends Component {
