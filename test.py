@@ -5,12 +5,37 @@ import os
 
 
 def test_questions():
-    Questions.createQuestion("Question", "Please Answer", "software", 1)
-    questions = Questions.getQuestionsByUser(1, 0)
-    if questions:
-        return 0
-    else:
+
+
+    # create test user
+    Users.createUser("Mark", "Hamill", "starwarsfan", "wookie", "Space", "chewbaca", True)
+    id = getUserId("starwarsfan")
+
+    if questions.questionExists(1):
         return 1
+    
+
+
+    Questions.createQuestion("Question", "Please Answer", "software", id)
+    questions = Questions.getQuestionsByUser(id, 0)
+    if not questions:
+        return 2
+    
+    question = Questions.getQuestion(1)
+    if not question:
+        return 3
+    
+    Questions.updateTags(1, "tag1 tag2 tag3")
+
+    if question.tags != "tag1 tag2 tag3":
+        return 4
+    
+    if Questions.getQuestionsByEngineer('software', id):
+        return 5
+
+    if not Questions.deleteQuestion(1):
+        return 6
+
     return 0
 
 
@@ -30,7 +55,7 @@ def test_users():
         return 1
     if Users.userVerified("starwarsfan", "wookie"):
         return 2
-    if Users.modifyUser(1, "Boba", "Fett", "Killer", "starwarsfan"):
+    if Users.modifyUser(1, "Boba", "Fett", "Killer"):
         return 3
 
     # test with existing user
@@ -50,7 +75,7 @@ def test_users():
         return 8
     if user["password_hash"] == "wookie":
         return 9
-    if not Users.modifyUser(user["id"], "Han", "Solo", "Ship", "starwarsfan"):
+    if not Users.modifyUser(user["id"], "Han", "Solo", "Ship"):
         return 10
     user = Users.getUser("starwarsfan")
     if user["fname"] != "Han" or user["lname"] != "Solo" or user["engineer"] != "Ship":
