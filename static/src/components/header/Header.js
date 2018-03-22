@@ -12,7 +12,7 @@ class Header extends Component {
       <Row className="header">
         <Col xs={9} lg={7} md={7}>
           <h1>
-            <Link to='/' style={{ textDecoration: 'none', color: '#e74c3c' }}>
+            <Link to='/' style={{ textDecoration: 'none', color: "#E27A3F" }}>
               <Image src={image} width={30} circle />&nbsp;Ask<small>ENG</small>
             </Link>    
           </h1>

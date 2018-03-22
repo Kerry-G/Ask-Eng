@@ -1,12 +1,26 @@
 @import url('https://fonts.googleapis.com/css?family=Mukta+Mahee');
 
-/* xsmall:     (max-width: 479px),
+/* xsmall:  (max-width: 479px),
 small:      (max-width: 599px),
 medium:     (max-width: 767px),
 large:      (max-width: 1024px),
 largeOnly:  (min-width: 768px) and (max-width: 1024px),
 xxl:        (min-width: 1200px),
 tall:       (min-height: 780px), */
+
+$main:#E27A3F;
+$darkermain:#DF5A49;
+$offwhite:#ecf0f1;
+$gray:#95a5a6;
+$confirm:#3498db;
+$borderconfirm:#2980b9;
+
+// $main:#E27A3F;
+// $darkermain:#DF5A49;
+// $offwhite:#ecf0f1;
+// $gray:#95a5a6;
+// $confirm:#030303;
+// $borderconfirm:#2980b9;
 
 *{
     font-family: 'Mukta Mahee', 'sans-serif';
@@ -17,19 +31,22 @@ tall:       (min-height: 780px), */
 h1,h2,h3,h4,h5,h6,p,div,textarea{
     word-wrap:break-word;
 }
+h1{
+    margin: 0.3em 0.5em 0.3em 0.5em;
+}
 /* HEADER */
 .header{
     margin: 0 0 25px;
-    background: #ecf0f1;
+    background:$offwhite;
     box-shadow: 0 2px 12px 1px rgba(127,140,141,0.6);
 }
 .header h1{
     font-size: 5rem;
-    color: #e74c3c;
+    color:$main;
     font-weight: 600;
 }
 .header h1 small{
-    color: #e74c3c;;
+    color:$main;;
 }
 
 .logoutBtn{
@@ -54,8 +71,8 @@ h1,h2,h3,h4,h5,h6,p,div,textarea{
     float: right; 
 }
 /* END HEADER */
-h1{
-    margin: 0.3em 0.5em 0.3em 0.5em;
+.jumbotron{
+    background-color: $gray;
 }
 /* FOOTER */
 .footer{
@@ -64,17 +81,17 @@ h1{
     bottom: 0;
     left: 0;
     padding: 1rem;
-    background-color: #ecf0f1;
+    background-color:$offwhite;
     text-align: center;
 }
 /* END FOOTER */
 /* BUTTON */
 .reg-btn{
-    border:2px solid #95a5a6;
+    border:2px solid$gray;
     height: 3rem;
     font-size: 1.5rem;
-    color:#95a5a6;
-    background-color: #ecf0f1;
+    color:$gray;
+    background-color:$offwhite;
     width: 100px;
     cursor: pointer;
     border-radius: 100px;
@@ -84,9 +101,9 @@ h1{
     margin-left:5px;
 }
 .reg-btn:hover{
-    border:2px solid #95a5a6;
-    color: #e74c3c;
-    background-color: #ecf0f1;
+    border:2px solid$gray;
+    color:$main;
+    background-color:$offwhite;
     width: 100px;
     cursor: pointer;
     border-radius: 100px;
@@ -98,11 +115,11 @@ h1{
     outline:none;
 } 
 .reg-btn-color{
-    border:2px solid #c0392b;
+    border:2px solid$darkermain;
     font-size: 1.5rem;
     margin-left: auto;
     color: #fff;
-    background-color: #e74c3c;
+    background-color:$main;
     width: 100px;
     cursor: pointer;
     border-radius: 100px;
@@ -111,10 +128,10 @@ h1{
     text-decoration: none;
 }
 .reg-btn-color:hover{
-    border:2px solid #c0392b;
+    border:2px solid$darkermain;
     margin-left: auto;
     color: #fff;
-    background-color: #c0392b;
+    background-color:$darkermain;
     width: 100px;
     cursor: pointer;
     border-radius: 100px;
@@ -173,15 +190,15 @@ label{
     font-weight: 300;
 }
 .custom-modal{
-    background-color: #ecf0f1;
+    background-color:$offwhite;
     width: 50%;
 }
 .modal-body{
-    background-color: #ecf0f1;
+    background-color:$offwhite;
     color: black;
 }
 .modal-footer{
-    background-color: #e74c3c;
+    background-color:$main;
     border: 0;
 }
 .alert-warning{
@@ -256,7 +273,7 @@ textarea{
         margin-left: auto;
         float: right;
         color: #fff;
-        background-color: #3498db;
+        background-color:$confirm;
         width: 100px;
         color: white;
         text-align: center;
@@ -267,35 +284,35 @@ textarea{
     }
 }
 .ask-box.type.selected{
-    border: 2px solid #e74c3c;
+    border: 2px solid$main;
     text-decoration: none;
     color: #fff;
-    background-color: #e74c3c;
-    border-color: #c0392b;
+    background-color:$main;
+    border-color:$darkermain;
 }
 .ask-box.type.selected:hover{
-    border: 2px solid #e74c3c;
+    border: 2px solid$main;
     text-decoration: none;
     color: #fff;
-    background-color: #e74c3c;
-    border-color: #c0392b;
+    background-color:$main;
+    border-color:$darkermain;
 }
 .ask-box.type{
     width: 100px;
-    color: #95a5a6;
+    color:$gray;
     cursor: pointer;
     margin-right: 10px;
     margin-bottom: 10px;
     text-align: center;
-    border: 2px solid #95a5a6;
+    border: 2px solid$gray;
     border-radius: 100px;
     padding: 5px;
     padding-right: 10px;
     padding-left: 10px;
 }
 .ask-box.type:hover{
-    color: #e74c3c;
-    border: 2px solid #e74c3c;
+    color:$main;
+    border: 2px solid$main;
     text-decoration: none;
     cursor: pointer;
 }
@@ -308,9 +325,9 @@ textarea{
     padding: 5px;
     padding-right: 10px;
     padding-left: 10px;
-    background-color: #e74c3c;
+    background-color:$main;
     &:hover{
-        background-color: #c0392b;
+        background-color:$darkermain;
     }
     /* padding-left: 55px; */
     /* padding-right: 55px; */
@@ -319,7 +336,7 @@ textarea{
 /* avatar */
 .avatarChange{
     text-align: center;
-    color: #ecf0f1;
+    color:$offwhite;
 }
 .avatarChange img{
     margin: 1rem;
@@ -337,7 +354,7 @@ textarea{
     padding: 3px;
 }
 .question-box .square{
-    border:1px dotted #95a5a6;
+    border:1px dotted$gray;
     float:left;
     width: 40px;
     height: 40px;
@@ -354,7 +371,7 @@ textarea{
 }
 .question-tag{
     float:left;
-    background-color:#e74c3c;
+    background-color:$main;
     color:white;
     padding:2px;
     padding-left:10px;
@@ -392,7 +409,7 @@ textarea{
 }
 .question-tag-answer{
     float:left;
-    background-color:#e74c3c;
+    background-color: $main;
     color:white;
     padding:2px;
     padding-right:10px;
@@ -402,40 +419,24 @@ textarea{
     font-size:1.4rem;
 }
 .modal-title{
-    color: #e74c3c  ;
+    color:$main  ;
 }
 .panel-primary{
-    border-color: #c0392b;
+    border-color:$darkermain;
 }
 .panel-primary>.panel-heading{ 
-    background-color: #e74c3c;
-    border-color: #c0392b;
+    background-color:$main;
+    border-color:$darkermain;
 }
 #dropdown-no-caret{
-    background-color:#ecf0f1;
-    border-color: #ecf0f1;
+    background-color:$offwhite;
+    border-color:$offwhite;
 }
 /*===============================
 START SEARCH
 =================================*/
-.search{
-    position: relative;
-    float: right;
-    width:20rem;
-    transition: all 10s;
-    &:focus{
-        outline: none; 
-    }
-}
-#searchButton{
-    float: right;
-    width:30px;
-    height: 30px;
-    border-radius: 50%;
-    margin-right:10px;
-    padding-left:5px;
-    text-align: left;
-}
+
+
 /*==========================================
 END SEARCH
 ============================================*/
@@ -457,13 +458,13 @@ profile card edit
     resize: none
 }
 .change-fname{
-    color: #e74c3c;
-    border-color: #c0392b;
+    color:$main;
+    border-color:$darkermain;
 }
 .profile-badges{
     color: black;
     & :hover {
-        color: #c0392b;
+        color:$darkermain;
     }
 }
 #box-edit-links{

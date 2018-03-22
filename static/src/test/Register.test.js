@@ -1,5 +1,5 @@
 import React from 'react';
-import { Register } from './../components/body/Register';
+import Register from './../components/body/Register';
 import { mount,shallow } from 'enzyme';
 
 
