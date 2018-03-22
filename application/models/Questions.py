@@ -88,7 +88,7 @@ def deleteQuestion(id):
 	if questionExists(id):
 		response = True
 		question = Question.query.filter_by(id=id).first()
-		db.session.remove(question)
+		db.session.delete(question)
 		db.session.commit()
 	return response
 

@@ -108,7 +108,7 @@ def deleteUser(email):
 	if userExists(email):
 		response = True
 		user = User.query.filter_by(email=email).first()
-		db.session.remove(user)
+		db.session.delete(user)
 		db.session.commit()
 	return response
 
@@ -172,14 +172,7 @@ def getUserById(id):
 		return dict(user)
 
 
-def deleteUser(id):
-	response = False
-	user = getUserById(id)
-	if user is not None:
-		response = True
-		db.session.remove(user)
-		db.session.commit()
-	return response
+
 
 
 def getUserId(email):
