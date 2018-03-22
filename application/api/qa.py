@@ -116,7 +116,7 @@ def questionsRoute():
 			status = 'OK'
 			message = 'List of several questions by user_id'
 		elif 'engineer' in questionArgs:
-			questions = Questions.getQuestionByEngineer(questionArgs['engineer'], id)
+			questions = Questions.getQuestionsByEngineer(questionArgs['engineer'], id)
 			success = True
 			status = 'OK'
 			message = 'List of several questions by engineer'
