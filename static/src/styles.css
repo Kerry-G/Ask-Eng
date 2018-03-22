@@ -1,5 +1,5 @@
 @import url("https://fonts.googleapis.com/css?family=Mukta+Mahee");
-/* xsmall:     (max-width: 479px),
+/* xsmall:  (max-width: 479px),
 small:      (max-width: 599px),
 medium:     (max-width: 767px),
 large:      (max-width: 1024px),
@@ -22,10 +22,12 @@ h1 {
 .header {
   margin: 0 0 25px;
   background: #ecf0f1;
-  box-shadow: 0 2px 12px 1px rgba(127, 140, 141, 0.6); }
+  box-shadow: 0 2px 12px 1px rgba(127, 140, 141, 0.6);
+  display: flex;
+  justify-content: space-between; }
 
 .header h1 {
-  font-size: 5rem;
+  font-size: 3rem;
   color: #E27A3F;
   font-weight: 600; }
 
@@ -42,15 +44,6 @@ h1 {
 
 .para {
   margin-top: 1.5rem; }
-
-.menu .btn-toolbar {
-  display: inline-block;
-  vertical-align: middle;
-  margin: auto 1rem; }
-
-.menu {
-  margin-top: 1.5rem;
-  float: right; }
 
 /* END HEADER */
 .jumbotron {
@@ -164,10 +157,6 @@ h1 {
 
 .modal-content {
   border: 0; }
-
-.menu {
-  float: left;
-  width: 100%; }
 
 label {
   font-weight: 300; }
@@ -412,23 +401,6 @@ textarea {
 /*===============================
 START SEARCH
 =================================*/
-.search {
-  position: relative;
-  float: right;
-  width: 20rem;
-  transition: all 10s; }
-  .search:focus {
-    outline: none; }
-
-#searchButton {
-  float: right;
-  width: 30px;
-  height: 30px;
-  border-radius: 50%;
-  margin-right: 10px;
-  padding-left: 5px;
-  text-align: left; }
-
 /*==========================================
 END SEARCH
 ============================================*/
