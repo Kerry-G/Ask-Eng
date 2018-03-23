@@ -12,7 +12,7 @@ class Register extends Component {
             email: '',
             pw: '',
             role: '',
-            display_image: '1',
+            display_image: '1.png',
 
             //validators
             validEmail: null,
@@ -59,7 +59,7 @@ class Register extends Component {
     }
 
     validatePassword(pw) {
-        if (pw.length > 6) {
+        if (pw.length >= 6) {
             this.setState({
                 validPassword: "success"
             })
@@ -237,7 +237,7 @@ class Register extends Component {
         }
         else if (this.state.page === 2) {
             body = <div>
-                <Col xs={12} md={6}>
+                <Col>
                     <div className="menu">
                         <FieldGroup
                             type="text"
@@ -258,22 +258,7 @@ class Register extends Component {
                             }}
                         />
                     </div>
-                </Col>
-                <Col xs={12} md={6}>
-                    <div className="picture">
-                        <div className="animated fadeIn">
-                            <Image src="https://i.imgur.com/H8wshWs.jpg" responsive rounded />
-                        </div>
-                    </div>
-                </Col>
-            </div>
-        }
-        else if (this.state.page === 3) {
-            body = <div>
-                <Col xs={12} md={6}>
-                    <div className="menu">
-
-                        <ControlLabel>Engineering Field</ControlLabel>
+                    <ControlLabel>Engineering Field</ControlLabel>
                         <Select
                             name="form-field-name"
                             value={this.state.role}
@@ -291,12 +276,6 @@ class Register extends Component {
                             id="formControlsFile"
                             label="Upload your engineering certificate"
                         />
-                    </div>
-                </Col>
-                <Col xs={12} md={6}>
-                    <div className="picture">
-                        <Image className="animated fadeIn" src="https://i.imgur.com/m06zvaZ.jpg]]]" responsive rounded />
-                    </div>
                 </Col>
             </div>
         }
@@ -317,14 +296,8 @@ class Register extends Component {
             </button >
         }
         else if (this.state.page === 2) {
-            saveButton = null
-            previousButton = <button className="reg-btn" onClick={this.handlePreviousPage}>Previous</button >
-            nextButton = <button className="reg-btn" onClick={this.handleNextPage}>Next</button >
-        }
-        else if (this.state.page === 3) {
             saveButton = <button className="reg-btn" disabled={this.state.button} onClick={this.handleClick}>Save</button >
             previousButton = <button className="reg-btn" onClick={this.handlePreviousPage}>Previous</button >
-            nextButton = null
         }
 
 

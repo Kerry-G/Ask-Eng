@@ -222,7 +222,7 @@ class Edit extends Component {
 
 	//Method to check if the new password is valid.
 	validatePassword(pw) {
-        if (pw.length > 6) {
+        if (pw.length >= 6) {
             this.setState({
                 validPassword: true
             })

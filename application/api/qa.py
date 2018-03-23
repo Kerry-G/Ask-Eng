@@ -170,8 +170,7 @@ def questionsIDRoute(id):
 # TAG ROUTE
 @qa.route('/api/qa/tags/<string:id>', methods=httpMethods)
 def updateTags(id):
-	data = request.args.to_dict()
-
+	data = toDict(request.data)
 	if request.method == 'PUT':
 		try:
 			Questions.updateTags(id,data['tags'])
