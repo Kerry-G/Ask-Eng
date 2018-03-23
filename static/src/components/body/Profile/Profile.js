@@ -5,7 +5,6 @@ import { connect } from 'react-redux'
 import ProfileCard from './ProfileCard'
 import Question from '..//Questions//Question'
 import Search from '..//Questions//Search'
-import { updateUser } from './../../../store/auth'
 
 
 class Profile extends Component {
@@ -48,7 +47,6 @@ class Profile extends Component {
 		try {
 			fetchAPI("GET", "/api/qa/questions/?loggedin_id=" + this.props.user.id + "&user_id="+ this.props.match.params.id + this.state.extraQuery).then(response => {
 				if (response.success) {
-					console.log(response.questions)
 					this.setState({
 						questions: response.questions
 					})
