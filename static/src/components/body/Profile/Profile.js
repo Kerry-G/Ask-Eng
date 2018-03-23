@@ -1,10 +1,10 @@
 import React, { Component } from 'react'
-import { Col, Nav, NavItem, NavDropdown, MenuItem, Panel, Glyphicon, Image, Media  } from 'react-bootstrap'
+import { Col, Nav, NavItem, NavDropdown, MenuItem, Grid } from 'react-bootstrap'
 import { fetchAPI } from '../../utility'
 import { connect } from 'react-redux'
 import ProfileCard from './ProfileCard'
 import Question from '..//Questions//Question'
-import Edit from './Edit'
+import Search from '..//Questions//Search'
 
 
 class Profile extends Component {
@@ -45,10 +45,7 @@ class Profile extends Component {
 
 	async getQuestions() {
 		try {
-			let engineerArray = ["","&engineer=Software","&engineer=Mechanical","&engineer=Computer","&engineer=Electrical","&engineer=Civil"]
-      //fetchAPI("GET", "/api/qa/questions/?" + engineerArray[(this.state.activeQuery)] + this.state.extraQuery).then(response => {
-			fetchAPI("GET", "/api/qa/questions/?loggedin_id" +  "=" + this.props.user.id).then(response => {
-				console.log(response)
+			fetchAPI("GET", "/api/qa/questions/?loggedin_id=" + this.props.user.id + "&user_id="+ this.props.match.params.id + this.state.extraQuery).then(response => {
 				if (response.success) {
 					this.setState({
 						questions: response.questions
@@ -57,6 +54,25 @@ class Profile extends Component {
 			})
 		} catch (e) { console.error("Error:", e) }
 	}
+
+	handleSearch(word){
+		try{
+		  let results = [];
+		  fetchAPI("GET", "/api/qa/questions/?loggedin_id=" + this.props.user.id + "&user_id="+ this.props.match.params.id + this.state.extraQuery).then(response => {
+			if (response.success) {
+			  let questions = response.questions
+			  for (let i in questions){
+				if (questions[i].title.includes(word.value)){
+				  results.push(questions[i])
+				}
+			  }
+			  this.setState({
+				questions: results
+			  })
+			}
+		  })}
+		  catch(e){console.error("Error: ", e)}
+	  }
 
 	handleSelect(eventKey) {
 		this.setState({
@@ -74,13 +90,11 @@ class Profile extends Component {
 		})
 		let ProfileInfo;
 		//Own account
-		if (!this.state.alert && (this.props.match.params.id == this.props.user.id)) {
-			console.log(this.props.user)
-			ProfileInfo = <div> <ProfileCard user={this.props.user} /> <Edit/> </div> 
-
-
+		if (!this.state.alert && (this.props.match.params.id === this.props.user.id)) {
+			ProfileInfo = <div> 
+				<ProfileCard user={this.props.user} />
+			 </div> 
 		} else if (!this.state.alert && (!(this.props.match.params.id === this.state.id))) { //viewing another person's profile
-			console.log(this.props.user)
 			ProfileInfo = <ProfileCard user={this.state.user} />
 		} else { //Profile inexistent
 			ProfileInfo = <div> <h1> User was not found. </h1> </div>
@@ -88,27 +102,30 @@ class Profile extends Component {
 
 		return (
 			<div>
-				<Col lg={8}>
-				<Nav bsStyle="tabs" activeKey={this.state.activeKey} onSelect={k => this.handleSelect(k)}>
-					<NavItem onClick={() => { this.setState({ activeQuery: "0" }) }} eventKey="0">
-						Question
-			</NavItem>
-					<NavItem onClick={() => { this.setState({ activeQuery: "2" }) }} eventKey="1" >
-						Answer
-			</NavItem>
-					<NavDropdown eventKey="6" title="Sort" id="nav-dropdown">
-						<MenuItem onClick={() => this.setState({ extraQuery: "&sort=title" })} eventKey="6.1">Title</MenuItem>
-						<MenuItem onClick={() => this.setState({ extraQuery: "&sort=register_date&reverse=1" })} eventKey="6.2">Newest</MenuItem>
-						<MenuItem onClick={() => this.setState({ extraQuery: "&sort=register_date&reverse=0" })} eventKey="6.3">Oldest</MenuItem>
-						<MenuItem eventKey="6.4">Ups</MenuItem>
-						<MenuItem eventKey="6.5">Downs</MenuItem>
-					</NavDropdown>
-				</Nav>
-					{questions}
-				</Col>
-				<Col lg={4} >
-					{ProfileInfo}
-				</Col>
+				<Grid>
+					<Col lg={8}>
+					<Nav bsStyle="tabs" activeKey={this.state.activeKey} onSelect={k => this.handleSelect(k)}>
+						<NavItem onClick={() => { this.setState({ activeQuery: "0" }) }} eventKey="0">
+							Question
+						</NavItem>
+						<NavDropdown eventKey="6" title="Sort" id="nav-dropdown">
+							<MenuItem onClick={() => this.setState({ extraQuery: "&sort=title" })} eventKey="6.1">Title</MenuItem>
+							<MenuItem onClick={() => this.setState({ extraQuery: "&sort=register_date&reverse=1" })} eventKey="6.2">Newest</MenuItem>
+							<MenuItem onClick={() => this.setState({ extraQuery: "&sort=register_date&reverse=0" })} eventKey="6.3">Oldest</MenuItem>
+							<MenuItem onClick={()=>this.setState({extraQuery:"&sort=downs"})} eventKey="6.4">Ups</MenuItem>
+							<MenuItem onClick={()=>this.setState({extraQuery:"&sort=ups"})} eventKey="6.5">Downs</MenuItem>
+						</NavDropdown>
+						<Search
+							handleSearch={(word) => this.handleSearch(word)}
+						/>
+					</Nav>
+						{questions}
+						<br/>
+					</Col>
+					<Col lg={4} >
+						{ProfileInfo}
+					</Col>
+				</Grid>
 			</div>
 		);
 	}

@@ -21,10 +21,11 @@ if app.config.__getitem__("SQLALCHEMY_DATABASE_URI") == "sqlite:///./soen341.db"
 # import api's
 from application.api.users import users
 from application.api.qa import qa
-
+from application.api.search import search
 
 # Attach api to app
 app.register_blueprint(users)
 app.register_blueprint(qa)
+app.register_blueprint(search)
 
 

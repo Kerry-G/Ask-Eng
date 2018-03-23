@@ -1,5 +1,4 @@
 import React, { Component } from 'react'
-import { Col, Row, Image} from 'react-bootstrap'
 import { connect } from 'react-redux'
 import { Link } from 'react-router-dom'
 import Headermenu from '../header/Headermenu'
@@ -8,25 +7,22 @@ class Header extends Component {
 
   render() {
     let image = "\\images\\ask-eng.png"
-           
     return (
-      <Row className="header">
-        <Col xs={7} lg={6}>
-          <h1>
-            <Link to='/' style={{ textDecoration: 'none', color: '#e74c3c' }}>
-              <Image src={image} width={30} circle />&nbsp;Ask<small>ENG</small>
-            </Link>    
-          </h1>
-        </Col>
-        <Col  xs={5} lg={6}>
+      <div className="header">
+      
+        <h1>
+          <Link to='/' style={{ textDecoration: 'none', color: "#E27A3F" }}>
+            <img src={image} alt="Ask-Eng" width={30} />&nbsp;Ask<small>ENG</small>
+          </Link>
+        </h1>
+
           <div className ="menu">
-            <Col lgOffset ={8}>
               <Headermenu
-              user = {this.props.user}/>
-            </Col>
+                user = {this.props.user}
+              />
           </div>  
-        </Col>
-      </Row>
+
+      </div>
     );
   }
 }

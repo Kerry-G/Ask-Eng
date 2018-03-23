@@ -9,7 +9,6 @@ import { PersistGate } from 'redux-persist/integration/react'
 // css imports
 import 'react-select/dist/react-select.css';
 import './styles.css';
-import './animated.css';
 
 const target = document.querySelector('#root');
 ReactDOM.render(

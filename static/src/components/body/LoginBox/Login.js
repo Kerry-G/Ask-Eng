@@ -17,8 +17,8 @@ class Login extends Component{
   handleLogin(e){
     e.preventDefault();
     this.setState({
-      alert: false
-    }
+        alert: false
+      }
     )   
     let user = { email: this.state.email, password: this.state.password }
     this.sendLoginInfo(user)
@@ -30,7 +30,6 @@ class Login extends Component{
         try{
           if (response.success){
             login(response.user)
-            this.setState({alert: false})
           }
           else{
             this.setState({alert: true})

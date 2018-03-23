@@ -55,7 +55,7 @@ class ProfileCard extends Component {
           <Glyphicon glyph="envelope" />&nbsp;&nbsp;&nbsp;&nbsp;{this.props.user.email}
           <div style={points}><FontAwesome name='chevron-up' />&nbsp;&nbsp;&nbsp;&nbsp;{this.props.user.ups}</div>
           <br/>
-          <Glyphicon glyph="calendar" />&nbsp;&nbsp;&nbsp;&nbsp;member since: {registerDate.format("LL")}
+          <Glyphicon glyph="calendar" />&nbsp;&nbsp;&nbsp;&nbsp;Member since: {registerDate.format("LL")}
           <div style={points}><FontAwesome name='chevron-down' />&nbsp;&nbsp;&nbsp;&nbsp;{this.props.user.downs}</div>
         </Panel.Body>
       </Panel>

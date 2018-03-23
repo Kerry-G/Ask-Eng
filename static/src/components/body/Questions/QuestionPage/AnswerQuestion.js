@@ -2,7 +2,6 @@ import React, { Component } from 'react'
 import { Button } from 'react-bootstrap'
 import { fetchAPI } from '../../../utility'
 import { connect } from 'react-redux'
-import { withRouter } from 'react-router'
 
 class AnswerQuestion extends Component {
     constructor(props) {
@@ -39,7 +38,7 @@ class AnswerQuestion extends Component {
     handleAsk() {
 		this.saveAnswer();
 		this.cleanState();
-		this.props.updateanswers();
+		this.props.updateAnswers();
     }
 
     async saveAnswer() {
@@ -76,7 +75,7 @@ class AnswerQuestion extends Component {
                         className="ask-box text"
 						ref="answering"
                         rows="5"
-                        placeholder="Answer away!"
+                        placeholder="Know the answer?"
                         onChange={(e) => this.handleAnswerChange(e)} />
                 </div>
                 <div className="ask-box-footer">

@@ -1,105 +1,155 @@
-import React, { Component } from 'react'
-import { Grid, Col, Row, Modal, FormGroup, FormControl, HelpBlock, ControlLabel, Alert, Popover, OverlayTrigger } from 'react-bootstrap'
-import Select from 'react-select'
-import { Panel, Glyphicon, Image, Media, Button} from 'react-bootstrap'
+import React, { Component} from 'react'
+import { Alert, Panel, Col, Media, Button, Row, FormControl, Grid,} from 'react-bootstrap'
 import { fetchAPI } from './../../utility'
+import { updateUser } from '../../../store/auth'
 import { connect } from 'react-redux'
+import ChooseAvatar from '../LoginBox/ChooseAvatar'
+import ProfileCard from './ProfileCard'
+import Select from 'react-select'
 
 class Edit extends Component {
     constructor(props) {
         super(props)
         this.state = {
-			showFnameModal: false,
             fname: this.props.user.fname,
-
-			showLnameModal: false,
             lname: this.props.user.lname,
 
-			showPwModal: false,
 			currentpw: '',
 			newpw: '',
-			verifyemail: '',
+			verifynewpw: '',
 
-			showEmailModal: false,
             email: this.props.user.email,
-
-			showEngineerModal: false,
 			eng: this.props.user.engineer,
 
-			verified : false,
+			validPassword : true,
+			matchingPasswords : true,
+			availableEmail : true,
+			validEmail : true,
 
+			showAvatar: false,
 
-
+			passwordChanged : false,
+			emailVerified: false,
+			processing: false,
+			submitted: false,
         };
-		//These handlers are used to determine which modal to show.
-		this.handleChange_fname = this.handleChange_fname.bind(this);
-		this.handleChange_lname = this.handleChange_lname.bind(this);
-		this.handleChange_pass = this.handleChange_pass.bind(this);
-		this.handleChange_email = this.handleChange_email.bind(this);
-		this.handleChange_eng = this.handleChange_eng.bind(this);
-
 		//Handlers to either submit or close the modal.
-		this.handleClose = this.handleClose.bind(this);
 		this.handleSubmit = this.handleSubmit.bind(this);
+		this.handleReset = this.handleReset.bind(this);
 
 		//Handlers to get user inputs in the modals.
 		this.handleFnameChange = this.handleFnameChange.bind(this);
 		this.handleLnameChange = this.handleLnameChange.bind(this);
 		this.handleEmailChange = this.handleEmailChange.bind(this);
-
 		this.handleCurrentPwChange = this.handleCurrentPwChange.bind(this);
-		this.handleEmailPwChange = this.handleEmailPwChange.bind(this);
 		this.handleNewPwChange = this.handleNewPwChange.bind(this);
+		this.handleVerifyNewPwChange = this.handleVerifyNewPwChange.bind(this);
 
+		//Handler that closes avatar modal.
+        this.handleCloseAvatar = this.handleCloseAvatar.bind(this);
     }
-
-	handleChange_fname(){
-		this.setState({ showFnameModal: true })
-	}
-
-	handleChange_lname(){
-		this.setState({ showLnameModal: true })
-	}
-
-	handleChange_pass(){
-		this.setState({ showPwModal: true })
-	}
-
-	handleChange_email(){
-		this.setState({ showEmailModal: true })
-	}
-
-	handleChange_eng(){
-		this.setState({ showEngineerModal: true})
-	}
-
-
-	//When closing a modal, set all the modal values to false, as well as input values.
-	handleClose(){
-		this.setState({ showFnameModal: false, 
-						showLnameModal: false, 
-						showPwModal : false,
-						showEmailModal : false,
-						showEngineerModal: false, 
-						fname : this.props.user.fname,
+	
+	//When closing a modal, set all the modal values to false and reset the input values.
+	handleReset(){
+		document.getElementById("modify_profile").reset();
+		this.setState({ fname : this.props.user.fname,
 						lname : this.props.user.lname,
 						email : this.props.user.email,
 						eng : this.props.user.engineer,
 						currentpw: '',
 						newpw: '',
-						verifyemail: '',
-						verified: false})
+						verifynewpw: '',
+						validPassword : true,
+						matchingPasswords : true,
+						validEmail: true,
+						availableEmail : true,
+						processing: false,
+						submitted: false,
+						})
 	}
 
-	//Submit and change info (this can change first name, last name, email or engineering).
-	// NOT FUNCTIONAL AT THE MOMENT
+	//Handler closes the avatar modal.
+	handleCloseAvatar() {
+		this.setState({ showAvatar: false });
+    }
+
+	//Submit and
 	handleSubmit(){
-		this.modifyUserInfo();
-
-		this.handleClose();
+		this.setState({processing: true, submitted: true})
+		//Modifying email cases.
+		//Case 1: Email entered is valid and is not the original email.
+		if (this.state.validEmail && this.state.email !== this.props.user.email){
+			this.checkEmail()
+		}
+		//Case 2: Email entered is not valid.
+		else if (!this.state.validEmail){
+			this.setState({emailVerified: false}, function(){
+				this.endSubmission()
+			})
+		}
+		//Case 3: No new email is entered.
+		else if (this.state.email === this.props.user.email)
+			this.setState({emailVerified: true}, function(){
+				this.modifyingPassword()
+			})
+		else
+			this.modifyingPassword()
 	}
 
-	//NOT FUNCTIONAL AT THE MOMENT.
+	modifyingPassword(){
+
+		//modifying password cases. Case 1: all fields are entered, new password is valid and new passwords match.
+		if (this.state.currentpw!=='' && this.state.newpw!=='' && this.state.verifynewpw!=='' && this.state.matchingPasswords && this.state.validPassword){
+			this.modifyPassword()
+		}
+		//Case 2: At least one of the fields is empty, or the new passwords do not match, or the new password is not valid.
+		else if (((this.state.currentpw!=='' || this.state.newpw !=='' || this.state.verifynewpw!=='') && (this.state.currentpw==='' || this.state.newpw==='' || this.state.verifynewpw==='')) || !this.state.validPassword || !this.state.matchingPasswords){
+			this.setState({passwordChanged: false}, function(){
+				this.endSubmission()
+			})
+		}
+		//Case 3: All the fields are empty and the password is not to be changed.
+		else
+			this.setState({passwordChanged: true}, function(){
+				this.modifyingInfo()
+			})
+	}
+
+	modifyingInfo(){
+		//Modifying rest of information (fname, lname, engineering). All cases check that email and password changes were successful.
+		//Case 1: At least of the fields is not empty. Mark the end of the submission by setting 'processing' to false.
+		if (this.state.passwordChanged && this.state.emailVerified && (this.state.fname !== this.props.user.fname || this.state.lname !== this.props.user.lname || this.state.eng !== this.props.user.engineer || this.state.email !== this.props.user.email) ){
+			this.modifyUserInfo()
+			this.setState({processing: false})
+		}
+		//Case 2: No fields entered. Mark the end of submission by setting 'processing' to false.
+		else
+			this.setState({processing: false})
+	}
+
+	//Check if email is existent or not. If not, then proceed and modify user information.
+	async checkEmail(){
+		try {
+			let data = {email: this.state.email}
+
+			fetchAPI("POST", '/api/users/email/', data).then(response =>{
+			if (response.success){
+				this.setState({avilableEmail: true})
+				this.setState({availableEmail : false})
+				this.setState({emailVerified: false})
+				this.endSubmission()
+				}
+			else{
+				this.setState({availableEmail: true, emailVerified: true})
+				this.modifyingPassword()
+				}
+            }).catch((e) => console.error("Error:" + e))
+        } catch (e) {
+            console.log("Error: ", e);
+        }
+    }
+	//Changes user information and reloads the profile card accordingly. This method can change first name, last name,
+	//email and engineering discipline. Once changed and submitted, the modal in question is closed.
 	async modifyUserInfo() {
         try {
 			  let data = {
@@ -110,10 +160,13 @@ class Edit extends Component {
 				email : this.state.email
 			}
             fetchAPI("PUT", '/api/users/' + this.props.user.id, data).then(response => {
-				console.log(response)
                 if (response.success) {
-                    console.log(response)
-					console.log("lol")
+					let updatedUser = JSON.parse(JSON.stringify(this.props.user))
+					updatedUser.fname = data.fname
+					updatedUser.lname = data.lname
+					updatedUser.engineer = data.engineer
+					updatedUser.email = data.email
+					updateUser(updatedUser)
                 }
             }).catch((e) => console.error("Error:" + e))
         } catch (e) {
@@ -121,22 +174,71 @@ class Edit extends Component {
         }
     }
 
-	//This submit button is used to change the password. It first verifies the email and then current password.
-	//NOT FULLY FUNCTIONAL.
-	handleSubmitPassword(){
-		let user = {email : this.state.verifyemail, password : this.state.currentpw}
-		this.authenticate(user)
-		if (this.state.verified == true){
-			this.modifyPassword()
-			this.handleClose()
-		}
-		
-			
+	//modifyPassword() uses a method from users.py that checks whether or not the email and current password
+	//are valid. If the current password entered is incorrect, this will fail.
+	async modifyPassword(){
+		try {
+			  let data = {
+				user_id : this.props.user.id,
+				email: this.props.user.email,
+				oldPassword : this.state.currentpw,
+				newPassword : this.state.newpw,
+			}
+            fetchAPI("PUT", '/api/users/password/' + this.props.user.id, data).then(response => {
+                if (response.success) {
+					this.setState({passwordChanged: true})
+					this.modifyingInfo()
+                }
+				else{
+					this.setState({passwordChanged : true})
+					this.setState({passwordChanged : false})
+					this.endSubmission()
+				}
+            }).catch((e) => console.error("Error:" + e))
+        } catch (e) {
+            console.log("Error: ", e);
+        }
 	}
 
+	endSubmission(){
+		this.setState({processing: false})
+	}
 
-	async modifyPassword(){
-	
+	//Method to check whether or not the new email is of correct format.
+	validateEmail(mail) {
+		/* eslint-disable*/
+		if (/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(mail)) {
+		/* eslint-enable*/	
+			this.setState({
+                validEmail: true
+            })
+        } else {
+            this.setState({
+                validEmail: false
+            })
+		}
+		
+    }
+
+	//Method to check if the new password is valid.
+	validatePassword(pw) {
+        if (pw.length > 6) {
+            this.setState({
+                validPassword: true
+            })
+        } else {
+            this.setState({
+                validPassword: false
+            })
+        }
+    }
+
+	//Method to check if the new password and re-entered new password match. 
+	passwordMatching(pw1, pw2){
+		if (pw1===pw2)
+			this.setState({matchingPasswords : true})
+		else
+			this.setState({matchingPasswords : false})
 	}
 
 	handleFnameChange(e) {
@@ -144,29 +246,20 @@ class Edit extends Component {
             fname: e.target.value
         })
     }
-
 	handleLnameChange(e) {
         this.setState({
             lname: e.target.value
         })
     }
-
 	handleEmailChange(e) {
         this.setState({
             email: e.target.value
         })
+		this.validateEmail(e.target.value)
     }
-
-
 	handleCurrentPwChange(e){
 		this.setState({
 			currentpw: e.target.value
-		})
-	}
-
-	handleEmailPwChange(e){
-		this.setState({
-			verifyemail: e.target.value
 		})
 	}
 
@@ -174,193 +267,186 @@ class Edit extends Component {
 		this.setState({
 			newpw: e.target.value
 		})
+		this.validatePassword(e.target.value)
+		this.passwordMatching(this.state.verifynewpw, e.target.value)
 	}
-
-	//When changing password, this will verify that email and current password entered in modal is correct.
-	async authenticate(user){
-		fetchAPI("POST", "/api/users/authenticate/", user).then(
-		  response => {
-			try{
-			  if (response.success){
-				this.setState({verified: true})
-			  }
-			  else{
-				this.setState({verified: false})
-			  }
-			} catch(e){console.error("Error", e)}
-		  }
-		).catch((e)=>console.error("Error:", e))
+	
+	handleVerifyNewPwChange(e){
+		this.setState({
+			verifynewpw: e.target.value
+		})
+		this.passwordMatching(e.target.value, this.state.newpw)
 	}
 
     render() {
-		//edit is assigned the correct modal to be displayed. options is for the engineering choices.
-		let edit,options;
-		options = [
+		let options = [
             { value: 'software', label: 'Software Engineering' },
             { value: 'mechanical', label: 'Mechanical Engineering' },
             { value: 'computer', label: 'Computer Engineering' },
             { value: 'electrical', label: 'Electrical Engineering' },
             { value: 'civil', label: 'Civil Engineering' }
-        ];
+		];
+		let process = null;
+		if (this.state.processing)
+			process = <div className="flash animated" id="processing"><Alert bsStyle="info">Processing Request...</Alert></div>
+		let alert = null;
 
-		if (this.state.showFnameModal == true){
-			edit = <Modal dialogClassName="fname_modal" show={true} onHide={this.handleClose}>
-						 <Modal.Body>
-							<textarea
-								className="change_fname_textbox"
-								rows = "1"
-								cols = "45"
-								placeholder="Enter your first name here"
-								onChange={(e) => this.handleFnameChange(e)} />
-						 </Modal.Body>
-						<Modal.Footer>
-							<Grid fluid>
-								<Row>
-									<Button onClick={()=> this.handleClose()}> Cancel </Button>
-									<Button disabled={this.state.fname == this.props.user.fname || this.state.fname==""} onClick={() => this.handleSubmit()}> Submit </Button>
-								</Row>
-							</Grid>
-						</Modal.Footer>
-					</Modal>
+		if ((!this.state.passwordChanged ||!this.state.emailVerified) && !this.state.processing && this.state.submitted)
+			 alert = <div className="flash animated" id="invalid"><Alert bsStyle="warning">Invalid email or password!</Alert></div>
+      
+		let updated = null;
+		if (this.state.passwordChanged && alert==null && this.state.emailVerified  && !this.state.processing && this.state.submitted){
+			 updated = <div className="flash animated" id="sucess"><Alert bsStyle="success">Updated Information!</Alert></div>
 		}
 
-		else if (this.state.showLnameModal == true){
-			edit = <Modal dialogClassName="lname_modal" show={true} onHide={this.handleClose}>
-						 <Modal.Body>
-							<Grid fluid>
-								<textarea
-								className="change_lname_textbox"
-								rows = "1"
-								cols = "45"
-								placeholder="Enter your last name here"
-								onChange={(e) => this.handleLnameChange(e)} />
-							</Grid>
-						 </Modal.Body>
-						<Modal.Footer>
-						<Grid fluid>
-								<Row>
-									<Button onClick={()=> this.handleClose()}> Cancel </Button>
-									<Button disabled={this.state.lname ==this.props.user.lname || this.state.lname=="" } onClick={() => this.handleSubmit()}> Submit </Button>
-								</Row>
-						</Grid>
-						</Modal.Footer>
-					</Modal>
-		}
+		let userState=null;
+		if ((Object.keys(this.props.user).length === 0 && this.props.user.constructor === Object))
+			userState = <div> <big>You must be logged in to view this page.</big> </div>
+		else
+			userState=	<div>
+							<Col lg={8}>
+								<form id="modify_profile">
+								<Panel bsStyle="primary">
+									<Panel.Heading>
+										<Media>
+										<Media.Left>
+											Edit Account Information
+										</Media.Left>
+										</Media>
+									</Panel.Heading>
+									<Panel.Body>
+									{process}
+									{alert}
+									{updated}
+									<Grid fluid>
+										<Row>{/*Change first name*/}
+											<Col sm={4}>
+												<b><big>First Name:</big></b>
+											</Col>
+											<Col sm={4}>
+												<FormControl style={{height:'30px', width:'100%'}} label="First Name" onChange={(e) => this.handleFnameChange(e)}/>
+											</Col>
+											<br/><hr></hr>
+										</Row>
+										<Row>{/*Change last name*/}
+											<Col sm={4}>
+												<b><big>Last Name:</big></b>
+											</Col>
+											<Col sm={4}>
+												<FormControl style={{height:'30px', width:'100%'}} label="Last Name" onChange={(e) => this.handleLnameChange(e)}/>	
+											</Col>
+											<br/><hr></hr>
+										</Row>
+										<Row>{/*Change email*/}
+											<Col sm={4}>
+												<b><big>Email:</big></b><br/><small>Email must be available.</small>
+											</Col>
+											<Col sm={4}>
+												<FormControl style={{height:'30px', width:'100%'}} label="Email" onChange={(e) => this.handleEmailChange(e)}/>
+											</Col>
+											<br/><br/><hr></hr>
+										</Row>
+										<Row>{/*Change engineering*/}
+											<Col sm={4}>
+												<b><big>Engineering:</big></b>
+											</Col>
+											<Col sm={5}>
+												<Select
+													name="form-field-name"
+													value={this.state.eng}
+													options={options}
+													onChange={(e) => {
+														if (e !== null) {
+															this.setState({ eng: e.value })
+														} else {
+															this.setState({ eng: '' })
+														}
+													}}
+												/>
+											</Col>
+											<br/><br/><hr></hr>
+										</Row>
+										<Row>{/*Change avatar*/}
+											<Col sm={4}>
+												<b><big>Avatar:</big></b>
+											</Col>
+											<Col sm={4}>
+												<Button onClick={() => this.setState({showAvatar : true})}>Click to change avatar</Button>
+												<ChooseAvatar 
+													show={this.state.showAvatar}
+													user = {this.props.user}
+													handleClose={this.handleCloseAvatar}
+												/>
+											</Col>
+											<br/><br/><hr></hr>
+										</Row>
+										<Row>{/*Change password*/}
+											<Col sm={4}>
+												<b><big>Password</big></b><br/><small>Password must be at least 6 characters.</small> 
+											</Col>
 
-		else if (this.state.showPwModal == true){
-			edit = <Modal dialogClassName="pw_modal" show={true} onHide={this.handleClose}>
-						 <Modal.Body>
-							<textarea
-								className="textarea_current_pw"
-								rows = "1"
-								cols = "45"
-								placeholder="Enter your current password here"
-								onChange={(e) => this.handleCurrentPwChange(e)} />
-							<textarea
-								className="textarea_email"
-								rows = "1"
-								cols = "45"
-								placeholder="Enter your email here"
-								onChange={(e) => this.handleEmailPwChange(e)} />
-							<textarea
-								className="textarea_new_pw"
-								rows = "1"
-								cols = "45"
-								placeholder="Enter your new password here"
-								onChange={(e) => this.handleNewPwChange(e)} />
-						 </Modal.Body>
-						<Modal.Footer>
-						<Grid fluid>
-								<Row>
-									<Button onClick={()=> this.handleClose()}> Cancel </Button>
-									<Button disabled={this.state.currentpw == "" || this.state.newpw == "" || this.state.verifyemail ==""} onClick={()=> this.handleSubmitPassword()}> Submit </Button>
-								</Row>
-						</Grid>
-						</Modal.Footer>
-					</Modal>
-		}
+										</Row>
+										<Row>
+											<br/>
+											<Col sm={4}>
+												Current password:
+											</Col>
+											<Col sm={4}>
+												<FormControl style={{height:'30px', width:'100%'}} type="password" onChange={(e) => this.handleCurrentPwChange(e)}/>
+											</Col>
+										</Row>
+										<Row>
+											<br/>
+											<Col sm={4}>
+												New password:
+											</Col>
+											<Col sm={4}>
+												<FormControl style={{height:'30px', width:'100%'}} type="password" onChange={(e) => this.handleNewPwChange(e)}/>
+											</Col>
+										</Row>
+										<Row>
+											<br/>
+											<Col sm={4}>
+												Re-enter new password: 
+											</Col>
+											<Col sm={4}>
+												<FormControl style={{height:'30px', width:'100%'}} type="password" onChange={(e) => this.handleVerifyNewPwChange(e)}/>
+											</Col>
+											<br/><br/>
+										</Row>
+									</Grid>
+									</Panel.Body>
+									<Panel.Footer>
+										<Media>
+											<Col sm={12} xs={12} lg={12}>
+												<Button  className = "reg-btn-color" onClick={() => this.handleReset()}>Reset form</Button>
+												<Button style={{float: "right"}} className = "reg-btn-color" onClick={() => this.handleSubmit()}>Submit</Button> 
+											</Col>
+										</Media>
+									</Panel.Footer>
+									</Panel>
+									</form>
+							</Col>
+							<Col lg={4} >
+								<ProfileCard user={this.props.user}/>
+							</Col>
+						</div>
 
-		else if (this.state.showEmailModal == true){
-			edit = <Modal dialogClassName="email_modal" show={true} onHide={this.handleClose}>
-						 <Modal.Body>
-							<Grid fluid>
-								<textarea
-								className="change_email_textbox"
-								rows = "1"
-								cols = "45"
-								placeholder="Enter your email here"
-								onChange={(e) => this.handleEmailChange(e)} />
-							</Grid>
-						 </Modal.Body>
-						<Modal.Footer>
-						<Grid fluid>
-								<Row>
-									<Button onClick={()=> this.handleClose()}> Cancel </Button>
-									<Button disabled={this.state.email==this.props.user.email || this.state.email==""} onClick={() => this.handleSubmit()}> Submit </Button>
-								</Row>
-						</Grid>
-						</Modal.Footer>
-					</Modal>
-		}
-
-		else if (this.state.showEngineerModal == true){
-			edit = <Modal dialogClassName="engineer_modal" show={true} onHide={this.handleClose}>
-						 <Modal.Body>
-							<Grid fluid>
-								 <ControlLabel>Engineering Field</ControlLabel>
-									<Select
-										name="form-field-name"
-										value={this.state.eng}
-										options={options}
-										onChange={(e) => {
-											if (e !== null) {
-												this.setState({ eng: e.value })
-											} else {
-												this.setState({ eng: '' })
-											}
-										}}
-									/>
-							</Grid>
-						 </Modal.Body>
-						<Modal.Footer>
-						<Grid fluid>
-								<Row>
-									<Button onClick={()=> this.handleClose()}> Cancel </Button>
-									<Button disabled={this.state.eng=="" || this.state.eng==this.props.user.engineer} onClick={() => this.handleSubmit()}> Submit </Button>
-								</Row>
-						</Grid>
-						</Modal.Footer>
-					</Modal>
-		}
-
-        return (
-			//A card that displays user information that can be changed, as well as the appropriate modal (if applicacle).
-			<div>
-            <Panel bsStyle="primary">
-				<Panel.Heading>
-					Edit profile
-				</Panel.Heading>
-				<Panel.Body>
-					<a id="change_fname" onClick={() => this.handleChange_fname()}> Change First Name </a><br></br>
-					<a id="change_lname" onClick={() => this.handleChange_lname()}> Change Last Name </a><br></br>
-					<a id="change_pass" onClick={() => this.handleChange_pass()}> Change Password </a><br></br>
-					<a id="change_email" onClick={() => this.handleChange_email()}> Change Email </a><br></br>
-					<a id="change_eng" onClick={() => this.handleChange_eng()}> Change Discipline </a><br></br>
-				</Panel.Body>
-              </Panel>
-			  {edit}
-			  </div>
+		return (
+			<div>{userState}</div>
         );
     }
 }
+
 function mapStateToProps(state) {
-    return {
-        user: state.login.user
-    }
+	return {
+		user: state.login.user
+	}
 }
 
 Edit = connect(
-    mapStateToProps,
+	mapStateToProps,
 )(Edit);
+
 
 export default Edit;

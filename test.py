@@ -5,16 +5,54 @@ import os
 
 
 def test_questions():
-    Questions.createQuestion("Question", "Please Answer", "software", 1)
-    questions = Questions.getQuestionsByUser(1, 0)
-    if questions:
-        return 0
-    else:
+    # create test user
+    Users.createUser("Mark", "Hamill", "starwarsfan", "wookie", "Space", "chewbaca", True)
+    id = Users.getUserId("starwarsfan")
+ 
+    if Questions.questionExists(1):
         return 1
+
+    Questions.createQuestion("Question", "Please Answer", "software", id)
+    questions = Questions.getQuestionsByUser(id, 0)
+    if not questions:
+        return 2
+    
+    question = Questions.getQuestion(1)
+    if not question:
+        return 3
+    
+    if not Questions.getQuestionsByEngineer('software', id):
+        return 4
+ 
+    if not Questions.deleteQuestion(1):
+        return 5
+
     return 0
 
 
 def test_answers():
+    # create test user
+    Users.createUser("Mark", "Hamill", "starwarsfan", "wookie", "Space", "chewbaca", True)
+    id = Users.getUserId("starwarsfan")
+
+    if Questions.questionExists(1):
+        return 1
+
+    Questions.createQuestion("Question", "Please Answer", "software", id)
+    questions = Questions.getQuestionsByUser(id, 0)
+    if not questions:
+        return 2
+
+    question = Questions.getQuestion(1)
+    if not question:
+        return 3
+
+    if not Questions.getQuestionsByEngineer('software', id):
+        return 4
+
+    if not Questions.deleteQuestion(1):
+        return 5
+
     Answers.createAnswer("My Answer", 3, 10)
     answer = Answers.getAnswersByQuestion(10)
     #if answer:
@@ -30,7 +68,7 @@ def test_users():
         return 1
     if Users.userVerified("starwarsfan", "wookie"):
         return 2
-    if Users.modifyUser(1, "Boba", "Fett", "Killer"):
+    if Users.modifyUser(1, "Boba", "Fett", "Killer", "starwarsfan"):
         return 3
 
     # test with existing user
@@ -50,7 +88,7 @@ def test_users():
         return 8
     if user["password_hash"] == "wookie":
         return 9
-    if not Users.modifyUser(user["id"], "Han", "Solo", "Ship"):
+    if not Users.modifyUser(user["id"], "Han", "Solo", "Ship", "starwarsfan"):
         return 10
     user = Users.getUser("starwarsfan")
     if user["fname"] != "Han" or user["lname"] != "Solo" or user["engineer"] != "Ship":
@@ -76,10 +114,6 @@ def test_users():
         return 17
     if not Users.userVerified("starwarsfan", "falcon"):
         return 18
-
-    Users.deleteUser("starwarsfan")
-    if Users.getUser("starwarsfan"):
-        return 19
 
     return 0
 

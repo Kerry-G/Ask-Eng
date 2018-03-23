@@ -1,8 +1,9 @@
 import React, {Component} from 'react'
 import {fetchAPI} from '../../../utility'
-import {Col, Row, Well} from 'react-bootstrap'
+import {Col, Row, Image, Grid} from 'react-bootstrap'
 import Answer from './Answer.js'
 import AnswerQuestion from './AnswerQuestion.js'
+import moment from 'moment'
 import Votes from "../../../votes/Votes";
 import { connect } from 'react-redux'
 
@@ -13,33 +14,36 @@ class QuestionPage extends Component {
             question: {
                 answers: []
             },
+            fname: "",
+            lname: "",
+            display_image: "",
+            user_id: "",
             loading: true
         }
-		this.answerhandler = this.answerhandler.bind(this);
-    }
-	
-	answerhandler() {
-		console.log("question answered");
-        this.getQuestion();
+		this.answerHandler = this.answerHandler.bind(this);
     }
 
-	componentDidMount(){
-		this.getQuestion()
-	}
-	
-    componentWillMount() {
-        this.setState({loading: true});
+    answerHandler() {
         this.getQuestion()
+    }
+
+    componentDidMount(){
+        this.getQuestion()
+    }
+
+    componentWillMount() {
+      this.setState({loading: true});
     }
 
     async getQuestion() {
         try {
-            fetchAPI("GET", "/api/qa/questions/?question_id=" + this.props.match.params.id).then(response => {
+            fetchAPI("GET", "/api/qa/questions/?question_id=" + this.props.match.params.id + "&loggedin_id=" + this.props.user.id).then(response => {
                 if (response.success) {
                     this.setState({
                         question: response.question,
-                        loading: false
-                    })
+                        loading: false,
+                        user_id: response.question.user_id
+                    }, ()=>this.getUser())
                 }
             })
         } catch (e) {
@@ -47,8 +51,28 @@ class QuestionPage extends Component {
         }
     }
 
+    async getUser() {
+        try {
+            fetchAPI("GET", "/api/users/" + this.state.user_id).then(response => {
+            if (response.success) {
+                console.log(response.user)
+                this.setState({
+                    fname: response.user.fname,
+                    lname: response.user.lname,
+                    display_image: response.user.display_image
+                })
+            }})
+        } catch (e) {
+            console.error("Error:", e)
+        }
+    }
+
     render() {
+        let tags=[];
+        let avatarPath = `\\images\\avatar\\`+this.state.display_image;
         if (!this.state.loading) {
+            let userLogin = !((Object.keys(this.props.user).length === 0 && this.props.user.constructor === Object)) //if no user is login
+            let askQuestion;
             let answers = this.state.question.answers.map((answer) => {
                 return (
                     <div key={answer.id}>
@@ -57,46 +81,62 @@ class QuestionPage extends Component {
                             answer={answer}
                         />
                     </div>
+            )});
+            let tagsInfo = tags.map((tag)=>{
+                return (
+                    <span key={tag} className="question-tags">
+                        {tag}
+                    </span>
                 )
-            });
-            return (
-                <div className="answer-page">
-                    <Row>
-                        <Col md={12}>
-                            <span className="question-tag">{this.state.question.engineer}</span>
-                        </Col>
-                    </Row>
-                    <Row className="question-box-text">
-                        <Col md={1}>
-                            {console.log(this.state.question)}
-                            <Votes
-                                question={this.state.question}
-                                status = {this.state.vote_status} //this may switch
-                                user={this.props.user}
-                            />
-                        </Col>
-                        <Col md={11}>
-                            <h1>{this.state.question.title}</h1>
-                            <p>{this.state.question.text}</p>
-                        </Col>
-                    </Row>
-                    <Row>
-                        <Col md={12}>
-                            <Well bsSize="large">
-                                <h2> Know the Answer? </h2>
-                                <AnswerQuestion
-                                id={this.props.match.params.id}
-								updateanswers={this.answerhandler}
-                            />
-                          </Well>
-                        </Col>
-                    </Row>
-                    <div>
-                    {answers}
+            })
+         if(userLogin){
+            askQuestion = <Row>
+                <Col md={12}>
+                    <div className="answer-box">
+                        <AnswerQuestion
+                            id={this.props.match.params.id}
+                            updateAnswers={this.answerHandler}
+                        />
                     </div>
+                </Col>
+            </Row>
+         } else { askQuestion = null; }
+        
+         return (
+            <div className="answer-page">
+            <Grid>
+                <Row>
+                    <Col>
+                        <span className="question-tag-answer">{this.state.question.engineer}</span>
+                        <Image src={avatarPath} width={24} circle /> {this.state.fname} {this.state.lname}
+                        &nbsp;- {moment(this.state.question.register_date).format("LLL")} 
+                        <span className="question-tags-answer">
+                        {tagsInfo}
+                        </span>
+                    </Col>
+                </Row>
+                <Row className="question-box-text">
+                    <Col>
+                        <Votes
+                            question={this.state.question}
+                            status = {this.state.question.vote_status}
+                            user={this.props.user}
+                            comment_status = {'question'}
+                        /> 
+                    </Col>
+                    <Col>
+                        <h1>{this.state.question.title}</h1>
+                        <p>{this.state.question.text}</p>
+                    </Col>
+                </Row>
+                {askQuestion}
+                <div>
+                    {answers}
                 </div>
-            )
-        } else {
+            </Grid>
+            </div>
+        )
+    } else {
             return <h2>Loading...</h2>
         }
     }

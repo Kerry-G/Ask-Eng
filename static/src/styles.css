@@ -1,5 +1,5 @@
 @import url("https://fonts.googleapis.com/css?family=Mukta+Mahee");
-/* xsmall:     (max-width: 479px),
+/* xsmall:  (max-width: 479px),
 small:      (max-width: 599px),
 medium:     (max-width: 767px),
 large:      (max-width: 1024px),
@@ -12,19 +12,27 @@ tall:       (min-height: 780px), */
 #app {
   padding-bottom: 6rem; }
 
+h1, h2, h3, h4, h5, h6, p, div, textarea {
+  word-wrap: break-word; }
+
+h1 {
+  margin: 0.3em 0.5em 0.3em 0.5em; }
+
 /* HEADER */
 .header {
   margin: 0 0 25px;
   background: #ecf0f1;
-  box-shadow: 0 2px 12px 1px rgba(127, 140, 141, 0.6); }
+  box-shadow: 0 2px 12px 1px rgba(127, 140, 141, 0.6);
+  display: flex;
+  justify-content: space-between; }
 
 .header h1 {
-  font-size: 5rem;
-  color: #e74c3c;
+  font-size: 3rem;
+  color: #E27A3F;
   font-weight: 600; }
 
 .header h1 small {
-  color: #e74c3c; }
+  color: #E27A3F; }
 
 .logoutBtn {
   color: #ffffff;
@@ -37,18 +45,26 @@ tall:       (min-height: 780px), */
 .para {
   margin-top: 1.5rem; }
 
-.menu .btn-toolbar {
-  display: inline-block;
-  vertical-align: middle;
-  margin: auto 1rem; }
-
-.menu {
-  margin-top: 1.5rem;
-  float: right; }
-
 /* END HEADER */
-h1 {
-  margin: 0.3em 0.5em 0.3em 0.5em; }
+.jumbotron {
+  background-color: #ecf0f1; }
+
+.search {
+  position: relative;
+  float: right;
+  width: 20rem;
+  transition: all 10s; }
+  .search:focus {
+    outline: none; }
+
+#searchButton {
+  float: right;
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  margin-right: 10px;
+  padding-left: 5px;
+  text-align: left; }
 
 /* FOOTER */
 .footer {
@@ -78,7 +94,7 @@ h1 {
 
 .reg-btn:hover {
   border: 2px solid #95a5a6;
-  color: #e74c3c;
+  color: #E27A3F;
   background-color: #ecf0f1;
   width: 100px;
   cursor: pointer;
@@ -91,12 +107,11 @@ h1 {
   outline: none; }
 
 .reg-btn-color {
-  border: 2px solid #c0392b;
-  height: 3rem;
+  border: 2px solid #DF5A49;
   font-size: 1.5rem;
   margin-left: auto;
   color: #fff;
-  background-color: #e74c3c;
+  background-color: #E27A3F;
   width: 100px;
   cursor: pointer;
   border-radius: 100px;
@@ -105,10 +120,10 @@ h1 {
   text-decoration: none; }
 
 .reg-btn-color:hover {
-  border: 2px solid #c0392b;
+  border: 2px solid #DF5A49;
   margin-left: auto;
   color: #fff;
-  background-color: #c0392b;
+  background-color: #DF5A49;
   width: 100px;
   cursor: pointer;
   border-radius: 100px;
@@ -160,10 +175,6 @@ h1 {
 .modal-content {
   border: 0; }
 
-.menu {
-  float: left;
-  width: 100%; }
-
 label {
   font-weight: 300; }
 
@@ -176,7 +187,7 @@ label {
   color: black; }
 
 .modal-footer {
-  background-color: #e74c3c;
+  background-color: #E27A3F;
   border: 0; }
 
 .alert-warning {
@@ -237,7 +248,6 @@ textarea {
 @media only screen and (max-width: 70em) {
   .ask-box-footer {
     width: 100%;
-    padding-top: 1rem;
     display: flex;
     flex-wrap: wrap;
     justify-content: center; } }
@@ -258,18 +268,18 @@ textarea {
     padding-left: 10px; } }
 
 .ask-box.type.selected {
-  border: 2px solid #e74c3c;
+  border: 2px solid #E27A3F;
   text-decoration: none;
   color: #fff;
-  background-color: #e74c3c;
-  border-color: #c0392b; }
+  background-color: #E27A3F;
+  border-color: #DF5A49; }
 
 .ask-box.type.selected:hover {
-  border: 2px solid #e74c3c;
+  border: 2px solid #E27A3F;
   text-decoration: none;
   color: #fff;
-  background-color: #e74c3c;
-  border-color: #c0392b; }
+  background-color: #E27A3F;
+  border-color: #DF5A49; }
 
 .ask-box.type {
   width: 100px;
@@ -285,8 +295,8 @@ textarea {
   padding-left: 10px; }
 
 .ask-box.type:hover {
-  color: #e74c3c;
-  border: 2px solid #e74c3c;
+  color: #E27A3F;
+  border: 2px solid #E27A3F;
   text-decoration: none;
   cursor: pointer; }
 
@@ -299,11 +309,11 @@ textarea {
   padding: 5px;
   padding-right: 10px;
   padding-left: 10px;
-  background-color: #e74c3c;
+  background-color: #E27A3F;
   /* padding-left: 55px; */
   /* padding-right: 55px; */ }
   #ask-box-button:hover {
-    background-color: #c0392b; }
+    background-color: #DF5A49; }
 
 /* END ASK-BOX */
 /* avatar */
@@ -323,6 +333,7 @@ textarea {
 /* question box */
 .question-box {
   border-bottom: 1px rgba(149, 165, 166, 0.65) solid;
+  width: 100%;
   padding: 3px; }
 
 .question-box .square {
@@ -343,7 +354,7 @@ textarea {
 
 .question-tag {
   float: left;
-  background-color: #e74c3c;
+  background-color: #E27A3F;
   color: white;
   padding: 2px;
   padding-left: 10px;
@@ -364,32 +375,88 @@ textarea {
 .question-box-text {
   margin: auto auto 2rem auto; }
 
+.question-tags {
+  margin: 0.4em;
+  background-color: #ecf0f1;
+  padding: 0 0.8em 0 0.8em;
+  border: 1px solid #E27A3F;
+  border-radius: 100px; }
+
+.question-tags-answer {
+  margin-left: 10px; }
+
 .answer-page h1 {
-  font-size: 2.5rem; }
+  font-size: 3rem;
+  margin: 10px; }
 
 .answer-page p {
-  font-size: 1.7rem; }
+  margin: 10px;
+  font-size: 2rem; }
+
+.answer-box {
+  border: 0.1em solid #c7d0d2;
+  border-radius: 0.2em;
+  box-shadow: inset 0 1.5px 3px rgba(190, 190, 190, 0.4), 0 0 0 5px #f5f7f8;
+  padding: 1em;
+  margin: 2rem; }
+
+.question-tag-answer {
+  float: left;
+  background-color: #E27A3F;
+  color: white;
+  padding: 2px;
+  padding-right: 10px;
+  padding-left: 10px;
+  margin-right: 10px;
+  margin-left: 2rem;
+  font-size: 1.4rem; }
 
 .modal-title {
-  color: #e74c3c; }
+  color: #E27A3F; }
 
 .panel-primary {
-  border-color: #c0392b; }
+  border-color: #DF5A49; }
 
 .panel-primary > .panel-heading {
-  background-color: #e74c3c;
-  border-color: #c0392b; }
+  background-color: #E27A3F;
+  border-color: #DF5A49; }
 
 #dropdown-no-caret {
   background-color: #ecf0f1;
   border-color: #ecf0f1; }
 
-.search {
-  float: right;
-  width: auto;
-  transition: all 10s; }
-  .search:hover {
-    width: 300px;
-    color: orange; }
-  .search:focus {
-    outline: none; }
+/*===============================
+START SEARCH
+=================================*/
+/*==========================================
+END SEARCH
+============================================*/
+/*==========================================
+profile card edit
+=========================================*/
+#box-edit-links {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-evenly; }
+
+#box-edit-links a {
+  text-decoration: none;
+  cursor: pointer; }
+
+.input-edit {
+  width: 50%;
+  height: 30px;
+  resize: none; }
+
+.change-fname {
+  color: #E27A3F;
+  border-color: #DF5A49; }
+
+.profile-badges {
+  color: black; }
+  .profile-badges :hover {
+    color: #DF5A49; }
+
+#box-edit-links {
+  margin-top: 5px;
+  margin-bottom: 5px; }

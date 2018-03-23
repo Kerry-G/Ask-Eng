@@ -7,13 +7,14 @@ class Votes extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            vote : parseInt(this.props.question.ups - this.props.question.downs),
+            vote : parseInt(this.props.question.ups - this.props.question.downs,10),
             color: "black",
             status: 0, //0 means no vote, 1 means upvoted, -1 means downvoted
         };
         this.vote = this.vote.bind(this);
         this.voteDown = this.voteDown.bind(this);
         this.voteUp = this.voteUp.bind(this);
+
     }
 
     componentDidUpdate(previousProps, previousState){
@@ -23,7 +24,7 @@ class Votes extends Component {
     }
 
     componentDidMount(){
-        this.setState({status: parseInt(this.props.status)})
+        this.setState({status: parseInt(this.props.status,10)})
     }
 
     async vote(version) {
@@ -85,7 +86,7 @@ class Votes extends Component {
             let body = {
                 vote_status: status,
                 loggedin_id: loggedin_id,
-                comment_status: 'question'
+                comment_status: this.props.comment_status
             };
             console.log(body);
             fetchAPI("PUT", "/api/qa/questions/" + this.props.question.id, body).then(response => {

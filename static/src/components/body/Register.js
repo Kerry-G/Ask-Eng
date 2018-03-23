@@ -12,7 +12,7 @@ class Register extends Component {
             email: '',
             pw: '',
             role: '',
-            display_image: '',
+            display_image: '1',
 
             //validators
             validEmail: null,
@@ -45,7 +45,9 @@ class Register extends Component {
      * @author Kerry Gougeon
      */
     validateEmail(mail) {
+        /*eslint-disable*/
         if (/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(mail)) {
+        /*eslint-enable*/
             this.setState({
                 validEmail: "success"
             })
@@ -57,7 +59,7 @@ class Register extends Component {
     }
 
     validatePassword(pw) {
-        if (/(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%]).{6,20}/.test(pw)) {
+        if (pw.length > 6) {
             this.setState({
                 validPassword: "success"
             })
@@ -191,9 +193,7 @@ class Register extends Component {
         const popoverFocus = <Popover 
         title="Your password should be safe!" 
         id="popover-basic">
-        Your password must contain atleast one lowercase character,
-        one uppercase character, one special character "@#$%",
-        and atleast 6 characters.</Popover>
+        Your password must be atleast 6 characters.</Popover>
         let body
         if (this.state.page === 1) {
             body =
@@ -286,8 +286,6 @@ class Register extends Component {
                                 }
                             }}
                         />
-
-
                         <FieldGroup
                             type="file"
                             id="formControlsFile"
@@ -314,9 +312,9 @@ class Register extends Component {
             else {
                 alert = null
             }
-
-            nextButton = <button className="reg-btn" onClick={this.handleNextPage} disabled={this.state.validPassword !== 'success'}>Next</button >
-
+            nextButton = <button className="reg-btn" onClick={this.handleNextPage} disabled={this.state.validPassword !== 'success'}>
+            Next
+            </button >
         }
         else if (this.state.page === 2) {
             saveButton = null
@@ -332,24 +330,18 @@ class Register extends Component {
 
         return (
             <Modal dialogClassName="custom-modal" show={this.props.show} onHide={this.handleClose}>
-
                 <Modal.Body>
-
                     <Grid fluid>
                         <Row>
                             {alert}
                             {body}
-
                         </Row>
                     </Grid>
-
                 </Modal.Body>
-
                 <Modal.Footer>
                     {previousButton}
                     {nextButton}
                     {saveButton}
-
                 </Modal.Footer>
             </Modal>
         );
