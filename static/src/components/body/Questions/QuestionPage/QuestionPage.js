@@ -68,7 +68,7 @@ class QuestionPage extends Component {
     }
 
     render() {
-        let tags = ["stuff", "try","Ok","Node.js"];
+        let tags=[];
         let avatarPath = `\\images\\avatar\\`+this.state.display_image;
         if (!this.state.loading) {
             let userLogin = !((Object.keys(this.props.user).length === 0 && this.props.user.constructor === Object)) //if no user is login
