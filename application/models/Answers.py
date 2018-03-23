@@ -80,7 +80,7 @@ def deleteAnswer(id):
 	if answerExists(id):
 		response = True
 		answer = Answer.query.filter_by(id=id).first()
-		db.session.remove(answer)
+		db.session.delete(answer)
 		db.session.commit()
 	return response
 
@@ -108,7 +108,7 @@ def getAnswersByUser(user_id, loggedin_id=-1):
 				ans['vote_status'] = {'vote_status':0}
 			else:
 				try:
-					ans['vote_status'] = Votes.getVote(loggedin_id, answer['id'], 'answer')['vote_status']
+					ans['vote_status'] = Votes.getVote(loggedin_id, ans['id'], 'answer')['vote_status']
 				except KeyError:
 					ans['vote_status'] = {'vote_status':0}
 			response.append(dict(ans))

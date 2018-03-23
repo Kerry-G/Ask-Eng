@@ -6,14 +6,13 @@ import os
 
 def test_questions():
     # create test user
-    Users.createUser("Mark", "Hamill", "starwarsfan", "wookie", "Space", "chewbaca", True)
-    id = Users.getUserId("starwarsfan")
+    user_id = Users.getUserId("starwarsfan")
  
     if Questions.questionExists(1):
         return 1
 
-    Questions.createQuestion("Question", "Please Answer", "software", id)
-    questions = Questions.getQuestionsByUser(id, 0)
+    Questions.createQuestion("Question", "Please Answer", "software", user_id)
+    questions = Questions.getQuestionsByUser(user_id, 0)
     if not questions:
         return 2
     
@@ -21,7 +20,7 @@ def test_questions():
     if not question:
         return 3
     
-    if not Questions.getQuestionsByEngineer('software', id):
+    if not Questions.getQuestionsByEngineer('software', user_id):
         return 4
  
     if not Questions.deleteQuestion(1):
@@ -32,33 +31,64 @@ def test_questions():
 
 def test_answers():
     # create test user
-    Users.createUser("Mark", "Hamill", "starwarsfan", "wookie", "Space", "chewbaca", True)
-    id = Users.getUserId("starwarsfan")
+    user_id = Users.getUserId("starwarsfan")
 
-    if Questions.questionExists(1):
+    # create test question
+    Questions.createQuestion("Question", "Please Answer", "software", user_id)
+    question = Questions.getQuestionsByUser(user_id, 0)[0]
+    question_id = question["id"]
+
+    Answers.createAnswer("My Answer", user_id, question_id)
+    answer = Answers.getAnswersByQuestion(question_id, 0)[0]
+    answer_id = answer["id"]
+    if not answer:
         return 1
-
-    Questions.createQuestion("Question", "Please Answer", "software", id)
-    questions = Questions.getQuestionsByUser(id, 0)
-    if not questions:
+    answer_user = Answers.getAnswersByUser(user_id, 0)[0]
+    if not answer_user:
         return 2
 
-    question = Questions.getQuestion(1)
-    if not question:
+    if answer_user["register_date"] != answer["register_date"]:
         return 3
 
-    if not Questions.getQuestionsByEngineer('software', id):
+    if not Answers.answerExists(answer_id):
         return 4
 
-    if not Questions.deleteQuestion(1):
+    if not Answers.deleteAnswer(answer_id):
         return 5
 
-    Answers.createAnswer("My Answer", 3, 10)
-    answer = Answers.getAnswersByQuestion(10)
-    #if answer:
-    #    return 0
-    #else:
-    #    return 1
+    return 0
+
+
+def test_votes():
+    # create test user
+    user_id = Users.getUserId("starwarsfan")
+
+    # create test question
+    Questions.createQuestion("Question", "Please Answer", "software", user_id)
+    question = Questions.getQuestionsByUser(user_id, 0)[0]
+    question_id = question["id"]
+
+    # create a test answer
+    Answers.createAnswer("My Answer", user_id, question_id)
+    answer = Answers.getAnswersByQuestion(question_id, 0)[0]
+    answer_id = answer["id"]
+
+    Votes.setVote(user_id, answer_id, "answer", 1)
+
+    Votes.setVote(user_id, question_id, "question", -1)
+
+    if Questions.getQuestion(question_id, 0)["ups"] != 0 or Questions.getQuestion(question_id, 0)["downs"] != 1:
+        return 1
+
+    if Answers.getAnswer(answer_id)["ups"] != 1 or Answers.getAnswer(answer_id)["downs"] != 0:
+        return 2
+
+    if (not Votes.isDown(user_id, question_id, "question")) or Votes.isUp(user_id, question_id, "question"):
+        return 3
+
+    if (not Votes.isUp(user_id, answer_id, "answer")) or Votes.isDown(user_id, answer_id, "answer"):
+        return 4
+
     return 0
 
 
@@ -133,29 +163,31 @@ db = SQLAlchemy(app)
 CORS(app)
 
 if __name__ == '__main__':
-    from application.models import Answers, Questions, Users
-    max_return_code = 0
+    from application.models import Answers, Questions, Users, Votes
+    error = False
     return_code = test_users()
     if return_code != 0:
         print("backend Test failed at User, Rc=" + str(return_code))
-
-    if return_code > max_return_code:
-        max_return_code = return_code
+        error = True
 
     return_code = test_questions()
     if return_code != 0:
         print("backend Test failed at Question, Rc=" + str(return_code))
-
-    if return_code > max_return_code:
-        max_return_code = return_code
+        error = True
 
     return_code = test_answers()
     if return_code != 0:
         print("backend Test failed at Answers, Rc=" + str(return_code))
+        error = True
 
-    if return_code > max_return_code:
-        max_return_code = return_code
+    return_code = test_votes()
+    if return_code != 0:
+        print("backend Test failed at Votes, Rc=" + str(return_code))
+        error = True
 
-    print("Backend Test completed")
-    exit(max_return_code)
-
+    if error:
+        print("Backend Test failed")
+        exit(-1)
+    else:
+        print("Backend Test completed")
+        exit(0)
