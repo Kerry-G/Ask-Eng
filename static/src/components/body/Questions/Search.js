@@ -5,7 +5,7 @@ class Search extends Component{
     render() {
         return  (
             <Form >
-                <FormControl className ="search"  bsSize="sm" type="text" onChange={(e)=>{this.props.handleSearch({value:e.target.value})}} placeholder="enter your search" />
+                <FormControl className ="search"  bsSize="sm" type="text" onChange={(e)=>{this.props.handleSearch({value:e.target.value.toUpperCase()})}} placeholder="enter your search" />
             </Form> 
     )
     }

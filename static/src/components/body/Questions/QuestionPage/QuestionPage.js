@@ -124,6 +124,7 @@ class QuestionPage extends Component {
                                     type="text" 
                                     onKeyPress={this.handleKeyPress.bind(this)}
                                     value = {this.state.newTags}
+                                    placeholder="enter your tags here"
                                     onChange = {(e)=> this.setState({newTags:e.target.value})}
                                 />
                 }
