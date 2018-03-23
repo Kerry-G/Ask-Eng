@@ -39,16 +39,22 @@ h1{
     margin: 0 0 25px;
     background:$offwhite;
     box-shadow: 0 2px 12px 1px rgba(127,140,141,0.6);
+    display:flex;
+    justify-content: space-between;
 }
 .header h1{
-    font-size: 5rem;
+    font-size: 3rem;
     color:$main;
     font-weight: 600;
 }
 .header h1 small{
-    color:$main;;
+    color:$main;
 }
-
+// .menu .btn-toolbar{
+//     display: inline-block;
+//     vertical-align: middle;
+//     margin: auto 1rem;
+// }
 .logoutBtn{
     color: #ffffff;
     cursor: pointer;
@@ -60,20 +66,30 @@ h1{
 .para{
     margin-top: 1.5rem;
 }
-.menu .btn-toolbar{
-    display: inline-block;
-        vertical-align: middle;
-        margin: auto 1rem;
-       
-}
-.menu {
-    margin-top: 1.5rem;
-    float: right; 
-}
 /* END HEADER */
 .jumbotron{
-    background-color: $gray;
+    background-color: $offwhite;
 }
+// SEARCH
+.search{ 
+    position: relative; 
+    float: right; 
+    width:20rem; 
+    transition: all 10s; 
+    &:focus{ 
+        outline: none;  
+    } 
+} 
+#searchButton{ 
+    float: right; 
+    width:30px; 
+    height: 30px; 
+    border-radius: 50%; 
+    margin-right:10px; 
+    padding-left:5px; 
+    text-align: left; 
+} 
+
 /* FOOTER */
 .footer{
     position: absolute;
@@ -181,10 +197,6 @@ h1{
 }
 .modal-content{
     border: 0;
-}
-.menu{ 
-    float: left;
-    width: 100%;  
 }
 label{
     font-weight: 300;
@@ -391,6 +403,17 @@ textarea{
 /* answer-page */
 .question-box-text{
     margin: auto auto 2rem auto;
+}
+.question-tags{
+    margin:0.4em;
+    background-color:$offwhite;
+    padding: 0 0.8em 0 0.8em;
+    border: 1px solid $main;
+    border-radius: 100px;
+    
+}
+.question-tags-answer{
+    margin-left:10px;
 }
 .answer-page h1{
     font-size: 3rem;

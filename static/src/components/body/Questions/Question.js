@@ -20,12 +20,11 @@ class Question extends Component {
                 <Grid>
                     <Row>
                         <Col lg={12}>
-                        {console.log(this.props.question)}
                             <Votes
-                            question = {this.props.question}
-                            status = {this.props.question.vote_status}
-                            user={this.props.user}
-                            comment_status = {'question'}
+                                question = {this.props.question}
+                                status = {this.props.question.vote_status}
+                                user={this.props.user}
+                                comment_status = {'question'}
                             />
                             <Row>
                                 <h1><span className="question-tag">{this.props.question.engineer}</span>
