@@ -12,7 +12,7 @@ class Register extends Component {
             email: '',
             pw: '',
             role: '',
-            display_image: '',
+            display_image: '1',
 
             //validators
             validEmail: null,
@@ -286,8 +286,6 @@ class Register extends Component {
                                 }
                             }}
                         />
-
-
                         <FieldGroup
                             type="file"
                             id="formControlsFile"
@@ -314,9 +312,9 @@ class Register extends Component {
             else {
                 alert = null
             }
-
-            nextButton = <button className="reg-btn" onClick={this.handleNextPage} disabled={this.state.validPassword !== 'success'}>Next</button >
-
+            nextButton = <button className="reg-btn" onClick={this.handleNextPage} disabled={this.state.validPassword !== 'success'}>
+            Next
+            </button >
         }
         else if (this.state.page === 2) {
             saveButton = null
@@ -332,24 +330,18 @@ class Register extends Component {
 
         return (
             <Modal dialogClassName="custom-modal" show={this.props.show} onHide={this.handleClose}>
-
                 <Modal.Body>
-
                     <Grid fluid>
                         <Row>
                             {alert}
                             {body}
-
                         </Row>
                     </Grid>
-
                 </Modal.Body>
-
                 <Modal.Footer>
                     {previousButton}
                     {nextButton}
                     {saveButton}
-
                 </Modal.Footer>
             </Modal>
         );

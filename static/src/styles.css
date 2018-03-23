@@ -1,5 +1,5 @@
 @import url("https://fonts.googleapis.com/css?family=Mukta+Mahee");
-/* xsmall:     (max-width: 479px),
+/* xsmall:  (max-width: 479px),
 small:      (max-width: 599px),
 medium:     (max-width: 767px),
 large:      (max-width: 1024px),
@@ -54,7 +54,7 @@ h1 {
 
 /* END HEADER */
 .jumbotron {
-  background-color: #95a5a6; }
+  background-color: #ecf0f1; }
 
 /* FOOTER */
 .footer {
@@ -369,6 +369,16 @@ textarea {
 .question-box-text {
   margin: auto auto 2rem auto; }
 
+.question-tags {
+  margin: 0.4em;
+  background-color: #ecf0f1;
+  padding: 0 0.8em 0 0.8em;
+  border: 1px solid #E27A3F;
+  border-radius: 100px; }
+
+.question-tags-answer {
+  margin-left: 10px; }
+
 .answer-page h1 {
   font-size: 3rem;
   margin: 10px; }
@@ -412,23 +422,6 @@ textarea {
 /*===============================
 START SEARCH
 =================================*/
-.search {
-  position: relative;
-  float: right;
-  width: 20rem;
-  transition: all 10s; }
-  .search:focus {
-    outline: none; }
-
-#searchButton {
-  float: right;
-  width: 30px;
-  height: 30px;
-  border-radius: 50%;
-  margin-right: 10px;
-  padding-left: 5px;
-  text-align: left; }
-
 /*==========================================
 END SEARCH
 ============================================*/

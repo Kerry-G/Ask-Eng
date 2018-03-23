@@ -72,7 +72,7 @@ h1{
 }
 /* END HEADER */
 .jumbotron{
-    background-color: $gray;
+    background-color: $offwhite;
 }
 /* FOOTER */
 .footer{
@@ -391,6 +391,17 @@ textarea{
 /* answer-page */
 .question-box-text{
     margin: auto auto 2rem auto;
+}
+.question-tags{
+    margin:0.4em;
+    background-color:$offwhite;
+    padding: 0 0.8em 0 0.8em;
+    border: 1px solid $main;
+    border-radius: 100px;
+    
+}
+.question-tags-answer{
+    margin-left:10px;
 }
 .answer-page h1{
     font-size: 3rem;
