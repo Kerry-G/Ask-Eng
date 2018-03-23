@@ -1,5 +1,4 @@
 import React, { Component } from 'react'
-import { Col, Row, Image } from 'react-bootstrap'
 import { connect } from 'react-redux'
 import { Link } from 'react-router-dom'
 import Headermenu from '../header/Headermenu'
@@ -13,7 +12,7 @@ class Header extends Component {
       
         <h1>
           <Link to='/' style={{ textDecoration: 'none', color: "#E27A3F" }}>
-            <img src={image} width={30} circle />&nbsp;Ask<small>ENG</small>
+            <img src={image} alt="Ask-Eng" width={30} />&nbsp;Ask<small>ENG</small>
           </Link>
         </h1>
 
