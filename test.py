@@ -23,7 +23,7 @@ def test_questions():
     if not question:
         return 3
     
-    if not Questions.getQuestionByEngineer('software', id):
+    if not Questions.getQuestionsByEngineer('software', id):
         return 4
  
     if not Questions.deleteQuestion(1):

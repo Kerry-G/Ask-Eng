@@ -180,7 +180,7 @@ def getQuestionsByUser(user_id, loggedin_id):
 
 
 # Get all Question returns list of users or an empty list
-def getQuestionByEngineer(engineer, loggedin_id):
+def getQuestionsByEngineer(engineer, loggedin_id):
 	from application.models import Users
 	from application.models import Votes
 	response = []
