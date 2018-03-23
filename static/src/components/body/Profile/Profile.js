@@ -46,8 +46,9 @@ class Profile extends Component {
 
 	async getQuestions() {
 		try {
-			fetchAPI("GET", "/api/qa/questions/?loggedin_id=" + this.props.user.id + this.state.extraQuery).then(response => {
+			fetchAPI("GET", "/api/qa/questions/?loggedin_id=" + this.props.user.id + "&user_id="+ this.props.match.params.id + this.state.extraQuery).then(response => {
 				if (response.success) {
+					console.log(response.questions)
 					this.setState({
 						questions: response.questions
 					})
@@ -59,7 +60,7 @@ class Profile extends Component {
 	handleSearch(word){
 		try{
 		  let results = [];
-		  fetchAPI("GET", "/api/qa/questions/?loggedin_id=" + this.props.user.id + this.state.extraQuery).then(response => {
+		  fetchAPI("GET", "/api/qa/questions/?loggedin_id=" + this.props.user.id + "&user_id="+ this.props.match.params.id + this.state.extraQuery).then(response => {
 			if (response.success) {
 			  let questions = response.questions
 			  for (let i in questions){
