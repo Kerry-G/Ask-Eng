@@ -50,7 +50,7 @@ class Questions extends Component {
         if (response.success) {
           let questions = response.questions
           for (let i in questions){
-            if (questions[i].title.includes(word.value)){
+            if (questions[i].title.toUpperCase().includes(word.value)){
               results.push(questions[i])
             }
           }
