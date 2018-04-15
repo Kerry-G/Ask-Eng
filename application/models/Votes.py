@@ -87,9 +87,7 @@ def setVote(user_id, comment_id, comment_status, vote_status):
 		db.session.add(vote)
 		db.session.commit()
 
-	user = Users.User.query.filter_by(id=user_id).first()  # get user
-	if user is None:
-		return
+	
 
 	# if the vote status changes (ie not going for up to up, down to down)
 	# vote.vote_status is the model's current vote status (1, 0, -1)
@@ -98,7 +96,9 @@ def setVote(user_id, comment_id, comment_status, vote_status):
 	if vote.vote_status != vote_status:
 		model = Questions.Question if comment_status == 'question' else Answers.Answer  # select the correct model
 		comment = model.query.filter_by(id=comment_id).first()  # get the question or answer
-
+		if comment is not None:
+			user = Users.User.query.filter_by(id=comment.user_id).first()  # get user
+			
 		# WHEN vote is unset and it is set up => add to ups
 		# WHEN vote is unset and it is set down => add to downs
 		# WHEN vote is set up and it is set down => remove up, add down

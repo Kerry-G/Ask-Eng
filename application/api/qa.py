@@ -158,7 +158,7 @@ def questionsIDRoute(id):
 
 	if request.method == 'PUT':
 		try:
-			vote_status = data['vote_status']	   
+			vote_status = data['vote_status']
 			Votes.setVote(user_id=data['loggedin_id'], comment_id=id, comment_status=data['comment_status'], vote_status=vote_status)
 			vote = Votes.getVote(user_id=data['loggedin_id'], comment_id=id, comment_status=data['comment_status'])
 			response = json.dumps({'success': True, 'status': 'OK', 'message': 'Vote is set.'})
