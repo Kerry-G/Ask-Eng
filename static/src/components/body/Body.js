@@ -45,8 +45,8 @@ class Body extends Component {
     }
 
     return (
-      <div>
-        <Grid>
+      <div id="body">
+        <Grid fluid>
           <Row>
               {/* body part */}
                 <Route exact path='/' render={()=>{

@@ -110,14 +110,13 @@ class QuestionPage extends Component {
             // CREATES THE ANSWER BOX
             if (userLogin) {
                 askQuestion = <Row>
-                    <Col md={12}>
+
                         <div className="answer-box">
                             <AnswerQuestion
                                 id={this.props.match.params.id}
                                 updateAnswers={this.answerHandler}
                             />
                         </div>
-                    </Col>
                 </Row>
                 if (this.props.user.id === this.state.question.user_id){
                     createTags = <input 

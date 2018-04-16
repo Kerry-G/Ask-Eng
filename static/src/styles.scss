@@ -494,3 +494,61 @@ profile card edit
     margin-top: 5px;
     margin-bottom: 5px;
 }
+
+
+/***
+
+OVERIDE
+
+***/
+.header h1 {
+    font-size: 3rem;
+    color: #E27A3F;
+    font-weight: 600;
+    margin: auto;
+    margin-left: 1em;
+    text-align: left;
+    float: left;
+    display: block;
+}
+.question-tag-answer {
+    float: left;
+    background-color: #E27A3F;
+    color: white;
+    padding: 2px;
+    padding-right: 10px;
+    padding-left: 10px;
+    margin-right: 10px;
+    margin-left: 0; 
+}
+.answer-box {
+    margin:0;
+}
+.answer-page {
+    padding: 2em;
+}
+.question-box-text {
+    margin-right: -15px;
+    margin-left: -15px;
+}
+.question-tags-answer {
+    display: block;
+    margin-left: 0;
+    margin-top: 1em;
+    padding: 0;
+}
+
+span.question-tags {
+    display: inline-block;
+    margin-left: 0;
+    margin-right: 1em;
+}
+
+#body{
+    margin: auto 2em auto 2em;
+}
+
+.menu {
+    padding-bottom: 0;
+    margin: auto 0 auto 0;
+}
