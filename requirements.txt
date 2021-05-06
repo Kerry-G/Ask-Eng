@@ -2,7 +2,7 @@ blinker==1.4
 certifi==2018.1.18
 click==6.7
 Flask==0.12.2
-Flask-Cors==3.0.3
+Flask-Cors==3.0.9
 Flask-Mail==0.9.1
 Flask-SQLAlchemy==2.3.2
 itsdangerous==0.24
